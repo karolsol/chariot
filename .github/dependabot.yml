@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 25
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "fix(deps):"
+    reviewers:
+      - "karolsol"
+    assignees:
+      - "karolsol"
