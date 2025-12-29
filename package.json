@@ -1,10 +1,10 @@
 {
   "name": "chariot",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "0.0.1-prelease",
+  "description": "Vehicle tracking and management system",
+  "author": "Karol Solecki",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
