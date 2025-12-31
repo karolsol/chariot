@@ -14,3 +14,20 @@ updates:
       - "karolsol"
     assignees:
       - "karolsol"
+    groups:
+      typescript-dependencies:
+        patterns:
+          - "typescript"
+          - "ts-*"
+          - "tsconfig*"
+      types-dependencies:
+        patterns:
+          - "@types/*"
+      eslint-dependencies:
+        patterns:
+          - "@eslint/*"
+          - "eslint*"
+          - "typescript-eslint*"
+      nestjs-dependencies:
+        patterns:
+          - "@nestjs*"
