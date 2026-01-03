@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "chariot",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
