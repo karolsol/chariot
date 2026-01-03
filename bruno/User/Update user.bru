@@ -1,0 +1,23 @@
+meta {
+  name: Update user
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:3000/user/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "admina",
+    "password": "sth2"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
