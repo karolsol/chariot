@@ -1,7 +1,5 @@
 import { ClassSerializerInterceptor, Module } from "@nestjs/common";
-import { UserController } from "./user/user.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { UserService } from "./user/user.service";
 import { UserModule } from "./user/user.module";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 
