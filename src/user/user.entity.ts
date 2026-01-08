@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { Exclude } from "class-transformer";
+import { Allow } from "class-validator";
 
 @Entity()
 export class User {
@@ -12,6 +13,7 @@ export class User {
 
   @Column()
   @Exclude()
+  @Allow()
   password: string;
 
   @Column()

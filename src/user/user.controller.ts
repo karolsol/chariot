@@ -11,6 +11,7 @@ import {
 import { User } from "src/user/user.entity";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Controller("user")
 export class UserController {
@@ -34,7 +35,7 @@ export class UserController {
   @Put(":id")
   async update(
     @Param("id", ParseIntPipe) id: number,
-    @Body() updateUserDto: Partial<User>,
+    @Body() updateUserDto: UpdateUserDto,
   ): Promise<User | null> {
     await this.userService.update(id, updateUserDto);
     return await this.userService.findOne(id);

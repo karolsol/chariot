@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./user.entity";
 import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
 import * as bcrypt from "bcrypt";
 
 @Injectable()
@@ -28,7 +29,7 @@ export class UserService {
     user.username = createUserDto.username;
     user.password = bcrypt.hashSync(createUserDto.password, this.HASH_ROUNDS);
     if (
-      await this.usersRepository.find({
+      await this.usersRepository.exists({
         where: { username: createUserDto.username },
       })
     ) {
@@ -43,7 +44,7 @@ export class UserService {
     await this.usersRepository.delete(id);
   }
 
-  update(id: number, updateUserDto: Partial<User>) {
+  update(id: number, updateUserDto: UpdateUserDto) {
     if (updateUserDto.password !== undefined) {
       updateUserDto.password = bcrypt.hashSync(
         updateUserDto.password,

@@ -1,5 +1,8 @@
+import { Allow } from "class-validator";
+
 export class CreateUserDto {
+  @Allow()
   username: string;
-  email: string;
+  @Allow()
   password: string;
 }
