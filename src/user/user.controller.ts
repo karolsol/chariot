@@ -12,6 +12,7 @@ import { User } from "src/user/user.entity";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
+import { Public } from "../auth/public.decorator";
 
 @Controller("user")
 export class UserController {
@@ -24,10 +25,11 @@ export class UserController {
 
   @Get(":id")
   findOne(@Param("id", ParseIntPipe) id: number): Promise<User | null> {
-    return this.userService.findOne(id);
+    return this.userService.findOneById(id);
   }
 
   @Post()
+  @Public()
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.add(createUserDto);
   }
@@ -38,7 +40,7 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User | null> {
     await this.userService.update(id, updateUserDto);
-    return await this.userService.findOne(id);
+    return await this.userService.findOneById(id);
   }
 
   @Delete(":id")
