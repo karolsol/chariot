@@ -1,0 +1,20 @@
+meta {
+  name: UserInfo
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3000/profile
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoxLCJpYXQiOjE3NjgwNzU2OTUsImV4cCI6MTc2ODA3NTc1NX0.CtTBXfSs23zvDhQ_5c_HRAlDj_NCxoC0DMGGYcS19Lk
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
