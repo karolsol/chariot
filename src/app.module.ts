@@ -4,6 +4,7 @@ import { UserModule } from "./user/user.module";
 import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
 import { AuthModule } from "./auth/auth.module";
 import { JwtAuthGuard } from "./auth/jwt-aut.guard";
+import { CaslModule } from "./casl/casl.module";
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { JwtAuthGuard } from "./auth/jwt-aut.guard";
     }),
     UserModule,
     AuthModule,
+    CaslModule,
   ],
   providers: [
     {
