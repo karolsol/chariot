@@ -16,7 +16,9 @@ export type AppAbility = MongoAbility<[Action, Subjects]>;
 @Injectable()
 export class CaslAbilityFactory {
   createForUser(user: User) {
-    const { can, build } = new AbilityBuilder(createMongoAbility);
+    const { can, cannot, build } = new AbilityBuilder(createMongoAbility);
+
+    cannot(Action.Manage, "all");
 
     if (user.isAdmin) {
       can(Action.Manage, "all");
