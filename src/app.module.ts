@@ -5,6 +5,7 @@ import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
 import { AuthModule } from "./auth/auth.module";
 import { JwtAuthGuard } from "./auth/jwt-aut.guard";
 import { CaslModule } from "./casl/casl.module";
+import { VehicleModule } from "./vehicle/vehicle.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CaslModule } from "./casl/casl.module";
     UserModule,
     AuthModule,
     CaslModule,
+    VehicleModule,
   ],
   providers: [
     {

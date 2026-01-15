@@ -1,0 +1,22 @@
+meta {
+  name: Update vehicle
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3000/api/vehicles/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "vin" : "new vin2"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
