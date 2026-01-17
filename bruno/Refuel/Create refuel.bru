@@ -1,0 +1,28 @@
+meta {
+  name: Create refuel
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/refuels
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "vehicleId": 2,
+    "date": "2026-01-01",
+    "fuelAmount": 22.2,
+    "fuelPrice": 4.4,
+    "fuelType": 1,
+    "gasStation": "Orlen",
+    "mileageAtRefuel": 250000
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

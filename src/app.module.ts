@@ -6,6 +6,7 @@ import { AuthModule } from "./auth/auth.module";
 import { JwtAuthGuard } from "./auth/jwt-aut.guard";
 import { CaslModule } from "./casl/casl.module";
 import { VehicleModule } from "./vehicle/vehicle.module";
+import { RefuelModule } from "./refuel/refuel.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { VehicleModule } from "./vehicle/vehicle.module";
     AuthModule,
     CaslModule,
     VehicleModule,
+    RefuelModule,
   ],
   providers: [
     {

@@ -36,7 +36,7 @@ export class Vehicle {
   })
   fuelType: FuelType;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   userId: number;
 
   @ManyToOne(() => User)
