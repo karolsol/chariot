@@ -1,0 +1,22 @@
+meta {
+  name: Update vehicle
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3000/api/refuels/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "gasStation" : "CircleK"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

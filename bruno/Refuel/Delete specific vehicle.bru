@@ -1,0 +1,29 @@
+meta {
+  name: Delete specific vehicle
+  type: http
+  seq: 5
+}
+
+delete {
+  url: http://localhost:3000/api/refuels/1
+  body: none
+  auth: inherit
+}
+
+body:json {
+  {
+    "vin": "sth random",
+    "registrationNumber": "STH 2132",
+    "make": "Audi",
+    "model": "A3",
+    "year": 2003,
+    "initialMileage": 243000,
+    "vehicleType": 0,
+    "fuelType": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
