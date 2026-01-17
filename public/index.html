@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="refuels.html">Refuels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="maintenance.html">Maintenance</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-light ms-2" id="logoutButton">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h2>Welcome back <span id="userNamePlaceHolder"></span>!</h2>
+            <div class="row g-4 mt-4">
+                <div class="col-md-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Quick Stats</h5>
+                            <p class="card-text">Monitor your account activity and usage statistics.</p>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Recent Activity</h5>
+                            <p class="card-text">Check your latest actions and updates.</p>
+                            <a href="#" class="btn btn-primary">See More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Account Settings</h5>
+                            <p class="card-text">Manage your profile and preferences.</p>
+                            <a href="#" class="btn btn-primary">Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    if(!localStorage.getItem("access_token")) {
+        window.location.href = "login.html";
+    }
+    fetch("/auth/info", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem("access_token")
+        }
+    })
+    .then(async response => {
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById("userNamePlaceHolder").innerText = data["username"];
+        } else {
+            console.error("Failed to fetch user info");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+    document.getElementById('logoutButton').onclick = () => {
+        localStorage.removeItem("access_token");
+        window.location.href = "login.html";
+    };
+</script>
+</body>
+</html>
