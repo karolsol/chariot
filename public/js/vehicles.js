@@ -46,6 +46,7 @@ function editEntry(id) {
       document.getElementById("editYear").value = data["year"];
       document.getElementById("editMileage").value = parseInt(data["initialMileage"]);
       document.getElementById("editVin").value = data["vin"];
+      document.getElementById("editFuelType").value = data["fuelType"];
     }
   });
 }
