@@ -19,6 +19,7 @@ import { Vehicle } from "./vehicle.entity";
 import type { RequestWithUser } from "../common/request-with-user.interface";
 import { CaslAbilityFactory } from "../casl/casl-ability.factory";
 import { Action } from "../casl/casl-action.enum";
+import { VehicleStatsDto } from "./dto/vehicle-stats.dto";
 
 @Controller("api/vehicles")
 export class VehicleController {
@@ -43,6 +44,19 @@ export class VehicleController {
       throw new NotFoundException("There is no such vehicle");
     }
     return this.vehicleService.findOne(id);
+  }
+
+  @Get("stats/:id")
+  async getStats(
+    @Param("id", ParseIntPipe) id: number,
+    @Request() req: RequestWithUser,
+  ): Promise<VehicleStatsDto> {
+    const vehicle = await this.vehicleService.findOne(id);
+    const ability = this.caslAbilityFactory.createForUser(req.user);
+    if (!vehicle || !ability.can(Action.Read, vehicle)) {
+      throw new NotFoundException("There is no such vehicle");
+    }
+    return this.vehicleService.getStats(id);
   }
 
   @Post()

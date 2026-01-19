@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { RefuelService } from "./refuel.service";
 import { RefuelController } from "./refuel.controller";
@@ -10,7 +10,7 @@ import { CaslModule } from "../casl/casl.module";
 @Module({
   imports: [
     TypeOrmModule.forFeature([Refuel]),
-    VehicleModule,
+    forwardRef(() => VehicleModule),
     UserModule,
     CaslModule,
   ],

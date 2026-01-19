@@ -5,9 +5,15 @@ import { VehicleController } from "./vehicle.controller";
 import { Vehicle } from "./vehicle.entity";
 import { UserModule } from "../user/user.module";
 import { CaslModule } from "../casl/casl.module";
+import { RefuelModule } from "../refuel/refuel.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Vehicle]), UserModule, CaslModule],
+  imports: [
+    TypeOrmModule.forFeature([Vehicle]),
+    UserModule,
+    CaslModule,
+    RefuelModule,
+  ],
   controllers: [VehicleController],
   providers: [VehicleService],
   exports: [VehicleService, TypeOrmModule],
