@@ -57,10 +57,9 @@ export class RefuelService {
   }
 
   findAllForUser(userId: number): Promise<Refuel[]> {
-    //return onlt reufuels without jointed vehicle data
     return this.refuelsRepository
       .createQueryBuilder("refuel")
-      .leftJoin("refuel.Vehicle", "vehicle")
+      .leftJoinAndSelect("refuel.Vehicle", "vehicle")
       .where("vehicle.userId = :userId", { userId })
       .getMany();
   }
