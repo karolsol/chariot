@@ -16,6 +16,10 @@ const editModal = new bootstrap.Modal(
   document.getElementById("editEntryModal"),
 );
 
+const addEntryModal = new bootstrap.Modal(
+  document.getElementById("addEntryModal"),
+);
+
 function editEntry(id) {
   editModal.show();
   fetch(`/api/refuels/${id}`, {
@@ -29,7 +33,7 @@ function editEntry(id) {
       const data = await response.json();
       document.getElementById("editEntryVehicle").value = data["vehicleId"];
       document.getElementById("editId").value = data["id"];
-      document.getElementById("editDate").value = (data["date"]).split("T")[0];
+      document.getElementById("editDate").value = data["date"].split("T")[0];
       document.getElementById("editFuelAmount").value = data["fuelAmount"];
       document.getElementById("editFuelPrice").value = data["fuelPrice"];
       document.getElementById("editFuelType").value = data["fuelType"];
@@ -93,7 +97,7 @@ const refreshTable = () => {
             const cutoff = new Date();
             cutoff.setHours(0, 0, 0, 0);
             cutoff.setDate(cutoff.getDate() - days);
-            console.log(cutoff)
+            console.log(cutoff);
             if (new Date(data[i]["date"]) < cutoff) continue;
           }
         }
@@ -131,7 +135,7 @@ const refreshTable = () => {
         span.classList.add("badge");
         span.classList.add("bg-primary");
         station.appendChild(span);
-        if(data[i]["invoiceLink"]) {
+        if (data[i]["invoiceLink"]) {
           let invoice = document.createElement("a");
           invoice.textContent = "invoice";
           invoice.classList.add("badge");
@@ -211,6 +215,7 @@ document.getElementById("popupSubmitButton").onclick = (event) => {
   }).then(async (response) => {
     if (response.ok) {
       refreshTable();
+      addEntryModal.hide();
     }
   });
 };
