@@ -61,14 +61,10 @@
         })
             .then(async response => {
                 if (response.ok) {
-                    if (response.ok) {
-                        const data = await response.json();
-                        const token = data["access_token"];
-                        localStorage.setItem("access_token", token);
-                        window.location.href = 'index.html';
-                        return;
-                    }
-                    window.location.href = 'login.html';
+                    const data = await response.json();
+                    const token = data["access_token"];
+                    localStorage.setItem("access_token", token);
+                    window.location.href = 'vehicles.html';
                     return;
                 }
                     return response.json()
