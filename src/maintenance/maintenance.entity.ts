@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Vehicle } from "../vehicle/vehicle.entity";
+import { User } from "../user/user.entity";
 
 @Entity()
 export class Maintenance {
@@ -36,4 +37,11 @@ export class Maintenance {
   @ManyToOne(() => Vehicle)
   @JoinColumn({ name: "vehicleId" })
   Vehicle: Vehicle;
+
+  @Column({ nullable: false })
+  userId: number;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "userId" })
+  User: User;
 }
