@@ -1,0 +1,28 @@
+meta {
+  name: Get maintenances
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/maintenances
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "vehicleId": 2,
+    "title": "Curburator",
+    "description": "None",
+    "date": "2025-12-12",
+    "cost": 23.45,
+    "invoiceLink": "https://google.com",
+    "mileage": 22222
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
