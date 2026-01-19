@@ -5,6 +5,8 @@ function generateButtons(id) {
   return infoBtnHtml + editBtnHtml + deleteBtnHtml;
 }
 
+
+
 function deleteEntry(id) {
   fetch(`/api/vehicles/${id}`, {
     method: "DELETE",
@@ -26,6 +28,32 @@ const editModal = new bootstrap.Modal(
 const addEntryModal = new bootstrap.Modal(
   document.getElementById("addEntryModal"),
 );
+
+const infoModal = new bootstrap.Modal(
+  document.getElementById("infoModal"),
+);
+
+function infoEntry(id) {
+
+  fetch(`/api/vehicles/stats/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
+    },
+  }).then(async (response) => {
+    if (response.ok) {
+      const data = await response.json();
+      document.getElementById("averageConsumption").innerHTML = data["averageConsumption"] || '-';
+      document.getElementById("maxConsumption").innerHTML = data["maxConsumption"] || '-';
+      document.getElementById("minConsumption").innerHTML = data["minConsumption"] || '-';
+      document.getElementById("totalFuelUsed").innerHTML = data["totalFuelUsed"];
+      document.getElementById("traveledDistance").innerHTML = data["traveledDistance"];
+      document.getElementById("costPerKm").innerHTML = data["costPerKm"] || '-';
+      infoModal.show();
+    }
+  });
+}
 
 function editEntry(id) {
   editModal.show();
