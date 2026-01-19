@@ -33,7 +33,9 @@ function editEntry(id) {
       const data = await response.json();
       document.getElementById("editEntryVehicle").value = data["vehicleId"];
       document.getElementById("editId").value = data["id"];
-      document.getElementById("editDate").value = data["date"].split("T")[0];
+      const d = new Date(data["date"]);
+      const pad = (n) => n.toString().padStart(2, "0");
+      document.getElementById("editDate").value = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
       document.getElementById("editFuelAmount").value = data["fuelAmount"];
       document.getElementById("editFuelPrice").value = data["fuelPrice"];
       document.getElementById("editFuelType").value = data["fuelType"];
