@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="vehicles.html">Vehicles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="refuels.html">Refuels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="maintenance.html">Maintenance</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-light ms-2" id="logoutButton">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <label for="vehicleFilter" class="form-label">Vehicle</label>
+                    <select class="form-select" id="vehicleFilter">
+                        <option value="" selected hidden></option>
+                        <option value="all">All</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="dateRange" class="form-label">Date Range</label>
+                    <select class="form-select" id="dateRange">
+                        <option value="7">Last 7 days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="365">Last Year</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="typeFilter" class="form-label">Type</label>
+                    <select class="form-select" id="typeFilter">
+                        <option>All</option>
+                        <option>Service</option>
+                        <option>Maintenance</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search metrics...">
+                        <button class="btn btn-outline-secondary" type="button">Filter</button>
+                    </div>
+                </div>
+            </div>
+            <h4>Statistics Overview</h4>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-primary">
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                        <th>Change</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Total Users</td>
+                        <td>1,234</td>
+                        <td><span class="text-success">+12%</span></td>
+                        <td><span class="badge bg-success">Growing</span></td>
+                    </tr>
+                    <tr>
+                        <td>Active Sessions</td>
+                        <td>456</td>
+                        <td><span class="text-danger">-3%</span></td>
+                        <td><span class="badge bg-warning">Stable</span></td>
+                    </tr>
+                    <tr>
+                        <td>Avg. Login Time</td>
+                        <td>2.1s</td>
+                        <td><span class="text-success">+15%</span></td>
+                        <td><span class="badge bg-success">Improved</span></td>
+                    </tr>
+                    <tr>
+                        <td>Error Rate</td>
+                        <td>0.5%</td>
+                        <td><span class="text-success">-20%</span></td>
+                        <td><span class="badge bg-success">Low</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1 edit-btn" data-metric="Total Users">
+                                <i class="bi bi-pencil"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger delete-btn" data-metric="Total Users">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Revenue</td>
+                        <td>$12,450</td>
+                        <td><span class="text-success">+8%</span></td>
+                        <td><span class="badge bg-primary">Profitable</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    if (!localStorage.getItem("access_token")) {
+        window.location.href = "login.html";
+    }
+    let vehicleFilter = document.getElementById('vehicleFilter');
+    let gasStationFilter = document.getElementById('vehicleFilter');
+    fetch("/api/vehicles", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem("access_token")
+        }
+    })
+        .then(async response => {
+            if (response.ok) {
+                const data = await response.json();
+                for(let i = 0; i < data.length; i++)  {
+                    let option = document.createElement("option");
+                    option.value = data[i]["id"];
+                    option.text = `${data[i]["make"]} ${data[i]["model"]}`;
+                    vehicleFilter.appendChild(option);
+                }
+            } else {
+                console.error("Failed to fetch user info");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    document.getElementById('logoutButton').onclick = () => {
+        localStorage.removeItem("access_token");
+        window.location.href = "login.html";
+    };
+</script>
+</body>
+</html>
