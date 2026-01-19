@@ -9,8 +9,11 @@ import {
 import { Action } from "./casl-action.enum";
 import { User } from "../user/user.entity";
 import { Vehicle } from "../vehicle/vehicle.entity";
+import { Maintenance } from "../maintenance/maintenance.entity";
 
-type Subjects = InferSubjects<typeof User | typeof Vehicle> | "all";
+type Subjects =
+  | InferSubjects<typeof User | typeof Vehicle | typeof Maintenance>
+  | "all";
 
 export type AppAbility = MongoAbility<[Action, Subjects]>;
 
