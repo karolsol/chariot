@@ -103,48 +103,51 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="entryVehicle" class="form-label">Vehicle</label>
-                            <select class="form-select form-select-sm" id="entryVehicle" required>
-                                <option value="" hidden>Select Vehicle</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" class="form-control form-control-sm" id="date" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="fuelAmount" class="form-label">Fuel amount</label>
-                            <input type="number" class="form-control form-control-sm" id="fuelAmount" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="fuelPrice" class="form-label">Fuel price</label>
-                            <input type="number" class="form-control form-control-sm" id="fuelPrice" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="fuelType" class="form-label">Fuel type</label>
-                            <select class="form-select form-select-sm" id="fuelType" required>
+                            <label for="FuelType" class="form-label">Fuel type</label>
+                            <select class="form-select form-select-sm" id="FuelType" required>
                                 <option value="" hidden>Select fuel type</option>
                                 <option value="0">Gasoline</option>
                                 <option value="1">Diesel</option>
-                                <option value="2">Electricity</option>
+                                <option value="2">Electric</option>
+                                <option value="3">Hybrid</option>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="mileageAtRefuel" class="form-label">Mileage</label>
-                            <input type="number" class="form-control form-control-sm" id="mileageAtRefuel" required>
+                            <label for="editVehicleType" class="form-label">Vehicle type</label>
+                            <select class="form-select form-select-sm" id="VehicleType" required>
+                                <option value="" hidden>Select vehicle type</option>
+                                <option value="0">Car</option>
+                                <option value="1">Motorcycle</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="Make" class="form-label">Make</label>
+                            <input type="text" class="form-control form-control-sm" id="Make" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="Model" class="form-label">Model</label>
+                            <input type="text" class="form-control form-control-sm" id="Model" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="Year" class="form-label">Year</label>
+                            <input type="number" class="form-control form-control-sm" id="Year" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="Mileage" class="form-label">Initial mileage</label>
+                            <input type="number" class="form-control form-control-sm" id="Mileage" required>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="gasStation" class="form-label">Gas station</label>
-                        <input type="text" class="form-control form-control-sm" id="gasStation" required>
+                        <label for="Vin" class="form-label">VIN</label>
+                        <input type="text" class="form-control form-control-sm" id="Vin" required>
                     </div>
                     <div class="mb-3">
-                        <label for="invoiceLink" class="form-label">Invoice link</label>
-                        <input type="text" class="form-control form-control-sm" id="invoiceLink" required>
+                        <label for="RegistrationNumber" class="form-label">Registration number</label>
+                        <input type="text" class="form-control form-control-sm" id="RegistrationNumber" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -171,48 +174,53 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="editEntryVehicle" class="form-label">Vehicle</label>
-                            <select class="form-select form-select-sm" id="editEntryVehicle" disabled>
-                                <option value="" hidden>Select Vehicle</option>
-                            </select>
+                            <div class="col-md-6 mb-3">
+                                <label for="editFuelType" class="form-label">Fuel type</label>
+                                <select class="form-select form-select-sm" id="editFuelType" required>
+                                    <option value="" hidden>Select fuel type</option>
+                                    <option value="0">Gasoline</option>
+                                    <option value="1">Diesel</option>
+                                    <option value="2">Electric</option>
+                                    <option value="3">Hybrid</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="editDate" class="form-label">Date</label>
-                            <input type="date" class="form-control form-control-sm" id="editDate" required>
+                            <label for="editVehicleType" class="form-label">Vehicle type</label>
+                            <select class="form-select form-select-sm" id="editVehicleType" required>
+                                <option value="" hidden>Select vehicle type</option>
+                                <option value="0">Car</option>
+                                <option value="1">Motorcycle</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="editFuelAmount" class="form-label">Fuel amount</label>
-                            <input type="number" class="form-control form-control-sm" id="editFuelAmount" required>
+                            <label for="editMake" class="form-label">Make</label>
+                            <input type="text" class="form-control form-control-sm" id="editMake" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="editFuelPrice" class="form-label">Fuel price</label>
-                            <input type="number" class="form-control form-control-sm" id="editFuelPrice" required>
+                            <label for="editModel" class="form-label">Model</label>
+                            <input type="text" class="form-control form-control-sm" id="editModel" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="editFuelType" class="form-label">Fuel type</label>
-                            <select class="form-select form-select-sm" id="editFuelType" required>
-                                <option value="" hidden>Select fuel type</option>
-                                <option value="0">Gasoline</option>
-                                <option value="1">Diesel</option>
-                                <option value="2">Electricity</option>
-                            </select>
+                            <label for="editYear" class="form-label">Year</label>
+                            <input type="number" class="form-control form-control-sm" id="editYear" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="editMileageAtRefuel" class="form-label">Mileage</label>
-                            <input type="number" class="form-control form-control-sm" id="editMileageAtRefuel" required>
+                            <label for="editMileage" class="form-label">Initial mileage</label>
+                            <input type="number" class="form-control form-control-sm" id="editMileage" required>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="editGasStation" class="form-label">Gas station</label>
-                        <input type="text" class="form-control form-control-sm" id="editGasStation" required>
+                        <label for="editVin" class="form-label">VIN</label>
+                        <input type="text" class="form-control form-control-sm" id="editVin" required>
                     </div>
                     <div class="mb-3">
-                        <label for="editInvoiceLink" class="form-label">Invoice link</label>
-                        <input type="text" class="form-control form-control-sm" id="editInvoiceLink" required>
+                        <label for="editRegistrationNumber" class="form-label">Registration number</label>
+                        <input type="text" class="form-control form-control-sm" id="editRegistrationNumber" required>
                     </div>
                 </div>
                 <div class="modal-footer">
