@@ -16,7 +16,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "build:libs": "nest build shared",
+    "build:frontend": "cd apps/frontend && npx vite build",
+    "dev": "concurrently -k -n backend,frontend -c blue,green \"nest start --watch\" \"cd apps/frontend && npx vite\""
   },
   "dependencies": {
     "@casl/ability": "6.8.0",
@@ -26,7 +29,7 @@
     "@nestjs/jwt": "11.0.2",
     "@nestjs/mapped-types": "2.1.0",
     "@nestjs/passport": "11.0.5",
-    "@nestjs/platform-express": "11.1.11",
+    "@nestjs/platform-express": "11.1.12",
     "@nestjs/serve-static": "5.0.4",
     "@nestjs/typeorm": "11.0.0",
     "bcrypt": "6.0.0",
@@ -53,6 +56,7 @@
     "@types/passport-jwt": "4.0.1",
     "@types/passport-local": "1.0.38",
     "@types/supertest": "6.0.3",
+    "concurrently": "^9.2.1",
     "eslint": "9.39.2",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "5.5.5",

@@ -23,7 +23,7 @@ export class Refuel {
   @Column({ type: "float", nullable: false })
   @IsNumber({ maxDecimalPlaces: 2 })
   fuelPrice: number;
-  @Column({ nullable: false })
+  @Column({ nullable: false, type: "int" })
   fuelType: FuelType;
   @Column({ nullable: false })
   gasStation: string;
