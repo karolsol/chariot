@@ -14,8 +14,7 @@ import { MaintenanceModule } from "./maintenance/maintenance.module";
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "..", "public"),
-      serveRoot: "/",
+      rootPath: join(__dirname, "..", "..", "..", "apps/frontend/dist"),
     }),
 
     TypeOrmModule.forRoot({
