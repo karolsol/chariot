@@ -39,7 +39,10 @@ export class Vehicle {
   @Column({ nullable: false })
   userId: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, {
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
+  })
   @JoinColumn({ name: "userId" })
   user: User;
 }

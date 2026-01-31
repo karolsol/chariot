@@ -34,7 +34,10 @@ export class Maintenance {
   @Column({ nullable: false })
   mileage: number;
 
-  @ManyToOne(() => Vehicle)
+  @ManyToOne(() => Vehicle, {
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
+  })
   @JoinColumn({ name: "vehicleId" })
   Vehicle: Vehicle;
 

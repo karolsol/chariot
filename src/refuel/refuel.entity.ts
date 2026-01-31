@@ -31,7 +31,10 @@ export class Refuel {
   mileageAtRefuel: number;
   @Column({ nullable: true })
   invoiceLink: string;
-  @ManyToOne(() => Vehicle)
+  @ManyToOne(() => Vehicle, {
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT",
+  })
   @JoinColumn({ name: "vehicleId" })
   Vehicle: Vehicle;
 }
