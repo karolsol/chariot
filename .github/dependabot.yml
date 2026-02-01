@@ -1,6 +1,20 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
+    directory: "/apps/frontend/"
+    target-branch: "develop"
+    schedule:
+      - interval: "weekly"
+    open-pull-requests-limit: 25
+    labels:
+      - "dependencies"
+    commit-message:
+      - prefix: "deps(frontend):"
+    reviewers:
+      - "karolsol"
+    assignees:
+      - "karolsol"
+  - package-ecosystem: "npm"
     directory: "/"
     target-branch: "develop"
     schedule:
@@ -9,7 +23,7 @@ updates:
     labels:
       - "dependencies"
     commit-message:
-      prefix: "fix(deps):"
+      prefix: "deps(backend):"
     reviewers:
       - "karolsol"
     assignees:
