@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateMaintenanceDto } from "./dto/create-maintenance.dto";
-import { UpdateMaintenanceDto } from "./dto/update-maintenance.dto";
+import { CreateMaintenanceDto } from "@shared/shared/create-maintenance.dto";
+import { UpdateMaintenanceDto } from "@shared/shared/update-maintenance.dto";
 import { Maintenance } from "./maintenance.entity";
 import { VehicleService } from "../vehicle/vehicle.service";
 

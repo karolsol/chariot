@@ -1,6 +1,6 @@
 import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
-import { VehicleType } from "../vehicle-type.enum";
-import { FuelType } from "../../common/fuel-type.enum";
+import { VehicleType } from "./vehicle-type.enum";
+import { FuelType } from "@shared/shared/fuel-type.enum";
 
 export class UpdateVehicleDto {
   @IsString()

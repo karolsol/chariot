@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { FuelType } from "../common/fuel-type.enum";
+import { FuelType } from "@shared/shared/fuel-type.enum";
 import { Vehicle } from "../vehicle/vehicle.entity";
 import { IsNumber } from "class-validator";
 

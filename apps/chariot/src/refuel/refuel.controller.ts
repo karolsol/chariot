@@ -13,8 +13,8 @@ import {
   Request,
 } from "@nestjs/common";
 import { RefuelService } from "./refuel.service";
-import { CreateRefuelDto } from "./dto/create-refuel.dto";
-import { UpdateRefuelDto } from "./dto/update-refuel.dto";
+import { CreateRefuelDto } from "@shared/shared/create-refuel.dto";
+import { UpdateRefuelDto } from "@shared/shared/update-refuel.dto";
 import { Refuel } from "./refuel.entity";
 import type { RequestWithUser } from "../common/request-with-user.interface";
 import { CaslAbilityFactory } from "../casl/casl-ability.factory";
