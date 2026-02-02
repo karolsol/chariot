@@ -4,7 +4,7 @@ import { LocalAuthGuard } from "./local-auth.guard";
 import { Public } from "./public.decorator";
 import type { RequestWithUser } from "../common/request-with-user.interface";
 
-@Controller("auth")
+@Controller("api/auth")
 export class AuthController {
   constructor(private authService: AuthService) {}
 

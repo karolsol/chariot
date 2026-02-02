@@ -22,7 +22,7 @@ import { CaslAbilityFactory } from "../casl/casl-ability.factory";
 import { Action } from "../casl/casl-action.enum";
 import type { RequestWithUser } from "../common/request-with-user.interface";
 
-@Controller("user")
+@Controller("api/users")
 export class UserController {
   constructor(
     private readonly userService: UserService,
