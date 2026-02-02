@@ -8,15 +8,14 @@ import { Repository } from "typeorm";
 import { User } from "./user.entity";
 import { CreateUserDto } from "@shared/create-user.dto";
 import { UpdateUserDto } from "@shared/update-user.dto";
-import * as bcrypt from "bcrypt";
+import { PasswordHashingService } from "../common/password-hashing.service";
 
 @Injectable()
 export class UserService {
-  HASH_ROUNDS = 10;
-
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private passwordHashingService: PasswordHashingService,
   ) {}
 
   findAll(): Promise<User[]> {
@@ -40,7 +39,9 @@ export class UserService {
     const user = new User();
     user.isAdmin = false;
     user.username = createUserDto.username;
-    user.password = bcrypt.hashSync(createUserDto.password, this.HASH_ROUNDS);
+    user.password = this.passwordHashingService.hashPassword(
+      createUserDto.password,
+    );
     if (
       await this.usersRepository.exists({
         where: { username: createUserDto.username },
@@ -59,9 +60,8 @@ export class UserService {
 
   update(id: number, updateUserDto: UpdateUserDto) {
     if (updateUserDto.password !== undefined) {
-      updateUserDto.password = bcrypt.hashSync(
+      updateUserDto.password = this.passwordHashingService.hashPassword(
         updateUserDto.password,
-        this.HASH_ROUNDS,
       );
     }
     return this.usersRepository.update(id, updateUserDto);
