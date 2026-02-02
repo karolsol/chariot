@@ -13,8 +13,8 @@ import {
   Request,
 } from "@nestjs/common";
 import { MaintenanceService } from "./maintenance.service";
-import { CreateMaintenanceDto } from "@shared/shared/create-maintenance.dto";
-import { UpdateMaintenanceDto } from "@shared/shared/update-maintenance.dto";
+import { CreateMaintenanceDto } from "@shared/create-maintenance.dto";
+import { UpdateMaintenanceDto } from "@shared/update-maintenance.dto";
 import { Maintenance } from "./maintenance.entity";
 import type { RequestWithUser } from "../common/request-with-user.interface";
 import { CaslAbilityFactory } from "../casl/casl-ability.factory";

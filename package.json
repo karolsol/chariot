@@ -6,7 +6,6 @@
   "private": true,
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -17,6 +16,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "build:backend": "nest build",
     "build:libs": "nest build shared",
     "build:frontend": "cd apps/frontend && npx vite build",
     "dev": "concurrently -k -n backend,frontend -c blue,green \"nest start --watch\" \"cd apps/frontend && npx vite\""

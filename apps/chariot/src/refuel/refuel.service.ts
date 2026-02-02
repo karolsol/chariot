@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateRefuelDto } from "@shared/shared/create-refuel.dto";
-import { UpdateRefuelDto } from "@shared/shared/update-refuel.dto";
+import { CreateRefuelDto } from "@shared/create-refuel.dto";
+import { UpdateRefuelDto } from "@shared/update-refuel.dto";
 import { Refuel } from "./refuel.entity";
 import { VehicleService } from "../vehicle/vehicle.service";
 

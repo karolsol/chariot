@@ -15,8 +15,8 @@ import {
 } from "@nestjs/common";
 import { User } from "./user.entity";
 import { UserService } from "./user.service";
-import { CreateUserDto } from "@shared/shared/create-user.dto";
-import { UpdateUserDto } from "@shared/shared/update-user.dto";
+import { CreateUserDto } from "@shared/create-user.dto";
+import { UpdateUserDto } from "@shared/update-user.dto";
 import { Public } from "../auth/public.decorator";
 import { CaslAbilityFactory } from "../casl/casl-ability.factory";
 import { Action } from "../casl/casl-action.enum";

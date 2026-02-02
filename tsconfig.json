@@ -22,10 +22,7 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@shared/shared": [
-        "libs/shared/src"
-      ],
-      "@shared/shared/*": [
+      "@shared/*": [
         "libs/shared/src/*"
       ]
     }
