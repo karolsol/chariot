@@ -106,7 +106,7 @@ importers:
         specifier: 6.0.3
         version: 6.0.3
       concurrently:
-        specifier: ^9.2.1
+        specifier: 9.2.1
         version: 9.2.1
       eslint:
         specifier: 9.39.2
