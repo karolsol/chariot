@@ -19,7 +19,12 @@
     "build:backend": "nest build",
     "build:libs": "nest build shared",
     "build:frontend": "cd apps/frontend && npx vite build",
-    "dev": "concurrently -k -n backend,frontend -c blue,green \"nest start --watch\" \"cd apps/frontend && npx vite\""
+    "dev": "concurrently -k -n backend,frontend -c blue,green \"nest start --watch\" \"cd apps/frontend && npx vite\"",
+    "typeorm": "NODE_OPTIONS='-r tsconfig-paths/register' TS_NODE_PROJECT='apps/chariot/tsconfig.app.json' pnpm exec typeorm-ts-node-commonjs",
+    "migration:generate": "pnpm typeorm migration:generate -d apps/chariot/src/config/data-source.ts",
+    "migration:run": "pnpm typeorm migration:run -d apps/chariot/src/config/data-source.ts",
+    "migration:revert": "pnpm typeorm migration:revert -d apps/chariot/src/config/data-source.ts",
+    "schema:log": "pnpm typeorm schema:log -d apps/chariot/src/config/data-source.ts"
   },
   "dependencies": {
     "@casl/ability": "6.8.0",

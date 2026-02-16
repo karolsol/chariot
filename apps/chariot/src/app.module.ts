@@ -10,23 +10,14 @@ import { CaslModule } from "./casl/casl.module";
 import { VehicleModule } from "./vehicle/vehicle.module";
 import { RefuelModule } from "./refuel/refuel.module";
 import { MaintenanceModule } from "./maintenance/maintenance.module";
+import { dataSourceOptions } from "./config/data-source";
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "..", "..", "..", "apps/frontend/dist"),
     }),
-
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      host: "localhost",
-      port: 5432,
-      username: "admin",
-      password: "password",
-      database: "chariot-dev",
-      synchronize: true,
-      autoLoadEntities: true,
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
     AuthModule,
     CaslModule,
