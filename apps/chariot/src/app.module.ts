@@ -15,7 +15,7 @@ import { dataSourceOptions } from "./config/data-source";
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "..", "..", "..", "apps/frontend/dist"),
+      rootPath: join(__dirname, "..", "..", "..", "/dist/apps/frontend"),
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
