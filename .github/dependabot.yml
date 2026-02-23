@@ -45,3 +45,18 @@ updates:
       nestjs-dependencies:
         patterns:
           - "@nestjs*"
+  - package-ecosystem: "docker"
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 25
+    labels:
+      - "dependencies"
+    reviewers:
+      - "karolsol"
+    assignees:
+      - "karolsol"
+    commit-message:
+      prefix: "deps(docker):"
+
