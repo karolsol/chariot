@@ -14,6 +14,15 @@ updates:
       - "karolsol"
     assignees:
       - "karolsol"
+    groups:
+      vue-dependencies:
+        patterns:
+          - "vue*"
+          - "@vue/*"
+      vite-dependencies:
+        patterns:
+          - "vite*"
+          - "@vite/*"
   - package-ecosystem: "npm"
     directory: "/"
     target-branch: "develop"
