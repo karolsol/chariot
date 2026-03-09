@@ -1,4 +1,4 @@
-FROM node:25.7.0-slim AS base
+FROM node:25.8.0-slim AS base
 COPY . /app
 RUN npm install -g corepack --force && corepack enable
 WORKDIR /app
@@ -10,7 +10,7 @@ FROM base AS build
 COPY --from=deps /app/node_modules /app/node_modules
 RUN pnpm run build:all
 
-FROM node:25.7.0-slim AS runner
+FROM node:25.8.0-slim AS runner
 WORKDIR /app
 
 COPY --from=build /app/package.json ./
