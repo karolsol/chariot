@@ -32,7 +32,6 @@ export class AuthController {
   @Post("logout")
   async logout(@Body("refresh_token") refreshToken: string) {
     await this.authService.logout(refreshToken);
-    return { message: "Logged out successfully" };
   }
 
   @Get("info")
