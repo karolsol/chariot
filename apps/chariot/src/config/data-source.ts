@@ -1,5 +1,9 @@
 import { DataSource } from "typeorm";
 import type { DataSourceOptions } from "typeorm";
+import { User } from "../user/user.entity";
+import { Maintenance } from "../maintenance/maintenance.entity";
+import { Refuel } from "../refuel/refuel.entity";
+import { Vehicle } from "../vehicle/vehicle.entity";
 
 export const dataSourceOptions: DataSourceOptions = {
   type: "postgres",
@@ -9,8 +13,7 @@ export const dataSourceOptions: DataSourceOptions = {
   password: "password",
   database: "chariot-dev",
   synchronize: false,
-  entities: [__dirname + "../../**/*.entity{.ts,.js}"],
+  entities: [User, Maintenance, Refuel, Vehicle],
   migrations: [__dirname + "/../migrations/*{.ts,.js}"],
 };
-
 export const AppDataSource = new DataSource(dataSourceOptions);
