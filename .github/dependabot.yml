@@ -4,7 +4,7 @@ updates:
     directory: "/apps/frontend"
     target-branch: "develop"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 25
     labels:
       - "dependencies"
@@ -27,7 +27,7 @@ updates:
     directory: "/"
     target-branch: "develop"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 25
     labels:
       - "dependencies"
@@ -58,7 +58,7 @@ updates:
     directory: "/"
     target-branch: "develop"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 25
     labels:
       - "dependencies"
