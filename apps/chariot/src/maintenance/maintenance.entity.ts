@@ -1,20 +1,14 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { Vehicle } from "../vehicle/vehicle.entity";
 import { User } from "../user/user.entity";
 
 @Entity()
 export class Maintenance {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn("uuid")
+  id: string;
 
   @Column({ nullable: false })
-  vehicleId: number;
+  vehicleId: string;
 
   @Column({ nullable: false })
   title: string;
@@ -42,7 +36,7 @@ export class Maintenance {
   Vehicle: Vehicle;
 
   @Column({ nullable: false })
-  userId: number;
+  userId: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: "userId" })

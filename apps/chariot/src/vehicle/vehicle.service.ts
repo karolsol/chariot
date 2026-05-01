@@ -19,7 +19,7 @@ export class VehicleService {
   ) {}
 
   async create(
-    userId: number,
+    userId: string,
     createVehicleDto: CreateVehicleDto,
   ): Promise<Vehicle> {
     return this.vehiclesRepository.save({
@@ -28,7 +28,7 @@ export class VehicleService {
     });
   }
 
-  async findOne(id: number): Promise<Vehicle> {
+  async findOne(id: string): Promise<Vehicle> {
     const vehicle = await this.vehiclesRepository.findOne({
       where: { id },
     });
@@ -39,7 +39,7 @@ export class VehicleService {
   }
 
   async update(
-    id: number,
+    id: string,
     updateVehicleDto: UpdateVehicleDto,
   ): Promise<Vehicle> {
     const vehicle = await this.vehiclesRepository.findOne({
@@ -54,17 +54,17 @@ export class VehicleService {
     });
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.vehiclesRepository.delete(id);
   }
 
-  findAllForUser(userId: number): Promise<Vehicle[]> {
+  findAllForUser(userId: string): Promise<Vehicle[]> {
     return this.vehiclesRepository.find({
       where: { userId: userId },
     });
   }
 
-  async getStats(vehicleId: number): Promise<VehicleStatsDto> {
+  async getStats(vehicleId: string): Promise<VehicleStatsDto> {
     const vehicle = await this.findOne(vehicleId);
     const refuels = await this.refuelsRepository.find({
       where: { vehicleId },

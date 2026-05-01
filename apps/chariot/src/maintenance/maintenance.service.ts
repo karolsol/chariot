@@ -28,7 +28,7 @@ export class MaintenanceService {
     });
   }
 
-  async findOne(id: number): Promise<Maintenance> {
+  async findOne(id: string): Promise<Maintenance> {
     const maintenance = await this.maintenanceRepository.findOne({
       where: { id },
     });
@@ -39,7 +39,7 @@ export class MaintenanceService {
   }
 
   async update(
-    id: number,
+    id: string,
     updateMaintenanceDto: UpdateMaintenanceDto,
   ): Promise<Maintenance> {
     const maintenance = await this.maintenanceRepository.findOne({
@@ -54,11 +54,11 @@ export class MaintenanceService {
     });
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.maintenanceRepository.delete(id);
   }
 
-  findAllForUser(userId: number): Promise<Maintenance[]> {
+  findAllForUser(userId: string): Promise<Maintenance[]> {
     return this.maintenanceRepository
       .createQueryBuilder("maintenance")
       .leftJoinAndSelect("maintenance.Vehicle", "vehicle")
@@ -66,7 +66,7 @@ export class MaintenanceService {
       .getMany();
   }
 
-  async findAllForVehicle(vehicleId: number): Promise<Maintenance[]> {
+  async findAllForVehicle(vehicleId: string): Promise<Maintenance[]> {
     const vehicle = await this.vehicleService.findOne(vehicleId);
     if (!vehicle) {
       throw new NotFoundException(`There is no such vehicle`);

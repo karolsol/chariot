@@ -4,7 +4,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { VehicleType } from "@shared/vehicle-type.enum";
@@ -13,8 +13,8 @@ import { User } from "../user/user.entity";
 
 @Entity()
 export class Vehicle {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn("uuid")
+  id: string;
   @Column()
   vin: string;
   @Column()
@@ -37,7 +37,7 @@ export class Vehicle {
   fuelType: FuelType;
 
   @Column({ nullable: false })
-  userId: number;
+  userId: string;
 
   @CreateDateColumn({ type: "timestamp" })
   created_at: Date;

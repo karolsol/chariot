@@ -10,7 +10,7 @@ import {
 
 export class CreateMaintenanceDto {
   @IsInt()
-  vehicleId: number;
+  vehicleId: string;
 
   @IsString()
   title: string;

@@ -8,7 +8,6 @@ import {
   HttpStatus,
   NotFoundException,
   Param,
-  ParseIntPipe,
   Post,
   Put,
   Request,
@@ -31,7 +30,7 @@ export class UserController {
 
   @Get(":id")
   async findOne(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Request() req: RequestWithUser,
   ): Promise<User | null> {
     const user = await this.userService.findOneById(id);
@@ -50,7 +49,7 @@ export class UserController {
 
   @Put(":id")
   async update(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Body() updateUserDto: UpdateUserDto,
     @Request() req: RequestWithUser,
   ): Promise<User> {
@@ -69,10 +68,7 @@ export class UserController {
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(
-    @Param("id", ParseIntPipe) id: number,
-    @Request() req: RequestWithUser,
-  ) {
+  async remove(@Param("id") id: string, @Request() req: RequestWithUser) {
     const ability = this.caslAbilityFactory.createForUser(req.user);
     const deletedUser = await this.userService.findOneById(id);
     if (!ability.can(Action.Delete, deletedUser)) {

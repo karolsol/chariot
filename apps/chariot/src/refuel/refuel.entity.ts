@@ -1,20 +1,14 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { FuelType } from "@shared/fuel-type.enum";
 import { Vehicle } from "../vehicle/vehicle.entity";
 import { IsNumber } from "class-validator";
 
 @Entity()
 export class Refuel {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn("uuid")
+  id: string;
   @Column({ nullable: false })
-  vehicleId: number;
+  vehicleId: string;
   @Column({ nullable: false })
   date: Date;
   @Column({ type: "float", nullable: false })

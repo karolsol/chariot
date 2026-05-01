@@ -7,7 +7,6 @@ import {
   HttpStatus,
   NotFoundException,
   Param,
-  ParseIntPipe,
   Post,
   Put,
   Request,
@@ -35,7 +34,7 @@ export class VehicleController {
 
   @Get(":id")
   async findOne(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Request() req: RequestWithUser,
   ): Promise<Vehicle> {
     const vehicle = await this.vehicleService.findOne(id);
@@ -48,7 +47,7 @@ export class VehicleController {
 
   @Get("stats/:id")
   async getStats(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Request() req: RequestWithUser,
   ): Promise<VehicleStatsDto> {
     const vehicle = await this.vehicleService.findOne(id);
@@ -71,7 +70,7 @@ export class VehicleController {
   @Put(":id")
   @HttpCode(HttpStatus.OK)
   async update(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Body() updateVehicleDto: UpdateVehicleDto,
     @Request() req: RequestWithUser,
   ): Promise<Vehicle> {
@@ -85,10 +84,7 @@ export class VehicleController {
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(
-    @Param("id", ParseIntPipe) id: number,
-    @Request() req: RequestWithUser,
-  ) {
+  async remove(@Param("id") id: string, @Request() req: RequestWithUser) {
     const vehicle = await this.vehicleService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
     if (!vehicle || !ability.can(Action.Delete, vehicle)) {

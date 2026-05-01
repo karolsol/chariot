@@ -1,11 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { BeforeInsert, Column, Entity, PrimaryColumn, Unique } from "typeorm";
+import { v7 as uuidv7 } from "uuid";
 import { Exclude } from "class-transformer";
 import { Allow } from "class-validator";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn("uuid")
+  id: string;
 
   @Column({ update: false })
   @Unique(["username"])
@@ -18,4 +19,9 @@ export class User {
 
   @Column()
   isAdmin: boolean;
+
+  @BeforeInsert()
+  beforeInsert() {
+    this.id = uuidv7();
+  }
 }

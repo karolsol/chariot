@@ -7,7 +7,6 @@ import {
   HttpStatus,
   NotFoundException,
   Param,
-  ParseIntPipe,
   Post,
   Put,
   Request,
@@ -36,7 +35,7 @@ export class MaintenanceController {
 
   @Get(":id")
   async findOne(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Request() req: RequestWithUser,
   ): Promise<Maintenance> {
     const maintenance = await this.maintenanceService.findOne(id);
@@ -49,7 +48,7 @@ export class MaintenanceController {
 
   @Get("/vehicle/:vehicleId")
   async findAllForVehicle(
-    @Param("vehicleId", ParseIntPipe) vehicleId: number,
+    @Param("vehicleId") vehicleId: string,
     @Request() req: RequestWithUser,
   ) {
     const vehicle = await this.vehicleService.findOne(vehicleId);
@@ -79,7 +78,7 @@ export class MaintenanceController {
   @Put(":id")
   @HttpCode(HttpStatus.OK)
   async update(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Body() updateMaintenanceDto: UpdateMaintenanceDto,
     @Request() req: RequestWithUser,
   ): Promise<Maintenance> {
@@ -93,10 +92,7 @@ export class MaintenanceController {
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(
-    @Param("id", ParseIntPipe) id: number,
-    @Request() req: RequestWithUser,
-  ) {
+  async remove(@Param("id") id: string, @Request() req: RequestWithUser) {
     const maintenance = await this.maintenanceService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
     if (!maintenance || !ability.can(Action.Delete, maintenance)) {

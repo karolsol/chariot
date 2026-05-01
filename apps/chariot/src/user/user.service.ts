@@ -22,7 +22,7 @@ export class UserService {
     return this.usersRepository.find();
   }
 
-  async findOneById(id: number): Promise<User> {
+  async findOneById(id: string): Promise<User> {
     const user = await this.usersRepository.findOneBy({ id });
     if (!user) {
       throw new NotFoundException(`User with this is does not exist`);
@@ -54,11 +54,11 @@ export class UserService {
     return this.usersRepository.save(user);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: UpdateUserDto) {
     if (updateUserDto.password !== undefined) {
       updateUserDto.password = this.passwordHashingService.hashPassword(
         updateUserDto.password,

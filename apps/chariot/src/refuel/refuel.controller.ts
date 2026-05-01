@@ -7,7 +7,6 @@ import {
   HttpStatus,
   NotFoundException,
   Param,
-  ParseIntPipe,
   Post,
   Put,
   Request,
@@ -34,7 +33,7 @@ export class RefuelController {
 
   @Get(":id")
   async findOne(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Request() req: RequestWithUser,
   ): Promise<Refuel> {
     const refuel = await this.refuelService.findOne(id);
@@ -47,7 +46,7 @@ export class RefuelController {
 
   @Get("/vehicle/:vehicleId")
   async findAllForVehicle(
-    @Param("vehicleId", ParseIntPipe) vehicleId: number,
+    @Param("vehicleId") vehicleId: string,
     @Request() req: RequestWithUser,
   ) {
     return this.refuelService.findAllForVehicle(vehicleId, req.user.id);
@@ -65,7 +64,7 @@ export class RefuelController {
   @Put(":id")
   @HttpCode(HttpStatus.OK)
   async update(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Body() updateRefuelDto: UpdateRefuelDto,
     @Request() req: RequestWithUser,
   ): Promise<Refuel> {
@@ -79,10 +78,7 @@ export class RefuelController {
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(
-    @Param("id", ParseIntPipe) id: number,
-    @Request() req: RequestWithUser,
-  ) {
+  async remove(@Param("id") id: string, @Request() req: RequestWithUser) {
     const refuel = await this.refuelService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
     if (!refuel || !ability.can(Action.Delete, refuel.Vehicle)) {
