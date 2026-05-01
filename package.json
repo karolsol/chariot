@@ -29,7 +29,7 @@
     "schema:log": "pnpm typeorm schema:log -d apps/chariot/src/config/data-source.ts"
   },
   "dependencies": {
-    "@casl/ability": "6.8.0",
+    "@casl/ability": "6.8.1",
     "@nestjs/common": "11.1.17",
     "@nestjs/config": "4.0.3",
     "@nestjs/core": "11.1.18",
