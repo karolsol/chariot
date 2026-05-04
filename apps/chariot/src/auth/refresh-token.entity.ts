@@ -14,7 +14,7 @@ export class RefreshToken {
   id: number;
 
   @Column({ nullable: false })
-  userId: number;
+  userId: string;
 
   @Column({ nullable: false, unique: true })
   token: string;

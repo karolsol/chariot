@@ -48,7 +48,7 @@ export class AuthService {
       throw new UnauthorizedException("Invalid refresh token");
     }
 
-    const userId = parseInt(payload.sub);
+    const userId = payload.sub;
 
     const stored = await this.refreshTokenRepository.findOne({
       where: { token: refreshToken, userId },
@@ -85,7 +85,9 @@ export class AuthService {
       expiresIn: jwtConstants.refreshExpiresIn,
     });
 
-    const expiresAt = new Date(Date.now() + jwtConstants.refreshExpiresIn * 1000);
+    const expiresAt = new Date(
+      Date.now() + jwtConstants.refreshExpiresIn * 1000,
+    );
 
     const refreshTokenEntity = this.refreshTokenRepository.create({
       userId: user.id,
