@@ -9,7 +9,7 @@ const password = ref("");
 const errorMessage = ref("");
 const handleLogin = async () => {
   if (!username.value || !password.value) {
-    errorMessage.value = "Proszę wypełnić wszystkie pola.";
+    errorMessage.value = "Please enter both username and password";
     return;
   }
   fetch("/api/auth/login", {
@@ -25,7 +25,7 @@ const handleLogin = async () => {
       const data = await response.json();
       localStorage.setItem("access_token", data.access_token);
 
-      // router.push("/dashboard");
+      router.push("/dashboard");
     } else {
       errorMessage.value = "Incorrect username or password";
     }
