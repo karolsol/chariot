@@ -22,7 +22,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
-    "paths": { "@shared/*": ["libs/shared/src/*"] }
+    "paths": { "#shared/*": ["libs/shared/src/*"] }
   },
   "include": ["src"],
 }

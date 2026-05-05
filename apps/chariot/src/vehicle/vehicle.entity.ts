@@ -7,8 +7,8 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { VehicleType } from "@shared/vehicle-type.enum";
-import { FuelType } from "@shared/fuel-type.enum";
+import { VehicleType } from "#shared/vehicle-type.enum";
+import { FuelType } from "#shared/fuel-type.enum";
 import { User } from "../user/user.entity";
 
 @Entity()

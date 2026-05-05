@@ -12,8 +12,8 @@ import {
   Request,
 } from "@nestjs/common";
 import { RefuelService } from "./refuel.service";
-import { CreateRefuelDto } from "@shared/create-refuel.dto";
-import { UpdateRefuelDto } from "@shared/update-refuel.dto";
+import { CreateRefuelDto } from "#shared/create-refuel.dto";
+import { UpdateRefuelDto } from "#shared/update-refuel.dto";
 import { Refuel } from "./refuel.entity";
 import type { RequestWithUser } from "../common/request-with-user.interface";
 import { CaslAbilityFactory } from "../casl/casl-ability.factory";

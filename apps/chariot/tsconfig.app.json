@@ -1,9 +1,18 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "isolatedDeclarations": false,
     "declaration": false,
+    "rootDir": "../..",
+    "rootDirs": [
+      "./src",
+      "../../libs/shared/src"
+    ],
     "outDir": "../../dist/apps/chariot"
   },
+  "references": [
+    { "path": "../../libs/shared" }
+  ],
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }

@@ -6,6 +6,10 @@
   "private": true,
   "license": "GPL-3.0-or-later",
   "packageManager": "pnpm@9.1.0",
+  "imports": {
+    "#shared/*.ts": "./libs/shared/src/*.ts",
+    "#shared/*": "./libs/shared/src/*.ts"
+  },
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "nest start",
