@@ -1,31 +1,38 @@
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
 } from "typeorm";
 import { User } from "../user/user.entity";
+import { v7 as uuidv7 } from "uuid";
 
 @Entity()
 export class RefreshToken {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn("uuid")
+  id!: string;
 
   @Column({ nullable: false })
-  userId: string;
+  userId!: string;
 
   @Column({ nullable: false, unique: true })
-  token: string;
+  token!: string;
 
   @Column({ nullable: false })
-  expiresAt: Date;
+  expiresAt!: Date;
 
   @CreateDateColumn({ type: "timestamp" })
-  createdAt: Date;
+  createdAt!: Date;
 
   @ManyToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn({ name: "userId" })
-  user: User;
+  user!: User;
+
+  @BeforeInsert()
+  beforeInsert() {
+    this.id = uuidv7();
+  }
 }
