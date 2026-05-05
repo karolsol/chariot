@@ -1,34 +1,47 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from "typeorm";
 import { FuelType } from "#shared/fuel-type.enum";
 import { Vehicle } from "../vehicle/vehicle.entity";
 import { IsNumber } from "class-validator";
+import { v7 as uuidv7 } from "uuid";
 
 @Entity()
 export class Refuel {
   @PrimaryColumn("uuid")
-  id: string;
+  id!: string;
   @Column({ nullable: false })
-  vehicleId: string;
+  vehicleId!: string;
   @Column({ nullable: false })
-  date: Date;
+  date!: Date;
   @Column({ type: "float", nullable: false })
   @IsNumber({ maxDecimalPlaces: 2 })
-  fuelAmount: number;
+  fuelAmount!: number;
   @Column({ type: "float", nullable: false })
   @IsNumber({ maxDecimalPlaces: 2 })
-  fuelPrice: number;
+  fuelPrice!: number;
   @Column({ nullable: false, type: "int" })
-  fuelType: FuelType;
+  fuelType!: FuelType;
   @Column({ nullable: false })
-  gasStation: string;
+  gasStation!: string;
   @Column({ nullable: false })
-  mileageAtRefuel: number;
+  mileageAtRefuel!: number;
   @Column({ nullable: true })
-  invoiceLink: string;
+  invoiceLink!: string;
   @ManyToOne(() => Vehicle, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
   })
   @JoinColumn({ name: "vehicleId" })
-  Vehicle: Vehicle;
+  Vehicle!: Vehicle;
+
+  @BeforeInsert()
+  beforeInsert() {
+    this.id = uuidv7();
+  }
 }

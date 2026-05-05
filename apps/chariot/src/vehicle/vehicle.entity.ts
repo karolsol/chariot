@@ -1,4 +1,5 @@
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -10,42 +11,48 @@ import {
 import { VehicleType } from "#shared/vehicle-type.enum";
 import { FuelType } from "#shared/fuel-type.enum";
 import { User } from "../user/user.entity";
+import { v7 as uuidv7 } from "uuid";
 
 @Entity()
 export class Vehicle {
   @PrimaryColumn("uuid")
-  id: string;
+  id!: string;
   @Column()
-  vin: string;
+  vin!: string;
   @Column()
-  registrationNumber: string;
+  registrationNumber!: string;
   @Column()
-  make: string;
+  make!: string;
   @Column()
-  model: string;
+  model!: string;
   @Column()
-  year: number;
+  year!: number;
   @Column()
-  initialMileage: number;
+  initialMileage!: number;
   @Column({
     type: "int",
   })
-  vehicleType: VehicleType;
+  vehicleType!: VehicleType;
   @Column({
     type: "int",
   })
-  fuelType: FuelType;
+  fuelType!: FuelType;
 
   @Column({ nullable: false })
-  userId: string;
+  userId!: string;
 
   @CreateDateColumn({ type: "timestamp" })
-  created_at: Date;
+  created_at!: Date;
 
   @UpdateDateColumn({ type: "timestamp" })
-  updated_at: Date;
+  updated_at!: Date;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: "userId" })
-  user: User;
+  user!: User;
+
+  @BeforeInsert()
+  beforeInsert() {
+    this.id = uuidv7();
+  }
 }

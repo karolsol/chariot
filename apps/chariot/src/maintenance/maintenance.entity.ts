@@ -1,44 +1,57 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from "typeorm";
 import { Vehicle } from "../vehicle/vehicle.entity";
 import { User } from "../user/user.entity";
+import { v7 as uuidv7 } from "uuid";
 
 @Entity()
 export class Maintenance {
   @PrimaryColumn("uuid")
-  id: string;
+  id!: string;
 
   @Column({ nullable: false })
-  vehicleId: string;
+  vehicleId!: string;
 
   @Column({ nullable: false })
-  title: string;
+  title!: string;
 
   @Column({ nullable: true })
-  description: string;
+  description!: string;
 
   @Column({ nullable: false })
-  date: Date;
+  date!: Date;
 
   @Column({ type: "float", nullable: false })
-  cost: number;
+  cost!: number;
 
   @Column({ nullable: true })
-  invoiceLink: string;
+  invoiceLink!: string;
 
   @Column({ nullable: false })
-  mileage: number;
+  mileage!: number;
 
   @ManyToOne(() => Vehicle, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
   })
   @JoinColumn({ name: "vehicleId" })
-  Vehicle: Vehicle;
+  Vehicle!: Vehicle;
 
   @Column({ nullable: false })
-  userId: string;
+  userId!: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: "userId" })
-  User: User;
+  User!: User;
+
+  @BeforeInsert()
+  beforeInsert() {
+    this.id = uuidv7();
+  }
 }

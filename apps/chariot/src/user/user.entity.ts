@@ -6,19 +6,19 @@ import { Allow } from "class-validator";
 @Entity()
 export class User {
   @PrimaryColumn("uuid")
-  id: string;
+  id!: string;
 
   @Column({ update: false })
   @Unique(["username"])
-  username: string;
+  username!: string;
 
   @Column()
   @Exclude()
   @Allow()
-  password: string;
+  password!: string;
 
   @Column()
-  isAdmin: boolean;
+  isAdmin!: boolean;
 
   @BeforeInsert()
   beforeInsert() {
