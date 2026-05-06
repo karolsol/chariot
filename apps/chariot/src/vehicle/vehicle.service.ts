@@ -22,10 +22,11 @@ export class VehicleService {
     userId: string,
     createVehicleDto: CreateVehicleDto,
   ): Promise<Vehicle> {
-    return this.vehiclesRepository.save({
+    const newVehicle = this.vehiclesRepository.create({
       ...createVehicleDto,
       user: await this.userService.findOneById(userId),
     });
+    return this.vehiclesRepository.save(newVehicle);
   }
 
   async findOne(id: string): Promise<Vehicle> {

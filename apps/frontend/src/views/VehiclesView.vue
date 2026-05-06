@@ -1,31 +1,36 @@
 <script setup lang="ts">
-import type {Vehicle} from "../../../chariot/src/vehicle/vehicle.entity.ts";
+import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import VehicleCard from "../components/VehicleCard.vue";
+import { onMounted, ref } from "vue";
 
-const vehicle: any = {
-  id: "2df1e8b-9c3a-4c5e-8b1a-2f1e8b9c3a4c",
-  initialMileage: 2000,
-  userId: "1a2b3c4d-5e6f-7g8h-9i0j-1a2b3c4d5e6f",
-  created_at: new Date("2023-01-01T00:00:00Z"),
-  updated_at: new Date("2023-01-01T00:00:00Z"),
-  make: "Toyota",
-  model: "Corolla",
-  year: 2020,
-  vin: "1HGBH41JXMN109186",
-  registrationNumber: "ABC123",
-  fuelType: 0,
-  vehicleType: 0,
+let vehicles = ref<Vehicle[]>([]);
+
+const fetchVehicles = () => {
+  fetch("/api/vehicles", {
+    method: "GET",
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      vehicles.value = data;
+    })
+    .catch((error) => {
+      console.error("Error fetching vehicles:", error);
+    });
 };
 
+onMounted(() => {
+  fetchVehicles();
+});
 const onEdit = (vehicle: Vehicle) => {
   console.log("Edit vehicle", vehicle);
 };
 
-const onDelete = (id: number | string) => {
+const onDelete = (id: string) => {
   console.log("Delete vehicle with id", id);
 };
 
-const onStats = (id: number | string) => {
+const onStats = (id: string) => {
   console.log("Show stats for vehicle with id", id);
 };
 </script>
@@ -66,8 +71,8 @@ const onStats = (id: number | string) => {
           </div>
         </div>
         <div class="row g-4 mt-4" id="vehiclesCards">
-          <div class="col-md-4">
-            <div class="card shadow h-100">
+          <template v-if="vehicles?.length > 0">
+            <div class="col-md-4" v-for="vehicle in vehicles" :key="vehicle.id">
               <VehicleCard
                 :vehicle="vehicle"
                 @edit="onEdit"
@@ -75,7 +80,12 @@ const onStats = (id: number | string) => {
                 @stats="onStats"
               />
             </div>
-          </div>
+          </template>
+          <NoEntitiesCard
+            main-text="No vehicles found"
+            secondary-text="You haven't added any vehicles to your garage yet."
+            v-else
+          />
         </div>
       </div>
     </div>
