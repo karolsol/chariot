@@ -8,18 +8,26 @@ const router = createRouter({
       alias: "/",
       name: "login",
       component: () => import("../views/LoginView.vue"),
+      meta: {
+        hideNavbar: true,
+      },
     },
     {
       path: "/register",
       name: "register",
       component: () => import("../views/RegisterView.vue"),
+      meta: {
+        hideNavbar: true,
+      },
     },
-    // {
-    //     path: '/vehicles',
-    //     name: 'vehicles',
-    //     // Lazy loading - komponent ładuje się tylko gdy użytkownik wejdzie na tę stronę
-    //     component: () => import('../views/VehiclesView.vue')
-    // }
+    {
+      path: "/vehicles",
+      name: "vehicles",
+      component: () => import("../views/VehiclesView.vue"),
+      meta: {
+        hideNavbar: false,
+      },
+    },
   ],
 });
 
