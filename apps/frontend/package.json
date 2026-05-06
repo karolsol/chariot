@@ -12,9 +12,10 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@iconify/vue": "5.0.1",
     "bootstrap": "5.3.8",
-    "vue-router": "5.0.6",
-    "vue": "3.5.33"
+    "vue": "3.5.33",
+    "vue-router": "5.0.6"
   },
   "devDependencies": {
     "@tsconfig/node24": "24.0.4",
