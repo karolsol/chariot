@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { onMounted, ref } from "vue";
+import router from "../router";
 
 let theme = ref(localStorage.getItem("theme") || "light");
 
@@ -17,6 +18,23 @@ const updateTheme = () => {
 onMounted(() => {
   updateTheme();
 });
+
+const handleLogout = () => {
+  fetch("/api/auth/logout", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(() => {
+      console.log("Successfully logged out!");
+      router.push("/login");
+    })
+    .catch((error) => {
+      console.error("Error logging out:", error);
+    });
+};
 </script>
 
 <template>
@@ -52,7 +70,7 @@ onMounted(() => {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-outline-light ms-2"
+            <a class="nav-link btn btn-outline-light ms-2" @click="handleLogout"
               >Logout</a
             >
           </li>
@@ -61,4 +79,3 @@ onMounted(() => {
     </div>
   </nav>
 </template>
-

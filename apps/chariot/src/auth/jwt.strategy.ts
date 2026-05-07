@@ -5,12 +5,18 @@ import { jwtConstants } from "../config/jwt.config";
 import { JwtPayload } from "./jwtPayload.interface";
 import { User } from "../user/user.entity";
 import { UserService } from "../user/user.service";
+import { Request } from "express";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly userService: UserService) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (request: Request) => {
+          const cookies = request.cookies as Record<string, string> | undefined;
+          return cookies?.access_token ?? null;
+        },
+      ]),
       ignoreExpiration: false,
       secretOrKey: jwtConstants.secret,
     });
