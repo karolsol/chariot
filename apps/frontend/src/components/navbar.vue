@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { onMounted, ref } from "vue";
-import router from "../router";
+import { useUserStore } from "../stores/userStore.ts";
+
+const userStore = useUserStore();
 
 let theme = ref(localStorage.getItem("theme") || "light");
 
@@ -20,20 +22,7 @@ onMounted(() => {
 });
 
 const handleLogout = () => {
-  fetch("/api/auth/logout", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(() => {
-      console.log("Successfully logged out!");
-      router.push("/login");
-    })
-    .catch((error) => {
-      console.error("Error logging out:", error);
-    });
+  userStore.logout();
 };
 </script>
 

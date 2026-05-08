@@ -10,6 +10,7 @@ const router = createRouter({
       component: () => import("../views/LoginView.vue"),
       meta: {
         hideNavbar: true,
+        public: true,
       },
     },
     {
@@ -18,6 +19,7 @@ const router = createRouter({
       component: () => import("../views/RegisterView.vue"),
       meta: {
         hideNavbar: true,
+        public: true,
       },
     },
     {

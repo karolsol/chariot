@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import type { InternalAxiosRequestConfig, AxiosResponse } from "axios";
-import router from "../router";
+import { useUserStore } from "../stores/userStore.ts";
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -14,6 +14,7 @@ const api = axios.create({
 api.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
+    const userStore = useUserStore();
     const originalRequest = error.config as CustomAxiosRequestConfig;
     if (
       error.response?.status === 401 &&
@@ -27,8 +28,7 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (refreshError) {
         console.error("Refresh token expired or invalid");
-        await axios.post("/api/auth/logout", {}, { withCredentials: true });
-        router.push("login");
+        await userStore.logout();
         return Promise.reject(
           new Error("Refresh token expired or invalid", {
             cause: refreshError,
