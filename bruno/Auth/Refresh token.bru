@@ -1,0 +1,27 @@
+meta {
+  name: Refresh token
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/auth/refresh
+  body: none
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "admin",
+    "password": "admin"
+  }
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}
