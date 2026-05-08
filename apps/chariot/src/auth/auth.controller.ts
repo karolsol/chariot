@@ -39,7 +39,7 @@ export class AuthController {
       httpOnly: true,
       secure: process.env.SECURE === "production",
       sameSite: "strict",
-      path: "/api/auth/login",
+      path: "/api/auth/refresh",
       maxAge: jwtConstants.refreshExpiresIn,
     });
 
@@ -48,7 +48,10 @@ export class AuthController {
 
   @Public()
   @Post("refresh")
-  async refresh(@Req() req: RequestWithUser, @Res() res: Response) {
+  async refresh(
+    @Req() req: RequestWithUser,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const refreshToken = req.cookies["refresh_token"];
     if (!refreshToken) throw new UnauthorizedException();
 
@@ -81,7 +84,7 @@ export class AuthController {
     await this.authService.logout(refreshToken);
 
     res.clearCookie("access_token");
-    res.clearCookie("refresh_token", { path: "/api/auth/login" });
+    res.clearCookie("refresh_token", { path: "/api/auth/refresh" });
     return { message: "Logged out" };
   }
 

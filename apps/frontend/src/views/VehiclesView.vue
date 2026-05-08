@@ -2,21 +2,14 @@
 import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import VehicleCard from "../components/VehicleCard.vue";
 import { onMounted, ref } from "vue";
+import NoEntitiesCard from "../components/NoEntitiesCard.vue";
+import api from "../services/api.ts";
 
 let vehicles = ref<Vehicle[]>([]);
 
-const fetchVehicles = () => {
-  fetch("/api/vehicles", {
-    method: "GET",
-    credentials: "include",
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      vehicles.value = data;
-    })
-    .catch((error) => {
-      console.error("Error fetching vehicles:", error);
-    });
+const fetchVehicles = async () => {
+  const { data } = await api.get("/vehicles");
+  vehicles.value = data;
 };
 
 onMounted(() => {
