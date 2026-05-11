@@ -2,7 +2,7 @@ import { Allow } from "class-validator";
 
 export class CreateUserDto {
   @Allow()
-  username: string;
+  username!: string;
   @Allow()
-  password: string;
+  password!: string;
 }

@@ -5,33 +5,33 @@ import { FuelType } from "#shared/fuel-type.enum";
 export class UpdateVehicleDto {
   @IsString()
   @IsOptional()
-  vin: string;
+  vin?: string;
 
   @IsString()
   @IsOptional()
-  registrationNumber: string;
+  registrationNumber?: string;
 
   @IsString()
   @IsOptional()
-  make: string;
+  make?: string;
 
   @IsString()
   @IsOptional()
-  model: string;
+  model?: string;
 
   @IsInt()
   @IsOptional()
-  year: number;
+  year?: number;
 
   @IsInt()
   @IsOptional()
-  initialMileage: number;
+  initialMileage?: number;
 
   @IsEnum(VehicleType)
   @IsOptional()
-  vehicleType: VehicleType;
+  vehicleType?: VehicleType;
 
   @IsEnum(FuelType)
   @IsOptional()
-  fuelType: FuelType;
+  fuelType?: FuelType;
 }

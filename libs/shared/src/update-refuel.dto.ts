@@ -4,19 +4,19 @@ import { IsDateString, IsNumber, IsOptional } from "class-validator";
 export class UpdateRefuelDto {
   @IsOptional()
   @IsDateString()
-  date: string;
+  date?: string;
   @IsOptional()
   @IsNumber({ maxDecimalPlaces: 2 })
-  fuelAmount: number;
+  fuelAmount?: number;
   @IsOptional()
   @IsNumber({ maxDecimalPlaces: 2 })
-  fuelPrice: number;
+  fuelPrice?: number;
   @IsOptional()
-  fuelType: FuelType;
+  fuelType?: FuelType;
   @IsOptional()
-  gasStation: string;
+  gasStation?: string;
   @IsOptional()
-  mileageAtRefuel: number;
+  mileageAtRefuel?: number;
   @IsOptional()
-  invoiceLink: string;
+  invoiceLink?: string;
 }

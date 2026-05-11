@@ -10,21 +10,21 @@ import {
 
 export class CreateMaintenanceDto {
   @IsInt()
-  vehicleId: string;
+  vehicleId!: string;
 
   @IsString()
-  title: string;
+  title!: string;
 
   @IsOptional()
   @IsString()
   description?: string;
 
   @IsDateString()
-  date: string;
+  date!: string;
 
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
-  cost: number;
+  cost!: number;
 
   @IsOptional()
   @IsUrl()

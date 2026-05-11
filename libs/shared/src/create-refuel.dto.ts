@@ -12,28 +12,28 @@ import { FuelType } from "#shared/fuel-type.enum";
 
 export class CreateRefuelDto {
   @IsInt()
-  vehicleId: string;
+  vehicleId!: string;
 
   @IsDateString()
-  date: string;
+  date!: string;
 
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
-  fuelAmount: number;
+  fuelAmount!: number;
 
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
-  fuelPrice: number;
+  fuelPrice!: number;
 
   @IsEnum(FuelType)
-  fuelType: FuelType;
+  fuelType!: FuelType;
 
   @IsString()
-  gasStation: string;
+  gasStation!: string;
 
   @IsInt()
   @Min(0)
-  mileageAtRefuel: number;
+  mileageAtRefuel!: number;
 
   @IsOptional()
   @IsUrl()

@@ -4,26 +4,26 @@ import { FuelType } from "#shared/fuel-type.enum";
 
 export class CreateVehicleDto {
   @IsString()
-  vin: string;
+  vin!: string;
 
   @IsString()
-  registrationNumber: string;
+  registrationNumber!: string;
 
   @IsString()
-  make: string;
+  make!: string;
 
   @IsString()
-  model: string;
+  model!: string;
 
   @IsInt()
-  year: number;
+  year!: number;
 
   @IsInt()
-  initialMileage: number;
+  initialMileage!: number;
 
   @IsEnum(VehicleType)
-  vehicleType: VehicleType;
+  vehicleType!: VehicleType;
 
   @IsEnum(FuelType)
-  fuelType: FuelType;
+  fuelType!: FuelType;
 }
