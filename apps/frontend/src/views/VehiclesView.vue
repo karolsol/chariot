@@ -6,25 +6,32 @@ import NoEntitiesCard from "../components/NoEntitiesCard.vue";
 import { vehicleService } from "../services/vehiclesService.ts";
 import type { CreateVehicleDto } from "../../../../libs/shared/src/create-vehicle.dto.ts";
 import AddVehicleModal from "../components/AddVehicleModal.vue";
+import EditVehicleModal from "../components/EditVehicleModal.vue";
+import type { UpdateVehicleDto } from "../../../../libs/shared/src/update-vehicle.dto.ts";
 
 let vehicles = ref<Vehicle[]>([]);
 
+let editedVehicle = ref<Vehicle>({} as Vehicle);
+
 const addModal = ref<InstanceType<typeof AddVehicleModal> | null>(null);
+const editModal = ref<InstanceType<typeof EditVehicleModal> | null>(null);
 
 onMounted(async () => {
   vehicles.value = await vehicleService.getAll();
 });
 
 const onEdit = (vehicle: Vehicle) => {
-  console.log("Edit vehicle", vehicle);
+  editedVehicle.value = vehicle;
+  editModal.value?.show();
 };
 
-const onEditAccept = (id: string, vehicle: Vehicle) => {
+const onEditAccept = (id: string, vehicle: UpdateVehicleDto) => {
   vehicleService.update(id, vehicle).then((updatedVehicle) => {
     const index = vehicles.value.findIndex((v) => v.id === id);
     if (index !== -1) {
       vehicles.value[index] = updatedVehicle;
     }
+    editModal.value?.hide();
   });
 };
 
@@ -105,4 +112,9 @@ const onStats = (id: string) => {
     </div>
   </div>
   <AddVehicleModal ref="addModal" @submit="onCreateAccept" />
+  <EditVehicleModal
+    ref="editModal"
+    @submit="onEditAccept"
+    :vehicle="editedVehicle"
+  />
 </template>
