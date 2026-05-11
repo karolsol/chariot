@@ -3,24 +3,46 @@ import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import VehicleCard from "../components/VehicleCard.vue";
 import { onMounted, ref } from "vue";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
-import api from "../services/api.ts";
+import { vehicleService } from "../services/vehiclesService.ts";
+import type { CreateVehicleDto } from "../../../../libs/shared/src/create-vehicle.dto.ts";
+import AddVehicleModal from "../components/AddVehicleModal.vue";
 
 let vehicles = ref<Vehicle[]>([]);
 
-const fetchVehicles = async () => {
-  const { data } = await api.get("/vehicles");
-  vehicles.value = data;
-};
+const addModal = ref<InstanceType<typeof AddVehicleModal> | null>(null);
 
-onMounted(() => {
-  fetchVehicles();
+onMounted(async () => {
+  vehicles.value = await vehicleService.getAll();
 });
+
 const onEdit = (vehicle: Vehicle) => {
   console.log("Edit vehicle", vehicle);
 };
 
+const onEditAccept = (id: string, vehicle: Vehicle) => {
+  vehicleService.update(id, vehicle).then((updatedVehicle) => {
+    const index = vehicles.value.findIndex((v) => v.id === id);
+    if (index !== -1) {
+      vehicles.value[index] = updatedVehicle;
+    }
+  });
+};
+
+const onCreate = () => {
+  addModal.value?.show();
+};
+
+const onCreateAccept = (createVehicleDto: CreateVehicleDto) => {
+  vehicleService.create(createVehicleDto).then((newVehicle) => {
+    vehicles.value.push(newVehicle);
+    addModal.value?.hide();
+  });
+};
+
 const onDelete = (id: string) => {
-  console.log("Delete vehicle with id", id);
+  vehicleService.delete(id).then(() => {
+    vehicles.value = vehicles.value.filter((v) => v.id !== id);
+  });
 };
 
 const onStats = (id: string) => {
@@ -56,8 +78,7 @@ const onStats = (id: string) => {
             <button
               class="btn btn-primary btn-sm"
               type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#addEntryModal"
+              @click="onCreate"
             >
               <i class="bi bi-funnel me-1"></i>Add new entry
             </button>
@@ -83,4 +104,5 @@ const onStats = (id: string) => {
       </div>
     </div>
   </div>
+  <AddVehicleModal ref="addModal" @submit="onCreateAccept" />
 </template>
