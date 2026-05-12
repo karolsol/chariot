@@ -8,6 +8,8 @@ import type { CreateVehicleDto } from "../../../../libs/shared/src/create-vehicl
 import AddVehicleModal from "../components/AddVehicleModal.vue";
 import EditVehicleModal from "../components/EditVehicleModal.vue";
 import type { UpdateVehicleDto } from "../../../../libs/shared/src/update-vehicle.dto.ts";
+import VehicleTypeSelector from "../components/VehicleTypeSelector.vue";
+import FuelTypeSelector from "../components/FuelTypeSelector.vue";
 
 let vehicles = ref<Vehicle[]>([]);
 
@@ -64,22 +66,10 @@ const onStats = (id: string) => {
         <h2>Your vehicles:</h2>
         <div class="row mb-4 align-items-end">
           <div class="col-md-3">
-            <label for="vehicleFilter" class="form-label">Type</label>
-            <select class="form-select form-select-sm" id="vehicleFilter">
-              <option value="all" selected>All</option>
-              <option value="0">Car</option>
-              <option value="1">Motorcycle</option>
-            </select>
+            <VehicleTypeSelector ref="vehicleTypeSelector" />
           </div>
           <div class="col-md-3">
-            <label for="fuelTypeFilter" class="form-label">Fuel type</label>
-            <select class="form-select form-select-sm" id="fuelTypeFilter">
-              <option value="all" selected>All</option>
-              <option value="0">Gasoline</option>
-              <option value="1">Diesel</option>
-              <option value="2">Electric</option>
-              <option value="3">Hybrid</option>
-            </select>
+            <FuelTypeSelector ref="fuelTypeSelector" />
           </div>
           <div class="col-md-6 d-flex justify-content-end">
             <button
