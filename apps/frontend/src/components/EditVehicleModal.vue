@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { onMounted, type PropType, ref, watch } from "vue";
 import { Modal } from "bootstrap";
 import { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
@@ -63,7 +64,8 @@ watch(
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            <i class="bi bi-pencil-square text-success me-2"></i>Edit Entry
+            <Icon icon="bi:pencil-square" class="me-2" />
+            Edit Entry
           </h5>
           <button
             type="button"
@@ -87,7 +89,8 @@ watch(
             class="btn btn-success btn-sm"
             @click="handleSubmit"
           >
-            <i class="bi bi-check-circle me-1"></i>Apply
+            <Icon icon="bi:check-circle" class="me-1" />
+            Apply
           </button>
         </div>
       </div>

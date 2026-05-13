@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { onMounted, ref } from "vue";
 import type { CreateVehicleDto } from "../../../../libs/shared/src/create-vehicle.dto.ts";
 import { Modal } from "bootstrap";
@@ -14,7 +15,7 @@ const form = ref<CreateVehicleDto>({} as CreateVehicleDto);
 const modalRef = ref<HTMLDivElement | null>(null);
 
 const hide = () => {
-  console.log("HIDE")
+  console.log("HIDE");
   Modal.getInstance(modalRef.value!)?.hide();
 };
 
@@ -39,7 +40,8 @@ onMounted(() => {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addEntryLabel">
-            <i class="bi bi-plus-circle text-success me-2"></i>Add New Entry
+            <Icon icon="bi:plus-circle" class="me-2" />
+            Add New Entry
           </h5>
           <button
             type="button"
@@ -152,7 +154,8 @@ onMounted(() => {
             class="btn btn-success btn-sm"
             @click="handleSubmit"
           >
-            <i class="bi bi-check-circle me-1"></i>Add Entry
+            <Icon icon="bi:check-circle" class="me-1" />
+            Add Entry
           </button>
         </div>
       </div>
