@@ -6,37 +6,7 @@ const form = defineModel<Partial<Vehicle>>({ required: true });
 </script>
 
 <template>
-  <div class="row">
-    <div class="col-md-6 mb-3">
-      <label for="fuelType" class="form-label">Fuel type</label>
-      <select
-        id="fuelType"
-        class="form-select form-select-sm"
-        v-model.number="form.fuelType"
-        required
-      >
-        <option value="" hidden>Select fuel type</option>
-        <option value="0">Gasoline</option>
-        <option value="1">Diesel</option>
-        <option value="2">Electric</option>
-        <option value="3">Hybrid</option>
-      </select>
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="vehicleType" class="form-label">Vehicle type</label>
-      <select
-        id="vehicleType"
-        class="form-select form-select-sm"
-        v-model.number="form.vehicleType"
-        required
-      >
-        <option value="" hidden>Select vehicle type</option>
-        <option value="0">Car</option>
-        <option value="1">Motorcycle</option>
-      </select>
-    </div>
-  </div>
-  <div class="row">
+    <div class="row">
     <div class="col-md-6 mb-3">
       <label for="make" class="form-label">Make</label>
       <input
@@ -78,6 +48,36 @@ const form = defineModel<Partial<Vehicle>>({ required: true });
         v-model="form.initialMileage"
         required
       />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="fuelType" class="form-label">Fuel type</label>
+      <select
+        id="fuelType"
+        class="form-select form-select-sm"
+        v-model.number="form.fuelType"
+        required
+      >
+        <option value="" hidden>Select fuel type</option>
+        <option value="0">Gasoline</option>
+        <option value="1">Diesel</option>
+        <option value="2">Electric</option>
+        <option value="3">Hybrid</option>
+      </select>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="vehicleType" class="form-label">Vehicle type</label>
+      <select
+        id="vehicleType"
+        class="form-select form-select-sm"
+        v-model.number="form.vehicleType"
+        required
+      >
+        <option value="" hidden>Select vehicle type</option>
+        <option value="0">Car</option>
+        <option value="1">Motorcycle</option>
+      </select>
     </div>
   </div>
   <div class="mb-3">
