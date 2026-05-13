@@ -49,7 +49,7 @@ watch(
   (editedVehicle) => {
     if (editedVehicle) {
       editedId.value = editedVehicle.id;
-      const { id, created_at, updated_at, userId, ...cleanVehicle } =
+      const { id, created_at, updated_at, userId, user, ...cleanVehicle } =
         editedVehicle;
       form.value = { ...(cleanVehicle as UpdateVehicleDto) };
     }
