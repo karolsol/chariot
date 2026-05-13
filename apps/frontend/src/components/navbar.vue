@@ -40,13 +40,20 @@ const handleLogout = () => {
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <router-link to="/vehicles" class="nav-link">Vehicles</router-link>
+            <router-link to="/vehicles" class="nav-link" active-class="active"
+              >Vehicles</router-link
+            >
           </li>
           <li class="nav-item">
-            <router-link to="/refuels" class="nav-link">Refuels</router-link>
+            <router-link to="/refuels" class="nav-link" active-class="active"
+              >Refuels</router-link
+            >
           </li>
           <li class="nav-item">
-            <router-link to="/maintenance" class="nav-link"
+            <router-link
+              to="/maintenance"
+              class="nav-link"
+              active-class="active"
               >Maintenance</router-link
             >
           </li>
