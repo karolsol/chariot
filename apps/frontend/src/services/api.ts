@@ -16,6 +16,10 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     const userStore = useUserStore();
     const originalRequest = error.config as CustomAxiosRequestConfig;
+    const url = originalRequest?.url ?? "";
+    if (url.includes("/auth/info")) {
+      return Promise.reject(error);
+    }
     if (
       error.response?.status === 401 &&
       originalRequest &&

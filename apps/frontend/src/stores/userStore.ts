@@ -3,7 +3,6 @@ import { ref } from "vue";
 import type { User } from "../../../chariot/src/user/user.entity.ts";
 import api from "../services/api.ts";
 import router from "../router";
-import axios from "axios";
 
 export const useUserStore = defineStore("user", () => {
   const user = ref<User | null>(null);
@@ -11,7 +10,7 @@ export const useUserStore = defineStore("user", () => {
 
   async function fetchInfo(): Promise<void> {
     try {
-      const { data } = await axios.get<User>("/api/auth/info", {
+      const { data } = await api.get<User>("/api/auth/info", {
         withCredentials: true,
       });
       user.value = data;
