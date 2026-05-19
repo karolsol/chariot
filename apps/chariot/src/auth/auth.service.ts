@@ -24,11 +24,14 @@ export class AuthService {
     pass: string,
   ): Promise<Partial<User> | null> {
     const user = await this.usersService.findOneByUsername(username);
-    if (
-      user &&
-      (await this.passwordHashingService.comparePassword(pass, user.password))
-    ) {
-      return user;
+    if (user && user.password) {
+      if (
+        await this.passwordHashingService.comparePassword(pass, user.password)
+      ) {
+        return user;
+      }
+    } else {
+      await this.passwordHashingService.comparePassword(pass, "A");
     }
     return null;
   }
