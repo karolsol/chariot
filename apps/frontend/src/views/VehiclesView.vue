@@ -10,13 +10,17 @@ import EditVehicleModal from "../components/EditVehicleModal.vue";
 import type { UpdateVehicleDto } from "../../../../libs/shared/src/update-vehicle.dto.ts";
 import VehicleTypeSelector from "../components/VehicleTypeSelector.vue";
 import FuelTypeSelector from "../components/FuelTypeSelector.vue";
+import StatsVehicleModal from "../components/StatsVehicleModal.vue";
+import type { VehicleStatsDto } from "../../../../libs/shared/src/vehicle-stats.dto.ts";
 
 let vehicles = ref<Vehicle[]>([]);
 
 let editedVehicle = ref<Vehicle>({} as Vehicle);
+let statusOfVehicle = ref<VehicleStatsDto>({} as VehicleStatsDto);
 
 const addModal = ref<InstanceType<typeof AddVehicleModal> | null>(null);
 const editModal = ref<InstanceType<typeof EditVehicleModal> | null>(null);
+const statsModal = ref<InstanceType<typeof StatsVehicleModal> | null>(null);
 
 onMounted(async () => {
   vehicles.value = await vehicleService.getAll();
@@ -55,7 +59,11 @@ const onDelete = (id: string) => {
 };
 
 const onStats = (id: string) => {
-  console.log("Show stats for vehicle with id", id);
+  vehicleService.stats(id).then((stats) => {
+    statusOfVehicle.value = stats;
+    console.log(stats);
+    statsModal.value?.show();
+  });
 };
 </script>
 
@@ -107,4 +115,5 @@ const onStats = (id: string) => {
     @submit="onEditAccept"
     :vehicle="editedVehicle"
   />
+  <StatsVehicleModal :stats="statusOfVehicle" ref="statsModal" />
 </template>

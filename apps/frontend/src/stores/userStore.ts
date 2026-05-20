@@ -10,7 +10,7 @@ export const useUserStore = defineStore("user", () => {
 
   async function fetchInfo(): Promise<void> {
     try {
-      const { data } = await api.get<User>("/api/auth/info", {
+      const { data } = await api.get<User>("/auth/info", {
         withCredentials: true,
       });
       user.value = data;
