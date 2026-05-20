@@ -87,9 +87,7 @@ export class AuthService {
       expiresIn: jwtConstants.refreshExpiresIn,
     });
 
-    const expiresAt = new Date(
-      Date.now() + jwtConstants.refreshExpiresIn * 1000,
-    );
+    const expiresAt = new Date(Date.now() + jwtConstants.refreshExpiresIn);
 
     const refreshTokenEntity = this.refreshTokenRepository.create({
       userId: user.id,
