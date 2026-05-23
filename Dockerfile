@@ -13,9 +13,9 @@ RUN pnpm run build:all
 FROM node:25.9.0-slim AS runner
 WORKDIR /app
 
-COPY --from=build /app/package.json ./
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/dist ./dist
+COPY --from=build --chown=node:node /app/package.json ./
+COPY --from=build --chown=node:node /app/node_modules ./node_modules
+COPY --from=build --chown=node:node /app/dist ./dist
 
 USER node
 

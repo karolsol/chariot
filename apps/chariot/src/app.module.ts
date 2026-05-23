@@ -10,20 +10,22 @@ import { CaslModule } from "./casl/casl.module";
 import { VehicleModule } from "./vehicle/vehicle.module";
 import { RefuelModule } from "./refuel/refuel.module";
 import { MaintenanceModule } from "./maintenance/maintenance.module";
-import { dataSourceOptions } from "./config/data-source";
+import { createDataSourceOptions } from "./config/data-source";
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "..", "..", "..", "/dist/apps/frontend"),
     }),
-    TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
     AuthModule,
     CaslModule,
     VehicleModule,
     RefuelModule,
     MaintenanceModule,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => createDataSourceOptions(),
+    }),
   ],
   providers: [
     {
