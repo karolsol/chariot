@@ -12,22 +12,25 @@ import VehicleTypeSelector from "../components/VehicleTypeSelector.vue";
 import FuelTypeSelector from "../components/FuelTypeSelector.vue";
 import StatsVehicleModal from "../components/StatsVehicleModal.vue";
 import type { VehicleStatsDto } from "../../../../libs/shared/src/vehicle-stats.dto.ts";
+import ConfirmationPopup from "../components/ConfirmationPopup.vue";
 
 let vehicles = ref<Vehicle[]>([]);
 
-let editedVehicle = ref<Vehicle>({} as Vehicle);
+let selectedVehicle = ref<Vehicle>({} as Vehicle);
 let statusOfVehicle = ref<VehicleStatsDto>({} as VehicleStatsDto);
 
 const addModal = ref<InstanceType<typeof AddVehicleModal> | null>(null);
 const editModal = ref<InstanceType<typeof EditVehicleModal> | null>(null);
 const statsModal = ref<InstanceType<typeof StatsVehicleModal> | null>(null);
 
+const showDeleteConfirmation = ref(false);
+
 onMounted(async () => {
   vehicles.value = await vehicleService.getAll();
 });
 
 const onEdit = (vehicle: Vehicle) => {
-  editedVehicle.value = vehicle;
+  selectedVehicle.value = vehicle;
   editModal.value?.show();
 };
 
@@ -52,10 +55,17 @@ const onCreateAccept = (createVehicleDto: CreateVehicleDto) => {
   });
 };
 
-const onDelete = (id: string) => {
-  vehicleService.delete(id).then(() => {
-    vehicles.value = vehicles.value.filter((v) => v.id !== id);
+const onDeleteAccept = () => {
+  vehicleService.delete(selectedVehicle.value.id).then(() => {
+    vehicles.value = vehicles.value.filter(
+      (v) => v.id !== selectedVehicle.value.id,
+    );
   });
+};
+
+const onDelete = (id: string) => {
+  selectedVehicle.value = vehicles.value.find((v) => v.id === id) as Vehicle;
+  showDeleteConfirmation.value = true;
 };
 
 const onStats = (id: string) => {
@@ -113,7 +123,17 @@ const onStats = (id: string) => {
   <EditVehicleModal
     ref="editModal"
     @submit="onEditAccept"
-    :vehicle="editedVehicle"
+    :vehicle="selectedVehicle"
   />
   <StatsVehicleModal :stats="statusOfVehicle" ref="statsModal" />
+  <ConfirmationPopup
+    v-model="showDeleteConfirmation"
+    title="Delete vehicle?"
+    :message="`Are you sure you want to delete ${selectedVehicle?.make} ${selectedVehicle?.model} (${selectedVehicle?.registrationNumber})? That operation cannot be undone.`"
+    confirm-text="Yes, delete"
+    cancel-text="Cancel"
+    icon="mdi:car-off"
+    variant="danger"
+    @confirm="onDeleteAccept"
+  />
 </template>
