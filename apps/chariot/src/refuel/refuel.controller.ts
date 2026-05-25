@@ -9,7 +9,7 @@ import {
   Param,
   Post,
   Put,
-  Request,
+  Req,
 } from "@nestjs/common";
 import { RefuelService } from "./refuel.service";
 import { CreateRefuelDto } from "#shared/create-refuel.dto";
@@ -27,14 +27,14 @@ export class RefuelController {
   ) {}
 
   @Get()
-  findAll(@Request() req: RequestWithUser): Promise<Refuel[]> {
+  findAll(@Req() req: RequestWithUser): Promise<Refuel[]> {
     return this.refuelService.findAllForUser(req.user.id);
   }
 
   @Get(":id")
   async findOne(
     @Param("id") id: string,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<Refuel> {
     const refuel = await this.refuelService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
@@ -47,7 +47,7 @@ export class RefuelController {
   @Get("/vehicle/:vehicleId")
   async findAllForVehicle(
     @Param("vehicleId") vehicleId: string,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ) {
     return this.refuelService.findAllForVehicle(vehicleId, req.user.id);
   }
@@ -56,7 +56,7 @@ export class RefuelController {
   @HttpCode(HttpStatus.CREATED)
   create(
     @Body() createRefuelDto: CreateRefuelDto,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<Refuel> {
     return this.refuelService.create(req.user.id, createRefuelDto);
   }
@@ -66,7 +66,7 @@ export class RefuelController {
   async update(
     @Param("id") id: string,
     @Body() updateRefuelDto: UpdateRefuelDto,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<Refuel> {
     const refuel = await this.refuelService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
@@ -78,7 +78,7 @@ export class RefuelController {
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param("id") id: string, @Request() req: RequestWithUser) {
+  async remove(@Param("id") id: string, @Req() req: RequestWithUser) {
     const refuel = await this.refuelService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
     if (!refuel || !ability.can(Action.Delete, refuel.Vehicle)) {

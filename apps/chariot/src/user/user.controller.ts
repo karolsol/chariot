@@ -10,7 +10,7 @@ import {
   Param,
   Post,
   Put,
-  Request,
+  Req,
 } from "@nestjs/common";
 import { User } from "./user.entity";
 import { UserService } from "./user.service";
@@ -31,7 +31,7 @@ export class UserController {
   @Get(":id")
   async findOne(
     @Param("id") id: string,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<User | null> {
     const user = await this.userService.findOneById(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
@@ -51,7 +51,7 @@ export class UserController {
   async update(
     @Param("id") id: string,
     @Body() updateUserDto: UpdateUserDto,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<User> {
     const ability = this.caslAbilityFactory.createForUser(req.user);
     const updatedUser = await this.userService.findOneById(id);
@@ -68,7 +68,7 @@ export class UserController {
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param("id") id: string, @Request() req: RequestWithUser) {
+  async remove(@Param("id") id: string, @Req() req: RequestWithUser) {
     const ability = this.caslAbilityFactory.createForUser(req.user);
     const deletedUser = await this.userService.findOneById(id);
     if (!ability.can(Action.Delete, deletedUser)) {

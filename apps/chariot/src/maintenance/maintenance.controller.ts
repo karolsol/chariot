@@ -9,7 +9,7 @@ import {
   Param,
   Post,
   Put,
-  Request,
+  Req,
 } from "@nestjs/common";
 import { MaintenanceService } from "./maintenance.service";
 import { CreateMaintenanceDto } from "#shared/create-maintenance.dto";
@@ -29,14 +29,14 @@ export class MaintenanceController {
   ) {}
 
   @Get()
-  findAll(@Request() req: RequestWithUser): Promise<Maintenance[]> {
+  findAll(@Req() req: RequestWithUser): Promise<Maintenance[]> {
     return this.maintenanceService.findAllForUser(req.user.id);
   }
 
   @Get(":id")
   async findOne(
     @Param("id") id: string,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<Maintenance> {
     const maintenance = await this.maintenanceService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
@@ -49,7 +49,7 @@ export class MaintenanceController {
   @Get("/vehicle/:vehicleId")
   async findAllForVehicle(
     @Param("vehicleId") vehicleId: string,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ) {
     const vehicle = await this.vehicleService.findOne(vehicleId);
     const ability = this.caslAbilityFactory.createForUser(req.user);
@@ -63,7 +63,7 @@ export class MaintenanceController {
   @HttpCode(HttpStatus.CREATED)
   async create(
     @Body() createMaintenanceDto: CreateMaintenanceDto,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<Maintenance> {
     const vehicle = await this.vehicleService.findOne(
       createMaintenanceDto.vehicleId,
@@ -80,7 +80,7 @@ export class MaintenanceController {
   async update(
     @Param("id") id: string,
     @Body() updateMaintenanceDto: UpdateMaintenanceDto,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<Maintenance> {
     const maintenance = await this.maintenanceService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
@@ -92,7 +92,7 @@ export class MaintenanceController {
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param("id") id: string, @Request() req: RequestWithUser) {
+  async remove(@Param("id") id: string, @Req() req: RequestWithUser) {
     const maintenance = await this.maintenanceService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
     if (!maintenance || !ability.can(Action.Delete, maintenance)) {

@@ -9,7 +9,7 @@ import {
   Param,
   Post,
   Put,
-  Request,
+  Req,
 } from "@nestjs/common";
 import { VehicleService } from "./vehicle.service";
 import { CreateVehicleDto } from "#shared/create-vehicle.dto";
@@ -28,14 +28,14 @@ export class VehicleController {
   ) {}
 
   @Get()
-  findAll(@Request() req: RequestWithUser): Promise<Vehicle[]> {
+  findAll(@Req() req: RequestWithUser): Promise<Vehicle[]> {
     return this.vehicleService.findAllForUser(req.user.id);
   }
 
   @Get(":id")
   async findOne(
     @Param("id") id: string,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<Vehicle> {
     const vehicle = await this.vehicleService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
@@ -48,7 +48,7 @@ export class VehicleController {
   @Get("stats/:id")
   async getStats(
     @Param("id") id: string,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<VehicleStatsDto> {
     const vehicle = await this.vehicleService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
@@ -62,7 +62,7 @@ export class VehicleController {
   @HttpCode(HttpStatus.CREATED)
   create(
     @Body() createVehicleDto: CreateVehicleDto,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<Vehicle> {
     return this.vehicleService.create(req.user.id, createVehicleDto);
   }
@@ -72,7 +72,7 @@ export class VehicleController {
   async update(
     @Param("id") id: string,
     @Body() updateVehicleDto: UpdateVehicleDto,
-    @Request() req: RequestWithUser,
+    @Req() req: RequestWithUser,
   ): Promise<Vehicle> {
     const vehicle = await this.vehicleService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
@@ -84,7 +84,7 @@ export class VehicleController {
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param("id") id: string, @Request() req: RequestWithUser) {
+  async remove(@Param("id") id: string, @Req() req: RequestWithUser) {
     const vehicle = await this.vehicleService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
     if (!vehicle || !ability.can(Action.Delete, vehicle)) {
