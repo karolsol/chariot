@@ -12,9 +12,11 @@ import VehicleTypeSelector from "../components/VehicleTypeSelector.vue";
 import FuelTypeSelector from "../components/FuelTypeSelector.vue";
 import StatsVehicleModal from "../components/StatsVehicleModal.vue";
 import type { VehicleStatsDto } from "../../../../libs/shared/src/vehicle-stats.dto.ts";
-import ConfirmationPopup from "../components/ConfirmationPopup.vue";
+import { useModalStore } from "../stores/modalStore.ts";
 
 let vehicles = ref<Vehicle[]>([]);
+
+const modalStore = useModalStore();
 
 let selectedVehicle = ref<Vehicle>({} as Vehicle);
 let statusOfVehicle = ref<VehicleStatsDto>({} as VehicleStatsDto);
@@ -70,9 +72,13 @@ const onDelete = (id: string) => {
 
 const onStats = (id: string) => {
   vehicleService.stats(id).then((stats) => {
-    statusOfVehicle.value = stats;
     console.log(stats);
-    statsModal.value?.show();
+    modalStore.open(StatsVehicleModal, {
+      stats: stats,
+      icon: "oui:stats",
+      title: `Stats for selected vehicle`,
+      variant: "primary",
+    });
   });
 };
 </script>
@@ -119,21 +125,21 @@ const onStats = (id: string) => {
       </div>
     </div>
   </div>
-  <AddVehicleModal ref="addModal" @submit="onCreateAccept" />
-  <EditVehicleModal
-    ref="editModal"
-    @submit="onEditAccept"
-    :vehicle="selectedVehicle"
-  />
-  <StatsVehicleModal :stats="statusOfVehicle" ref="statsModal" />
-  <ConfirmationPopup
-    v-model="showDeleteConfirmation"
-    title="Delete vehicle?"
-    :message="`Are you sure you want to delete ${selectedVehicle?.make} ${selectedVehicle?.model} (${selectedVehicle?.registrationNumber})? That operation cannot be undone.`"
-    confirm-text="Yes, delete"
-    cancel-text="Cancel"
-    icon="mdi:car-off"
-    variant="danger"
-    @confirm="onDeleteAccept"
-  />
+  <!--  <AddVehicleModal ref="addModal" @submit="onCreateAccept" />-->
+  <!--  <EditVehicleModal-->
+  <!--    ref="editModal"-->
+  <!--    @submit="onEditAccept"-->
+  <!--    :vehicle="selectedVehicle"-->
+  <!--  />-->
+  <!--  &lt;!&ndash;  <StatsVehicleModal :stats="statusOfVehicle" ref="statsModal" />&ndash;&gt;-->
+  <!--  <ConfirmationPopup-->
+  <!--    v-model="showDeleteConfirmation"-->
+  <!--    title="Delete vehicle?"-->
+  <!--    :message="`Are you sure you want to delete ${selectedVehicle?.make} ${selectedVehicle?.model} (${selectedVehicle?.registrationNumber})? That operation cannot be undone.`"-->
+  <!--    confirm-text="Yes, delete"-->
+  <!--    cancel-text="Cancel"-->
+  <!--    icon="mdi:car-off"-->
+  <!--    variant="danger"-->
+  <!--    @confirm="onDeleteAccept"-->
+  <!--  />-->
 </template>
