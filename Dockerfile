@@ -3,8 +3,8 @@ RUN npm install -g corepack --force && corepack enable
 WORKDIR /app
 
 FROM base AS deps
-COPY package.json pnpm-lock.yaml .
-COPY apps/frontend/package.json apps/frontend/pnpm-lock.yaml ./apps/frontend/
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .
+COPY apps/frontend/package.json ./apps/frontend/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile \
      && cd apps/frontend && pnpm install --frozen-lockfile
 
@@ -15,7 +15,7 @@ COPY . .
 RUN pnpm run build:all
 
 FROM base AS prod-deps
-COPY package.json pnpm-lock.yaml .
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile --prod
