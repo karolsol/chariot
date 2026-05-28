@@ -1,0 +1,3 @@
+packages:
+  - 'apps/chariot'
+  - 'apps/frontend'
