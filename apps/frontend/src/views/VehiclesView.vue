@@ -11,21 +11,14 @@ import type { UpdateVehicleDto } from "../../../../libs/shared/src/update-vehicl
 import VehicleTypeSelector from "../components/VehicleTypeSelector.vue";
 import FuelTypeSelector from "../components/FuelTypeSelector.vue";
 import StatsVehicleModal from "../components/StatsVehicleModal.vue";
-import type { VehicleStatsDto } from "../../../../libs/shared/src/vehicle-stats.dto.ts";
 import { useModalStore } from "../stores/modalStore.ts";
+import ConfirmationPopup from "../components/ConfirmationPopup.vue";
 
 let vehicles = ref<Vehicle[]>([]);
 
 const modalStore = useModalStore();
 
 let selectedVehicle = ref<Vehicle>({} as Vehicle);
-let statusOfVehicle = ref<VehicleStatsDto>({} as VehicleStatsDto);
-
-const addModal = ref<InstanceType<typeof AddVehicleModal> | null>(null);
-const editModal = ref<InstanceType<typeof EditVehicleModal> | null>(null);
-const statsModal = ref<InstanceType<typeof StatsVehicleModal> | null>(null);
-
-const showDeleteConfirmation = ref(false);
 
 onMounted(async () => {
   vehicles.value = await vehicleService.getAll();
@@ -33,7 +26,15 @@ onMounted(async () => {
 
 const onEdit = (vehicle: Vehicle) => {
   selectedVehicle.value = vehicle;
-  editModal.value?.show();
+  modalStore.open(
+    EditVehicleModal,
+    {
+      vehicle: selectedVehicle.value,
+    },
+    {
+      submit: onEditAccept,
+    },
+  );
 };
 
 const onEditAccept = (id: string, vehicle: UpdateVehicleDto) => {
@@ -42,18 +43,24 @@ const onEditAccept = (id: string, vehicle: UpdateVehicleDto) => {
     if (index !== -1) {
       vehicles.value[index] = updatedVehicle;
     }
-    editModal.value?.hide();
+    modalStore.close();
   });
 };
 
 const onCreate = () => {
-  addModal.value?.show();
+  modalStore.open(
+    AddVehicleModal,
+    {},
+    {
+      submit: onCreateAccept,
+    },
+  );
 };
 
 const onCreateAccept = (createVehicleDto: CreateVehicleDto) => {
   vehicleService.create(createVehicleDto).then((newVehicle) => {
     vehicles.value.push(newVehicle);
-    addModal.value?.hide();
+    modalStore.close();
   });
 };
 
@@ -63,22 +70,33 @@ const onDeleteAccept = () => {
       (v) => v.id !== selectedVehicle.value.id,
     );
   });
+  modalStore.close();
 };
 
 const onDelete = (id: string) => {
   selectedVehicle.value = vehicles.value.find((v) => v.id === id) as Vehicle;
-  showDeleteConfirmation.value = true;
+  modalStore.open(ConfirmationPopup, {
+    title: "Delete vehicle",
+    message: `Are you sure you want to delete the ${selectedVehicle.value.make} ${selectedVehicle.value.model}? This action cannot be undone.`,
+    confirmText: "Delete",
+    cancelText: "Cancel",
+    icon: "bi:exclamation-triangle-fill",
+    variant: "danger",
+  }, {
+    submit: onDeleteAccept,
+  })
 };
 
 const onStats = (id: string) => {
   vehicleService.stats(id).then((stats) => {
     console.log(stats);
-    modalStore.open(StatsVehicleModal, {
-      stats: stats,
-      icon: "oui:stats",
-      title: `Stats for selected vehicle`,
-      variant: "primary",
-    });
+    modalStore.open(
+      StatsVehicleModal,
+      {
+        stats: stats,
+      },
+      {},
+    );
   });
 };
 </script>
@@ -125,21 +143,4 @@ const onStats = (id: string) => {
       </div>
     </div>
   </div>
-  <!--  <AddVehicleModal ref="addModal" @submit="onCreateAccept" />-->
-  <!--  <EditVehicleModal-->
-  <!--    ref="editModal"-->
-  <!--    @submit="onEditAccept"-->
-  <!--    :vehicle="selectedVehicle"-->
-  <!--  />-->
-  <!--  &lt;!&ndash;  <StatsVehicleModal :stats="statusOfVehicle" ref="statsModal" />&ndash;&gt;-->
-  <!--  <ConfirmationPopup-->
-  <!--    v-model="showDeleteConfirmation"-->
-  <!--    title="Delete vehicle?"-->
-  <!--    :message="`Are you sure you want to delete ${selectedVehicle?.make} ${selectedVehicle?.model} (${selectedVehicle?.registrationNumber})? That operation cannot be undone.`"-->
-  <!--    confirm-text="Yes, delete"-->
-  <!--    cancel-text="Cancel"-->
-  <!--    icon="mdi:car-off"-->
-  <!--    variant="danger"-->
-  <!--    @confirm="onDeleteAccept"-->
-  <!--  />-->
 </template>

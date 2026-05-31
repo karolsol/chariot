@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type PropType } from "vue";
 import type { VehicleStatsDto } from "../../../../libs/shared/src/vehicle-stats.dto.ts";
+import { Icon } from "@iconify/vue";
 
 defineProps({
   stats: {
@@ -19,6 +20,11 @@ const handleClose = () => {
 </script>
 
 <template>
+  <div class="modal-header">
+    <Icon icon="oui:stats" class="fs-4 me-3 text-primary" />
+    <h5 class="modal-title mb-0">Stats for selected vehicle</h5>
+    <button type="button" class="btn-close" @click="handleClose" />
+  </div>
   <div class="modal-body">
     <div class="row g-3">
       <div class="col-md-6">
@@ -84,7 +90,11 @@ const handleClose = () => {
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" @click="handleClose">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      @click="handleClose"
+    >
       Close
     </button>
   </div>

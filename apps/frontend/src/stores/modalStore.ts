@@ -4,24 +4,16 @@ import { ref, markRaw, type Component } from "vue";
 export const useModalStore = defineStore("modal", () => {
   const activeModal = ref<Component | null>(null);
   const modalProps = ref<Record<string, any>>({});
+  const modalFunctions = ref<Record<string, void>>({});
 
-  type Variant =
-    | "danger"
-    | "warning"
-    | "success"
-    | "info"
-    | "primary"
-    | "secondary";
-
-  type modalProps = {
-    title: string;
-    icon?: string;
-    variant: Variant;
-  } & Record<string, any>;
-
-  function open(component: Component, props: modalProps): void {
+  function open(
+    component: Component,
+    props: Record<string, any>,
+    functions: Record<string, any>,
+  ): void {
     activeModal.value = markRaw(component);
     modalProps.value = props;
+    modalFunctions.value = functions;
   }
 
   function close(): void {
@@ -29,5 +21,5 @@ export const useModalStore = defineStore("modal", () => {
     modalProps.value = {};
   }
 
-  return { activeModal, modalProps, open, close };
+  return { activeModal, modalProps, modalFunctions, open, close };
 });
