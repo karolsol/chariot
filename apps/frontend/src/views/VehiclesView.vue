@@ -5,14 +5,14 @@ import { onMounted, ref } from "vue";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
 import { vehicleService } from "../services/vehiclesService.ts";
 import type { CreateVehicleDto } from "../../../../libs/shared/src/create-vehicle.dto.ts";
-import AddVehicleModal from "../components/AddVehicleModal.vue";
-import EditVehicleModal from "../components/EditVehicleModal.vue";
+import AddVehicleModal from "../components/modals/AddVehicleModal.vue";
+import EditVehicleModal from "../components/modals/EditVehicleModal.vue";
 import type { UpdateVehicleDto } from "../../../../libs/shared/src/update-vehicle.dto.ts";
 import VehicleTypeSelector from "../components/VehicleTypeSelector.vue";
 import FuelTypeSelector from "../components/FuelTypeSelector.vue";
-import StatsVehicleModal from "../components/StatsVehicleModal.vue";
+import StatsVehicleModal from "../components/modals/StatsVehicleModal.vue";
 import { useModalStore } from "../stores/modalStore.ts";
-import ConfirmationPopup from "../components/ConfirmationPopup.vue";
+import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 
 let vehicles = ref<Vehicle[]>([]);
 

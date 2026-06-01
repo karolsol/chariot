@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
-import type { CreateVehicleDto } from "../../../../libs/shared/src/create-vehicle.dto.ts";
-import VehicleForm from "./VehicleForm.vue";
+import type { CreateVehicleDto } from "../../../../../libs/shared/src/create-vehicle.dto.ts";
+import VehicleForm from "../VehicleForm.vue";
 
 const emits = defineEmits<{
   (e: "close"): void;

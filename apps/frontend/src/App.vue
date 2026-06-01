@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Navbar from "./components/navbar.vue";
 import { useRoute } from "vue-router";
-import BaseModal from "./components/BaseModal.vue";
+import BaseModal from "./components/modals/BaseModal.vue";
 const route = useRoute();
 </script>
 <template>

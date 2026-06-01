@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type PropType } from "vue";
-import type { VehicleStatsDto } from "../../../../libs/shared/src/vehicle-stats.dto.ts";
+import type { VehicleStatsDto } from "../../../../../libs/shared/src/vehicle-stats.dto.ts";
 import { Icon } from "@iconify/vue";
 
 defineProps({

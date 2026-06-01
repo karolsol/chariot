@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { onMounted, type PropType, ref } from "vue";
-import { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
-import type { UpdateVehicleDto } from "../../../../libs/shared/src/update-vehicle.dto.ts";
-import VehicleForm from "./VehicleForm.vue";
+import { Vehicle } from "../../../../chariot/src/vehicle/vehicle.entity.ts";
+import type { UpdateVehicleDto } from "../../../../../libs/shared/src/update-vehicle.dto.ts";
+import VehicleForm from "../VehicleForm.vue";
 
 const emits = defineEmits<{
   (e: "close"): void;
