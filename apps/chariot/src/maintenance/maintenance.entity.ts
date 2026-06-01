@@ -48,7 +48,7 @@ export class Maintenance {
 
   @ManyToOne(() => User)
   @JoinColumn({ name: "userId" })
-  User!: User;
+  user!: User;
 
   @BeforeInsert()
   beforeInsert() {

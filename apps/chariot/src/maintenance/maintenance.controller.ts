@@ -72,7 +72,7 @@ export class MaintenanceController {
     if (!vehicle || !ability.can(Action.Create, vehicle)) {
       throw new NotFoundException("There is no such vehicle");
     }
-    return this.maintenanceService.create(createMaintenanceDto);
+    return this.maintenanceService.create(req.user.id, createMaintenanceDto);
   }
 
   @Put(":id")

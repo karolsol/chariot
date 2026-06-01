@@ -1,15 +1,28 @@
 meta {
   name: Create maintenance
   type: http
-  seq: 1
+  seq: 2
 }
 
-get {
-  url: http://localhost:3000
-  body: none
+post {
+  url: http://localhost:3000/api/maintenances
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "vehicleId": "019e208e-3b06-7507-806a-6dd438363138",
+    "title": "Oil change",
+    "description": "None",
+    "date": "2025-12-12",
+    "cost": 23.45,
+    "invoiceLink": "",
+    "mileage": 22222
+  }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

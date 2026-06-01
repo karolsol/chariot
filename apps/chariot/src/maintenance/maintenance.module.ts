@@ -5,11 +5,13 @@ import { MaintenanceController } from "./maintenance.controller";
 import { Maintenance } from "./maintenance.entity";
 import { VehicleModule } from "../vehicle/vehicle.module";
 import { CaslModule } from "../casl/casl.module";
+import { UserModule } from "../user/user.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Maintenance]),
     forwardRef(() => VehicleModule),
+    UserModule,
     CaslModule,
   ],
   controllers: [MaintenanceController],

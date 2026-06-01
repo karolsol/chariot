@@ -5,27 +5,26 @@ import { CreateMaintenanceDto } from "#shared/create-maintenance.dto";
 import { UpdateMaintenanceDto } from "#shared/update-maintenance.dto";
 import { Maintenance } from "./maintenance.entity";
 import { VehicleService } from "../vehicle/vehicle.service";
+import { UserService } from "../user/user.service";
 
 @Injectable()
 export class MaintenanceService {
   constructor(
     @InjectRepository(Maintenance)
     private maintenanceRepository: Repository<Maintenance>,
-    private readonly vehicleService: VehicleService,
+    private vehicleService: VehicleService,
+    private userService: UserService,
   ) {}
 
   async create(
+    userId: string,
     createMaintenanceDto: CreateMaintenanceDto,
   ): Promise<Maintenance> {
-    const vehicle = await this.vehicleService.findOne(
-      createMaintenanceDto.vehicleId,
-    );
-    if (!vehicle) {
-      throw new NotFoundException(`There is no such vehicle`);
-    }
-    return this.maintenanceRepository.save({
+    const newMaintenance = this.maintenanceRepository.create({
       ...createMaintenanceDto,
+      user: await this.userService.findOneById(userId),
     });
+    return this.maintenanceRepository.save(newMaintenance);
   }
 
   async findOne(id: string): Promise<Maintenance> {

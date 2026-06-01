@@ -26,17 +26,16 @@ const router = createRouter({
       path: "/dashboard",
       name: "dashboard",
       component: () => import("../views/DashboardView.vue"),
-      meta: {
-        hideNavbar: false,
-      },
     },
     {
       path: "/vehicles",
       name: "vehicles",
       component: () => import("../views/VehiclesView.vue"),
-      meta: {
-        hideNavbar: false,
-      },
+    },
+    {
+      path: "/maintenance",
+      name: "maintenance",
+      component: () => import("../views/MaintenancesView.vue"),
     },
   ],
 });

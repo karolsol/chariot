@@ -117,7 +117,7 @@ const onStats = (id: string) => {
               type="button"
               @click="onCreate"
             >
-              <i class="bi bi-funnel me-1"></i>Add new entry
+              Add new entry
             </button>
           </div>
         </div>
