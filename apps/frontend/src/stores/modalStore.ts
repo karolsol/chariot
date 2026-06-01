@@ -6,14 +6,15 @@ export const useModalStore = defineStore("modal", () => {
   const modalProps = ref<Record<string, any>>({});
   const modalFunctions = ref<Record<string, void>>({});
 
-  function open(
-    component: Component,
-    props: Record<string, any>,
-    functions: Record<string, any>,
-  ): void {
+  type modalPayload = {
+    props?: Record<string, any>;
+    functions?: Record<string, any>;
+  };
+
+  function open(component: Component, payload: modalPayload): void {
     activeModal.value = markRaw(component);
-    modalProps.value = props;
-    modalFunctions.value = functions;
+    modalProps.value = payload.props || {};
+    modalFunctions.value = payload.functions || {};
   }
 
   function close(): void {

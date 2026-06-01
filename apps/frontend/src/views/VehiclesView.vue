@@ -26,15 +26,14 @@ onMounted(async () => {
 
 const onEdit = (vehicle: Vehicle) => {
   selectedVehicle.value = vehicle;
-  modalStore.open(
-    EditVehicleModal,
-    {
+  modalStore.open(EditVehicleModal, {
+    props: {
       vehicle: selectedVehicle.value,
     },
-    {
+    functions: {
       submit: onEditAccept,
     },
-  );
+  });
 };
 
 const onEditAccept = (id: string, vehicle: UpdateVehicleDto) => {
@@ -48,13 +47,11 @@ const onEditAccept = (id: string, vehicle: UpdateVehicleDto) => {
 };
 
 const onCreate = () => {
-  modalStore.open(
-    AddVehicleModal,
-    {},
-    {
+  modalStore.open(AddVehicleModal, {
+    functions: {
       submit: onCreateAccept,
     },
-  );
+  });
 };
 
 const onCreateAccept = (createVehicleDto: CreateVehicleDto) => {
@@ -76,27 +73,28 @@ const onDeleteAccept = () => {
 const onDelete = (id: string) => {
   selectedVehicle.value = vehicles.value.find((v) => v.id === id) as Vehicle;
   modalStore.open(ConfirmationPopup, {
-    title: "Delete vehicle",
-    message: `Are you sure you want to delete the ${selectedVehicle.value.make} ${selectedVehicle.value.model}? This action cannot be undone.`,
-    confirmText: "Delete",
-    cancelText: "Cancel",
-    icon: "bi:exclamation-triangle-fill",
-    variant: "danger",
-  }, {
-    submit: onDeleteAccept,
-  })
+    props: {
+      title: "Delete vehicle",
+      message: `Are you sure you want to delete the ${selectedVehicle.value.make} ${selectedVehicle.value.model}? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      icon: "bi:exclamation-triangle-fill",
+      variant: "danger",
+    },
+    functions: {
+      submit: onDeleteAccept,
+    },
+  });
 };
 
 const onStats = (id: string) => {
   vehicleService.stats(id).then((stats) => {
     console.log(stats);
-    modalStore.open(
-      StatsVehicleModal,
-      {
+    modalStore.open(StatsVehicleModal, {
+      props: {
         stats: stats,
       },
-      {},
-    );
+    });
   });
 };
 </script>
