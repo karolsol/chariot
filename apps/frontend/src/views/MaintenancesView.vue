@@ -90,13 +90,15 @@ const onCreate = (): void => {
   });
 };
 
-const onCreateAccept = (maintenance: Partial<Maintenance>): void => {
-  maintenanceService
-    .create(omitEmptyFields(maintenance as any) as any)
-    .then((newMaintenance) => {
-      maintenances.value.push(newMaintenance);
-      modalStore.close();
-    });
+const onCreateAccept = async (maintenance: Partial<Maintenance>): Promise<void> => {
+  const newMaintenance = await maintenanceService.create(
+    omitEmptyFields(maintenance as any) as any,
+  );
+  newMaintenance.Vehicle = (await vehicleService.getById(
+    newMaintenance.vehicleId,
+  )) as Vehicle;
+  maintenances.value.push(newMaintenance);
+  modalStore.close();
 };
 </script>
 
