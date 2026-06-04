@@ -46,7 +46,7 @@ onMounted(() => {
 <template>
   <div class="modal-header">
     <Icon icon="bi:pencil-square" class="fs-4 me-3 text-primary" />
-    <h5 class="modal-title mb-0">Edit vehicle</h5>
+    <h5 class="modal-title mb-0">Edit maintenance</h5>
     <button type="button" class="btn-close" @click="handleClose" />
   </div>
   <div class="modal-body">
