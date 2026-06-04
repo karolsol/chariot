@@ -10,6 +10,8 @@ import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 import { useModalStore } from "../stores/modalStore.ts";
 import EditMaintenanceModal from "../components/modals/EditMaintenanceModal.vue";
 import type { UpdateMaintenanceDto } from "../../../../libs/shared/src/update-maintenance.dto.ts";
+import AddMaintenanceModal from "../components/modals/AddMaintenanceModal.vue";
+import { omitEmptyFields } from "../utils/omitEmptyFields.ts";
 
 const maintenances = ref<Maintenance[]>([]);
 const vehicles = ref<Vehicle[]>([]);
@@ -77,7 +79,25 @@ const onDeleteAccept = () => {
   modalStore.close();
 };
 
-const onCreate = (): void => {};
+const onCreate = (): void => {
+  modalStore.open(AddMaintenanceModal, {
+    props: {
+      vehicles: vehicles.value,
+    },
+    functions: {
+      submit: onCreateAccept,
+    },
+  });
+};
+
+const onCreateAccept = (maintenance: Partial<Maintenance>): void => {
+  maintenanceService
+    .create(omitEmptyFields(maintenance as any) as any)
+    .then((newMaintenance) => {
+      maintenances.value.push(newMaintenance);
+      modalStore.close();
+    });
+};
 </script>
 
 <template>

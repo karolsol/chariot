@@ -16,7 +16,8 @@ const formattedDate = computed({
     if (form.value.date) {
       return form.value.date.toISOString().split("T")[0];
     } else {
-      return new Date();
+      form.value.date! = new Date();
+      return new Date().toISOString().split("T")[0];
     }
   },
   set(newValue) {
