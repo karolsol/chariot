@@ -31,8 +31,9 @@ const handleClose = () => {
         <div class="card border-primary h-100">
           <div class="card-body text-center">
             <h6>Average Consumption</h6>
-            <h3 class="text-primary mb-1">
-              <span id="averageConsumption" class="me-1"></span>L/100km
+            <h3 class="text-primary mb-1">{{
+                stats.averageConsumption
+              }}l/100km
             </h3>
           </div>
         </div>
@@ -41,8 +42,9 @@ const handleClose = () => {
         <div class="card border-success h-100">
           <div class="card-body text-center">
             <h6>Min Consumption</h6>
-            <h3 class="text-success mb-1">
-              <span id="maxConsumption" class="me-1"></span>L/100km
+            <h3 class="text-success mb-1">{{
+                stats.maxConsumption
+              }}l/100km
             </h3>
           </div>
         </div>
@@ -51,8 +53,9 @@ const handleClose = () => {
         <div class="card border-danger-subtle h-100">
           <div class="card-body text-center">
             <h6>Max Consumption</h6>
-            <h3 class="text-danger mb-1">
-              <span id="minConsumption" class="me-1"></span>L/100km
+            <h3 class="text-danger mb-1">{{
+                  stats.minConsumption
+              }}l/100km
             </h3>
           </div>
         </div>
@@ -61,8 +64,9 @@ const handleClose = () => {
         <div class="card border-info h-100">
           <div class="card-body text-center">
             <h6>Total Fuel Used</h6>
-            <h3 class="text-info mb-1">
-              <span id="totalFuelUsed" class="me-1"></span>L
+            <h3 class="text-info mb-1">{{
+                stats.totalFuelUsed
+              }}l
             </h3>
           </div>
         </div>
@@ -71,8 +75,9 @@ const handleClose = () => {
         <div class="card border-secondary h-100">
           <div class="card-body text-center">
             <h6>Traveled Distance</h6>
-            <h3 class="text-secondary mb-1">
-              <span id="traveledDistance" class="me-1"></span>km
+            <h3 class="text-secondary mb-1">{{
+                  stats.traveledDistance
+              }}km
             </h3>
           </div>
         </div>
@@ -81,8 +86,9 @@ const handleClose = () => {
         <div class="card border-warning h-100">
           <div class="card-body text-center">
             <h6>Cost per km</h6>
-            <h3 class="text-warning mb-1">
-              <span id="costPerKm" class="me-1"></span>zł/km
+            <h3 class="text-warning mb-1">{{
+                  stats.costPerKm
+              }}zł/km
             </h3>
           </div>
         </div>
