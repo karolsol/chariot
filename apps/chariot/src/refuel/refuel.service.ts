@@ -18,15 +18,11 @@ export class RefuelService {
     userId: string,
     createRefuelDto: CreateRefuelDto,
   ): Promise<Refuel> {
-    const vehicle = await this.vehicleService.findOne(
-      createRefuelDto.vehicleId,
-    );
-    if (!vehicle || vehicle.userId !== userId) {
-      throw new NotFoundException(`There is no such vehicle`);
-    }
-    return this.refuelsRepository.save({
+    const newRefuel = this.refuelsRepository.create({
       ...createRefuelDto,
+      vehicle: await this.vehicleService.findOne(createRefuelDto.vehicleId),
     });
+    return this.refuelsRepository.save(newRefuel);
   }
 
   async findOne(id: string): Promise<Refuel> {

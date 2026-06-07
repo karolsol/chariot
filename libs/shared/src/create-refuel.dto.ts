@@ -11,7 +11,7 @@ import {
 import { FuelType } from "#shared/fuel-type.enum";
 
 export class CreateRefuelDto {
-  @IsInt()
+  @IsString()
   vehicleId!: string;
 
   @IsDateString()
