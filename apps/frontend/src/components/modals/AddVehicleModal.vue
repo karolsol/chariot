@@ -10,8 +10,13 @@ const emits = defineEmits<{
 }>();
 
 const form = ref<CreateVehicleDto>({} as CreateVehicleDto);
+const formRef = ref<InstanceType<typeof VehicleForm> | null>(null);
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
+  if (formRef.value) {
+    const isValid = await formRef.value.validateForm();
+    if (!isValid) return;
+  }
   emits("submit", { ...(form.value as CreateVehicleDto) });
 };
 
@@ -27,7 +32,7 @@ const handleClose = () => {
     <button type="button" class="btn-close" @click="handleClose" />
   </div>
   <div class="modal-body">
-    <VehicleForm v-model="form" />
+    <VehicleForm ref="formRef" v-model="form" />
   </div>
   <div class="modal-footer">
     <button

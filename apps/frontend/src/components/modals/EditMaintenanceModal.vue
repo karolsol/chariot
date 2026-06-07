@@ -24,8 +24,13 @@ const props = defineProps({
 const form = ref<Partial<Maintenance>>({} as Partial<Maintenance>);
 const vehicles = ref<Vehicle[]>([]);
 const editedId = ref<string>("");
+const formRef = ref<InstanceType<typeof MaintenanceForm> | null>(null);
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
+  if (formRef.value) {
+    const isValid = await formRef.value.validateForm();
+    if (!isValid) return;
+  }
   const { vehicleId, ...rest } = form.value;
   emits("submit", editedId.value, rest);
 };
@@ -50,7 +55,7 @@ onMounted(() => {
     <button type="button" class="btn-close" @click="handleClose" />
   </div>
   <div class="modal-body">
-    <MaintenanceForm v-model="form" :vehicles="vehicles" />
+    <MaintenanceForm ref="formRef" v-model="form" :vehicles="vehicles" :isEdit="true" />
   </div>
   <div class="modal-footer">
     <button

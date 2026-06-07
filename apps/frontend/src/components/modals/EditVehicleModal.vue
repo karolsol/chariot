@@ -19,8 +19,13 @@ const props = defineProps({
 
 const form = ref<UpdateVehicleDto>({} as UpdateVehicleDto);
 const editedId = ref<string>("");
+const formRef = ref<InstanceType<typeof VehicleForm> | null>(null);
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
+  if (formRef.value) {
+    const isValid = await formRef.value.validateForm();
+    if (!isValid) return;
+  }
   emits("submit", editedId.value, form.value);
 };
 
@@ -43,7 +48,7 @@ onMounted(() => {
     <button type="button" class="btn-close" @click="handleClose" />
   </div>
   <div class="modal-body">
-    <VehicleForm v-model="form" />
+    <VehicleForm ref="formRef" v-model="form" :isEdit="true" />
   </div>
   <div class="modal-footer">
     <button

@@ -1,19 +1,40 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { validate } from "class-validator";
+import { plainToInstance } from "class-transformer";
+import { CreateUserDto } from "../../../../libs/shared/src/create-user.dto.ts";
 
 const router = useRouter();
 
 const errorMessage = ref("");
+const errors = ref<Record<string, string>>({});
 const username = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 
 const handleRegister = async () => {
-  if (!username.value || !password.value) {
-    errorMessage.value = "Please enter both username and password";
-    return;
+  errors.value = {};
+  errorMessage.value = "";
+
+  const dtoInstance = plainToInstance(CreateUserDto, {
+    username: username.value,
+    password: password.value,
+  });
+
+  const validationErrors = await validate(dtoInstance);
+
+  if (validationErrors.length > 0) {
+    validationErrors.forEach((err) => {
+      if (err.property && err.constraints) {
+        errors.value[err.property] = Object.values(err.constraints)[0];
+      }
+    });
+    if (Object.keys(errors.value).length > 0) {
+      return;
+    }
   }
+
   if (password.value != confirmPassword.value) {
     errorMessage.value = "Passwords do not match";
     return;
@@ -57,20 +78,28 @@ const handleRegister = async () => {
                 <input
                   type="text"
                   class="form-control"
+                  :class="{ 'is-invalid': errors.username }"
                   id="username"
                   v-model="username"
                   required
                 />
+                <div class="invalid-feedback" v-if="errors.username">
+                  {{ errors.username }}
+                </div>
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input
                   type="password"
                   class="form-control"
+                  :class="{ 'is-invalid': errors.password }"
                   id="password"
                   v-model="password"
                   required
                 />
+                <div class="invalid-feedback" v-if="errors.password">
+                  {{ errors.password }}
+                </div>
               </div>
               <div class="mb-3">
                 <label for="confirmPassword" class="form-label"
