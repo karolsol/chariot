@@ -56,7 +56,7 @@ const onDelete = (id: String) => {
   modalStore.open(ConfirmationPopup, {
     props: {
       title: "Delete refuel",
-      message: `Are you sure you want to delete the ${selectedRefuel.value.Vehicle.make} ${selectedRefuel.value.Vehicle.model} from ${new Date(selectedRefuel.value.date).toLocaleDateString()}? This action cannot be undone.`,
+      message: `Are you sure you want to delete the ${selectedRefuel.value.vehicle.make} ${selectedRefuel.value.vehicle.model} from ${new Date(selectedRefuel.value.date).toLocaleDateString()}? This action cannot be undone.`,
       confirmText: "Delete",
       cancelText: "Cancel",
       icon: "bi:exclamation-triangle-fill",
@@ -88,13 +88,9 @@ const onCreate = (): void => {
   });
 };
 
-const onCreateAccept = async (
-  refuel: Partial<Refuel>,
-): Promise<void> => {
-  const newRefuel = await refuelService.create(
-    omitEmptyFields(refuel) as any,
-  );
-  newRefuel.Vehicle = (await vehicleService.getById(
+const onCreateAccept = async (refuel: Partial<Refuel>): Promise<void> => {
+  const newRefuel = await refuelService.create(omitEmptyFields(refuel) as any);
+  newRefuel.vehicle = (await vehicleService.getById(
     newRefuel.vehicleId,
   )) as Vehicle;
   refuels.value.push(newRefuel);

@@ -55,7 +55,7 @@ export class RefuelService {
   findAllForUser(userId: string): Promise<Refuel[]> {
     return this.refuelsRepository
       .createQueryBuilder("refuel")
-      .leftJoinAndSelect("refuel.Vehicle", "vehicle")
+      .leftJoinAndSelect("refuel.vehicle", "vehicle")
       .where("vehicle.userId = :userId", { userId })
       .getMany();
   }

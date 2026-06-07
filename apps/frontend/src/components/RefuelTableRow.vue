@@ -30,7 +30,7 @@ const getVehicleName = (vehicle: Vehicle) => {
 
 <template>
   <tr>
-    <td>{{ getVehicleName(refuel.Vehicle) }}</td>
+    <td>{{ getVehicleName(refuel.vehicle) }}</td>
     <td>{{ new Date(props.refuel.date).toLocaleDateString() }}</td>
     <td>{{ refuel.fuelPrice }}</td>
     <td>{{ refuel.fuelAmount }} km</td>
