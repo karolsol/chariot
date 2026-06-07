@@ -1,5 +1,5 @@
 import { FuelType } from "#shared/fuel-type.enum";
-import { IsDateString, IsNumber, IsOptional } from "class-validator";
+import { IsDateString, IsNumber, IsOptional, Min } from "class-validator";
 
 export class UpdateRefuelDto {
   @IsOptional()
@@ -7,9 +7,11 @@ export class UpdateRefuelDto {
   date?: string;
   @IsOptional()
   @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
   fuelAmount?: number;
   @IsOptional()
   @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
   fuelPrice?: number;
   @IsOptional()
   fuelType?: FuelType;
