@@ -38,7 +38,7 @@ export class Refuel {
     onUpdate: "RESTRICT",
   })
   @JoinColumn({ name: "vehicleId" })
-  Vehicle!: Vehicle;
+  vehicle!: Vehicle;
 
   @BeforeInsert()
   beforeInsert() {

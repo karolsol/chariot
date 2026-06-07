@@ -38,7 +38,7 @@ export class RefuelController {
   ): Promise<Refuel> {
     const refuel = await this.refuelService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
-    if (!refuel || !ability.can(Action.Read, refuel.Vehicle)) {
+    if (!refuel || !ability.can(Action.Read, refuel.vehicle)) {
       throw new NotFoundException("There is no such refuel");
     }
     return this.refuelService.findOne(id);
@@ -70,7 +70,7 @@ export class RefuelController {
   ): Promise<Refuel> {
     const refuel = await this.refuelService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
-    if (!refuel || !ability.can(Action.Update, refuel.Vehicle)) {
+    if (!refuel || !ability.can(Action.Update, refuel.vehicle)) {
       throw new NotFoundException("There is no such refuel");
     }
     return await this.refuelService.update(id, updateRefuelDto);
@@ -81,7 +81,7 @@ export class RefuelController {
   async remove(@Param("id") id: string, @Req() req: RequestWithUser) {
     const refuel = await this.refuelService.findOne(id);
     const ability = this.caslAbilityFactory.createForUser(req.user);
-    if (!refuel || !ability.can(Action.Delete, refuel.Vehicle)) {
+    if (!refuel || !ability.can(Action.Delete, refuel.vehicle)) {
       throw new NotFoundException("There is no such refuel");
     }
     return this.refuelService.remove(id);
