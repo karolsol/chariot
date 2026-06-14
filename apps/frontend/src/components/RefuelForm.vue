@@ -4,8 +4,8 @@ import { computed, type PropType, ref } from "vue";
 import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import { validate } from "class-validator";
 import { plainToInstance } from "class-transformer";
-import { CreateRefuelDto } from "../../../../libs/shared/src/create-refuel.dto.ts";
-import { UpdateRefuelDto } from "../../../../libs/shared/src/update-refuel.dto.ts";
+import { CreateRefuelDto } from "@chariot/shared";
+import { UpdateRefuelDto } from "@chariot/shared";
 
 const form = defineModel<Partial<Refuel>>({ required: true });
 const props = defineProps({

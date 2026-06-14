@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
-import type { CreateVehicleDto } from "../../../../../libs/shared/src/create-vehicle.dto.ts";
+import type { CreateVehicleDto } from "@chariot/shared";
 import VehicleForm from "../VehicleForm.vue";
 
 const emits = defineEmits<{

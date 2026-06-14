@@ -8,7 +8,7 @@ import {
   IsUrl,
   Min,
 } from "class-validator";
-import { FuelType } from "#shared/fuel-type.enum";
+import { FuelType } from "./fuel-type.enum.js";
 
 export class CreateRefuelDto {
   @IsString()

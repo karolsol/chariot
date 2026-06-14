@@ -1,7 +1,7 @@
 import api from "./api.ts";
 import type { Maintenance } from "../../../chariot/src/maintenance/maintenance.entity.ts";
-import type { CreateMaintenanceDto } from "../../../../libs/shared/src/create-maintenance.dto.ts";
-import type { UpdateMaintenanceDto } from "../../../../libs/shared/src/update-maintenance.dto.ts";
+import type { CreateMaintenanceDto } from "@chariot/shared";
+import type { UpdateMaintenanceDto } from "@chariot/shared";
 
 export const maintenanceService = {
   getAll: async (): Promise<Maintenance[]> => {

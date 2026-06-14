@@ -11,7 +11,7 @@ import { refuelService } from "../services/refuelService.ts";
 import RefuelTableRow from "../components/RefuelTableRow.vue";
 import AddRefuelModal from "../components/modals/AddRefuelModal.vue";
 import EditRefuelModal from "../components/modals/EditRefuelModal.vue";
-import type { UpdateRefuelDto } from "../../../../libs/shared/src/update-refuel.dto.ts";
+import type { UpdateRefuelDto } from "@chariot/shared";
 
 const refuels = ref<Refuel[]>([]);
 const vehicles = ref<Vehicle[]>([]);

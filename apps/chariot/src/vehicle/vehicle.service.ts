@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateVehicleDto } from "#shared/create-vehicle.dto";
-import { UpdateVehicleDto } from "#shared/update-vehicle.dto";
+import { CreateVehicleDto } from "@chariot/shared";
+import { UpdateVehicleDto } from "@chariot/shared";
 import { Vehicle } from "./vehicle.entity";
 import { UserService } from "../user/user.service";
-import { VehicleStatsDto } from "#shared/vehicle-stats.dto";
+import { VehicleStatsDto } from "@chariot/shared";
 import { Refuel } from "../refuel/refuel.entity";
 
 @Injectable()

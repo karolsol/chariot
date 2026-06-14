@@ -2,7 +2,7 @@
 import { Icon } from "@iconify/vue";
 import { onMounted, type PropType, ref } from "vue";
 import { Vehicle } from "../../../../chariot/src/vehicle/vehicle.entity.ts";
-import type { UpdateVehicleDto } from "../../../../../libs/shared/src/update-vehicle.dto.ts";
+import type { UpdateVehicleDto } from "@chariot/shared";
 import VehicleForm from "../VehicleForm.vue";
 
 const emits = defineEmits<{

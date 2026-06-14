@@ -4,16 +4,9 @@
     "isolatedDeclarations": false,
     "declaration": false,
     "types": ["node"],
-    "rootDir": "../..",
-    "rootDirs": [
-      "./src",
-      "../../libs/shared/src"
-    ],
-    "outDir": "../../dist/apps/chariot"
+    "rootDir": ".",
+    "outDir": "./dist"
   },
-  "references": [
-    { "path": "../../libs/shared" }
-  ],
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }

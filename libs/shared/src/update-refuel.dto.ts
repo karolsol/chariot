@@ -1,4 +1,4 @@
-import { FuelType } from "#shared/fuel-type.enum";
+import { FuelType } from "./fuel-type.enum.js";
 import { IsDateString, IsNumber, IsOptional, Min } from "class-validator";
 
 export class UpdateRefuelDto {

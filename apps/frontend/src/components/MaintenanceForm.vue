@@ -4,8 +4,8 @@ import { computed, type PropType, ref } from "vue";
 import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import { validate } from "class-validator";
 import { plainToInstance } from "class-transformer";
-import { CreateMaintenanceDto } from "../../../../libs/shared/src/create-maintenance.dto.ts";
-import { UpdateMaintenanceDto } from "../../../../libs/shared/src/update-maintenance.dto.ts";
+import { CreateMaintenanceDto } from "@chariot/shared";
+import { UpdateMaintenanceDto } from "@chariot/shared";
 
 const form = defineModel<Partial<Maintenance>>({ required: true });
 const props = defineProps({

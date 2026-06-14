@@ -12,13 +12,13 @@ import {
   Req,
 } from "@nestjs/common";
 import { VehicleService } from "./vehicle.service";
-import { CreateVehicleDto } from "#shared/create-vehicle.dto";
-import { UpdateVehicleDto } from "#shared/update-vehicle.dto";
+import { CreateVehicleDto } from "@chariot/shared";
+import { UpdateVehicleDto } from "@chariot/shared";
 import { Vehicle } from "./vehicle.entity";
 import type { RequestWithUser } from "../common/request-with-user.interface";
 import { CaslAbilityFactory } from "../casl/casl-ability.factory";
 import { Action } from "../casl/casl-action.enum";
-import { VehicleStatsDto } from "#shared/vehicle-stats.dto";
+import { VehicleStatsDto } from "@chariot/shared";
 
 @Controller("api/vehicles")
 export class VehicleController {

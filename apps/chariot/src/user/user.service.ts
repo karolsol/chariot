@@ -6,8 +6,8 @@ import {
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./user.entity";
-import { CreateUserDto } from "#shared/create-user.dto";
-import { UpdateUserDto } from "#shared/update-user.dto";
+import { CreateUserDto } from "@chariot/shared";
+import { UpdateUserDto } from "@chariot/shared";
 import { PasswordHashingService } from "../common/password-hashing.service";
 
 @Injectable()

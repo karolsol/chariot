@@ -8,8 +8,8 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { VehicleType } from "#shared/vehicle-type.enum";
-import { FuelType } from "#shared/fuel-type.enum";
+import { VehicleType } from "@chariot/shared";
+import { FuelType } from "@chariot/shared";
 import { User } from "../user/user.entity";
 import { v7 as uuidv7 } from "uuid";
 

@@ -1,8 +1,8 @@
 import api from "./api.ts";
 import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
-import type { UpdateVehicleDto } from "../../../../libs/shared/src/update-vehicle.dto.ts";
-import type { CreateVehicleDto } from "../../../../libs/shared/src/create-vehicle.dto.ts";
-import type { VehicleStatsDto } from "../../../../libs/shared/src/vehicle-stats.dto.ts";
+import type { UpdateVehicleDto } from "@chariot/shared";
+import type { CreateVehicleDto } from "@chariot/shared";
+import type { VehicleStatsDto } from "@chariot/shared";
 
 export const vehicleService = {
   getAll: async (): Promise<Vehicle[]> => {

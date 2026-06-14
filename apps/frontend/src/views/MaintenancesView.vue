@@ -9,7 +9,7 @@ import { vehicleService } from "../services/vehiclesService.ts";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 import { useModalStore } from "../stores/modalStore.ts";
 import EditMaintenanceModal from "../components/modals/EditMaintenanceModal.vue";
-import type { UpdateMaintenanceDto } from "../../../../libs/shared/src/update-maintenance.dto.ts";
+import type { UpdateMaintenanceDto } from "@chariot/shared";
 import AddMaintenanceModal from "../components/modals/AddMaintenanceModal.vue";
 import { omitEmptyFields } from "../utils/omitEmptyFields.ts";
 

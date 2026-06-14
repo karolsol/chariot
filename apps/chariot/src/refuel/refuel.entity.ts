@@ -6,7 +6,7 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from "typeorm";
-import { FuelType } from "#shared/fuel-type.enum";
+import { FuelType } from "@chariot/shared";
 import { Vehicle } from "../vehicle/vehicle.entity";
 import { IsNumber } from "class-validator";
 import { v7 as uuidv7 } from "uuid";

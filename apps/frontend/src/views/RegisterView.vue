@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { validate } from "class-validator";
 import { plainToInstance } from "class-transformer";
-import { CreateUserDto } from "../../../../libs/shared/src/create-user.dto.ts";
+import { CreateUserDto } from "@chariot/shared";
 
 const router = useRouter();
 
