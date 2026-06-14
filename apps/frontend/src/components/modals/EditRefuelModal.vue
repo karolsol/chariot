@@ -2,27 +2,26 @@
 import { Icon } from "@iconify/vue";
 import RefuelForm from "../RefuelForm.vue";
 import { onMounted, type PropType, ref } from "vue";
-import { Vehicle } from "../../../../chariot/src/vehicle/vehicle.entity.ts";
-import type { Refuel } from "../../../../chariot/src/refuel/refuel.entity.ts";
+import type { IRefuel, IVehicle } from "@chariot/shared";
 
 const emits = defineEmits<{
   (e: "close"): void;
-  (e: "submit", id: string, refuel: Partial<Refuel>): void;
+  (e: "submit", id: string, refuel: Partial<IRefuel>): void;
 }>();
 
 const props = defineProps({
   refuel: {
-    type: Object as PropType<Refuel>,
+    type: Object as PropType<IRefuel>,
     required: true,
   },
   vehicles: {
-    type: Array as PropType<Vehicle[]>,
+    type: Array as PropType<IVehicle[]>,
     required: true,
   },
 });
 
-const form = ref<Partial<Refuel>>({} as Partial<Refuel>);
-const vehicles = ref<Vehicle[]>([]);
+const form = ref<Partial<IRefuel>>({} as Partial<IRefuel>);
+const vehicles = ref<IVehicle[]>([]);
 const editedId = ref<string>("");
 const formRef = ref<InstanceType<typeof RefuelForm> | null>(null);
 
@@ -40,8 +39,7 @@ const handleClose = () => {
 };
 
 onMounted(() => {
-  const { id, Vehicle, date, ...cleanMaintenance } =
-    props.refuel;
+  const { id, vehicle, date, ...cleanMaintenance } = props.refuel;
   form.value = { ...cleanMaintenance, date: new Date(date) };
   editedId.value = id;
   vehicles.value = props.vehicles;
@@ -55,7 +53,12 @@ onMounted(() => {
     <button type="button" class="btn-close" @click="handleClose" />
   </div>
   <div class="modal-body">
-    <RefuelForm ref="formRef" v-model="form" :vehicles="vehicles" :isEdit="true" />
+    <RefuelForm
+      ref="formRef"
+      v-model="form"
+      :vehicles="vehicles"
+      :isEdit="true"
+    />
   </div>
   <div class="modal-footer">
     <button

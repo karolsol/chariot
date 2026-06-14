@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
-import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
-import type { Refuel } from "../../../chariot/src/refuel/refuel.entity.ts";
+import type { IRefuel, IVehicle } from "@chariot/shared";
 
 const props = defineProps({
   refuel: {
-    type: Object as PropType<Refuel>,
+    type: Object as PropType<IRefuel>,
     required: true,
   },
 });
@@ -23,7 +22,7 @@ const onDelete = (): void => {
   emits("delete", props.refuel.id);
 };
 
-const getVehicleName = (vehicle: Vehicle) => {
+const getVehicleName = (vehicle: IVehicle) => {
   return `${vehicle.make} ${vehicle.model}`;
 };
 </script>

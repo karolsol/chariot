@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import type { InternalAxiosRequestConfig, AxiosResponse } from "axios";
-import { useUserStore } from "../stores/userStore.ts";
+import { useUserStore } from "../stores/userStore";
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;

@@ -1,29 +1,34 @@
 import api from "./api.ts";
-import type { Maintenance } from "../../../chariot/src/maintenance/maintenance.entity.ts";
-import type { CreateMaintenanceDto } from "@chariot/shared";
-import type { UpdateMaintenanceDto } from "@chariot/shared";
+import type {
+  CreateMaintenanceDto,
+  IMaintenance,
+  UpdateMaintenanceDto,
+} from "@chariot/shared";
 
 export const maintenanceService = {
-  getAll: async (): Promise<Maintenance[]> => {
-    const { data } = await api.get<Maintenance[]>("/maintenances/");
+  getAll: async (): Promise<IMaintenance[]> => {
+    const { data } = await api.get<IMaintenance[]>("/maintenances/");
     return data;
   },
 
-  getById: async (id: string): Promise<Maintenance> => {
-    const { data } = await api.get<Maintenance>(`/maintenances/${id}`);
+  getById: async (id: string): Promise<IMaintenance> => {
+    const { data } = await api.get<IMaintenance>(`/maintenances/${id}`);
     return data;
   },
 
-  create: async (payload: CreateMaintenanceDto): Promise<Maintenance> => {
-    const { data } = await api.post<Maintenance>("/maintenances", payload);
+  create: async (payload: CreateMaintenanceDto): Promise<IMaintenance> => {
+    const { data } = await api.post<IMaintenance>("/maintenances", payload);
     return data;
   },
 
   update: async (
     id: string,
     payload: UpdateMaintenanceDto,
-  ): Promise<Maintenance> => {
-    const { data } = await api.put<Maintenance>(`/maintenances/${id}`, payload);
+  ): Promise<IMaintenance> => {
+    const { data } = await api.put<IMaintenance>(
+      `/maintenances/${id}`,
+      payload,
+    );
     return data;
   },
 

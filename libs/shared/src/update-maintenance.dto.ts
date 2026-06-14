@@ -9,24 +9,24 @@ import {
 export class UpdateMaintenanceDto {
   @IsOptional()
   @IsString()
-  title!: string;
+  title?: string;
 
   @IsOptional()
   @IsString()
-  description!: string;
+  description?: string;
 
   @IsOptional()
   @IsDateString()
-  date!: string;
+  date?: string;
 
   @IsOptional()
   @IsNumber({ maxDecimalPlaces: 2 })
-  cost!: number;
+  cost?: number;
 
   @IsOptional()
-  invoiceLink!: string;
+  invoiceLink?: string;
 
   @IsOptional()
   @IsInt()
-  mileage!: number;
+  mileage?: number;
 }

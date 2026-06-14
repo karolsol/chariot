@@ -1,24 +1,23 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { onMounted, type PropType, ref } from "vue";
-import { Vehicle } from "../../../../chariot/src/vehicle/vehicle.entity.ts";
 import MaintenanceForm from "../MaintenanceForm.vue";
-import type { Maintenance } from "../../../../chariot/src/maintenance/maintenance.entity.ts";
+import type { IMaintenance, IVehicle } from "@chariot/shared";
 
 const emits = defineEmits<{
   (e: "close"): void;
-  (e: "submit", maintenance: Partial<Maintenance>): void;
+  (e: "submit", maintenance: Partial<IMaintenance>): void;
 }>();
 
 const props = defineProps({
   vehicles: {
-    type: Array as PropType<Vehicle[]>,
+    type: Array as PropType<IVehicle[]>,
     required: true,
   },
 });
 
-const form = ref<Partial<Maintenance>>({} as Partial<Maintenance>);
-const vehicles = ref<Vehicle[]>([]);
+const form = ref<Partial<IMaintenance>>({} as Partial<IMaintenance>);
+const vehicles = ref<IVehicle[]>([]);
 const formRef = ref<InstanceType<typeof MaintenanceForm> | null>(null);
 
 const handleSubmit = async () => {

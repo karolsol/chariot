@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import VehicleCard from "../components/VehicleCard.vue";
 import { onMounted, ref } from "vue";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
 import { vehicleService } from "../services/vehiclesService.ts";
-import type { CreateVehicleDto } from "@chariot/shared";
+import type { CreateVehicleDto, IVehicle } from "@chariot/shared";
 import AddVehicleModal from "../components/modals/AddVehicleModal.vue";
 import EditVehicleModal from "../components/modals/EditVehicleModal.vue";
 import type { UpdateVehicleDto } from "@chariot/shared";
@@ -14,17 +13,17 @@ import StatsVehicleModal from "../components/modals/StatsVehicleModal.vue";
 import { useModalStore } from "../stores/modalStore.ts";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 
-let vehicles = ref<Vehicle[]>([]);
+let vehicles = ref<IVehicle[]>([]);
 
 const modalStore = useModalStore();
 
-let selectedVehicle = ref<Vehicle>({} as Vehicle);
+let selectedVehicle = ref<IVehicle>({} as IVehicle);
 
 onMounted(async () => {
   vehicles.value = await vehicleService.getAll();
 });
 
-const onEdit = (vehicle: Vehicle) => {
+const onEdit = (vehicle: IVehicle) => {
   selectedVehicle.value = vehicle;
   modalStore.open(EditVehicleModal, {
     props: {
@@ -71,7 +70,7 @@ const onDeleteAccept = () => {
 };
 
 const onDelete = (id: string) => {
-  selectedVehicle.value = vehicles.value.find((v) => v.id === id) as Vehicle;
+  selectedVehicle.value = vehicles.value.find((v) => v.id === id) as IVehicle;
   modalStore.open(ConfirmationPopup, {
     props: {
       title: "Delete vehicle",

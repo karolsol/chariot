@@ -1,26 +1,25 @@
 import api from "./api.ts";
-import type { Refuel } from "../../../chariot/src/refuel/refuel.entity.ts";
-import type { CreateRefuelDto } from "@chariot/shared";
+import type { CreateRefuelDto, IRefuel } from "@chariot/shared";
 import type { UpdateRefuelDto } from "@chariot/shared";
 
 export const refuelService = {
-  getAll: async (): Promise<Refuel[]> => {
-    const { data } = await api.get<Refuel[]>("/refuels");
+  getAll: async (): Promise<IRefuel[]> => {
+    const { data } = await api.get<IRefuel[]>("/refuels");
     return data;
   },
 
-  getById: async (id: string): Promise<Refuel> => {
-    const { data } = await api.get<Refuel>(`/refuels/${id}`);
+  getById: async (id: string): Promise<IRefuel> => {
+    const { data } = await api.get<IRefuel>(`/refuels/${id}`);
     return data;
   },
 
-  create: async (payload: CreateRefuelDto): Promise<Refuel> => {
-    const { data } = await api.post<Refuel>("/refuels", payload);
+  create: async (payload: CreateRefuelDto): Promise<IRefuel> => {
+    const { data } = await api.post<IRefuel>("/refuels", payload);
     return data;
   },
 
-  update: async (id: string, payload: UpdateRefuelDto): Promise<Refuel> => {
-    const { data } = await api.put<Refuel>(`/refuels/${id}`, payload);
+  update: async (id: string, payload: UpdateRefuelDto): Promise<IRefuel> => {
+    const { data } = await api.put<IRefuel>(`/refuels/${id}`, payload);
     return data;
   },
 

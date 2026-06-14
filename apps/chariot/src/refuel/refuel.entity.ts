@@ -6,13 +6,13 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from "typeorm";
-import { FuelType } from "@chariot/shared";
+import { FuelType, IRefuel } from "@chariot/shared";
 import { Vehicle } from "../vehicle/vehicle.entity";
 import { IsNumber } from "class-validator";
 import { v7 as uuidv7 } from "uuid";
 
 @Entity()
-export class Refuel {
+export class Refuel implements IRefuel {
   @PrimaryColumn("uuid")
   id!: string;
   @Column({ nullable: false })

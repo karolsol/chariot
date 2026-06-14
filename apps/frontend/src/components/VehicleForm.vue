@@ -1,13 +1,12 @@
 <script setup lang="ts">
 
-import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import { ref } from "vue";
 import { validate } from "class-validator";
 import { plainToInstance } from "class-transformer";
-import { CreateVehicleDto } from "@chariot/shared";
+import { CreateVehicleDto, type IVehicle } from "@chariot/shared";
 import { UpdateVehicleDto } from "@chariot/shared";
 
-const form = defineModel<Partial<Vehicle>>({ required: true });
+const form = defineModel<Partial<IVehicle>>({ required: true });
 
 const props = defineProps({
   isEdit: {

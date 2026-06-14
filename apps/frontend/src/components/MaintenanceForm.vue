@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import type { Maintenance } from "../../../chariot/src/maintenance/maintenance.entity.ts";
 import { computed, type PropType, ref } from "vue";
-import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import { validate } from "class-validator";
 import { plainToInstance } from "class-transformer";
-import { CreateMaintenanceDto } from "@chariot/shared";
+import {
+  CreateMaintenanceDto,
+  type IMaintenance,
+  type IVehicle,
+} from "@chariot/shared";
 import { UpdateMaintenanceDto } from "@chariot/shared";
 
-const form = defineModel<Partial<Maintenance>>({ required: true });
+const form = defineModel<Partial<IMaintenance>>({ required: true });
 const props = defineProps({
   vehicles: {
-    type: Array as PropType<Vehicle[]>,
+    type: Array as PropType<IVehicle[]>,
     required: true,
   },
   isEdit: {
@@ -52,7 +54,7 @@ defineExpose({ validateForm });
 
 const formattedDate = computed({
   get() {
-    if (form.value.date) {
+    if (form.value.date && form.value.date instanceof Date) {
       return form.value.date.toISOString().split("T")[0];
     } else {
       form.value.date! = new Date();
@@ -87,7 +89,9 @@ const formattedDate = computed({
           {{ vehicle.make }} {{ vehicle.model }}
         </option>
       </select>
-      <div class="invalid-feedback" v-if="errors.vehicleId">{{ errors.vehicleId }}</div>
+      <div class="invalid-feedback" v-if="errors.vehicleId">
+        {{ errors.vehicleId }}
+      </div>
     </div>
     <div class="col-md-6 mb-3">
       <label for="date" class="form-label">Date</label>
@@ -125,7 +129,9 @@ const formattedDate = computed({
         id="mileage"
         required
       />
-      <div class="invalid-feedback" v-if="errors.mileage">{{ errors.mileage }}</div>
+      <div class="invalid-feedback" v-if="errors.mileage">
+        {{ errors.mileage }}
+      </div>
     </div>
   </div>
   <div class="mb-3">
@@ -149,7 +155,9 @@ const formattedDate = computed({
       v-model="form.invoiceLink"
       id="invoiceLink"
     />
-    <div class="invalid-feedback" v-if="errors.invoiceLink">{{ errors.invoiceLink }}</div>
+    <div class="invalid-feedback" v-if="errors.invoiceLink">
+      {{ errors.invoiceLink }}
+    </div>
   </div>
   <div class="mb-3">
     <label for="description" class="form-label">Description</label>
@@ -160,6 +168,8 @@ const formattedDate = computed({
       v-model="form.description"
       id="description"
     ></textarea>
-    <div class="invalid-feedback" v-if="errors.description">{{ errors.description }}</div>
+    <div class="invalid-feedback" v-if="errors.description">
+      {{ errors.description }}
+    </div>
   </div>
 </template>

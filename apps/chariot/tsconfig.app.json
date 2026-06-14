@@ -4,8 +4,8 @@
     "isolatedDeclarations": false,
     "declaration": false,
     "types": ["node"],
-    "rootDir": ".",
-    "outDir": "./dist"
+    "rootDir": "src",
+    "outDir": "./dist",
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]

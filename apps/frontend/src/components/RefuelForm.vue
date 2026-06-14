@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import type { Refuel } from "../../../chariot/src/refuel/refuel.entity.ts";
 import { computed, type PropType, ref } from "vue";
-import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import { validate } from "class-validator";
 import { plainToInstance } from "class-transformer";
-import { CreateRefuelDto } from "@chariot/shared";
+import { CreateRefuelDto, type IRefuel, type IVehicle } from "@chariot/shared";
 import { UpdateRefuelDto } from "@chariot/shared";
 
-const form = defineModel<Partial<Refuel>>({ required: true });
+const form = defineModel<Partial<IRefuel>>({ required: true });
 const props = defineProps({
   vehicles: {
-    type: Array as PropType<Vehicle[]>,
+    type: Array as PropType<IVehicle[]>,
     required: true,
   },
   isEdit: {
@@ -25,11 +23,6 @@ const validateForm = async (): Promise<boolean> => {
   errors.value = {};
 
   const submitData = { ...form.value };
-  if (submitData.date instanceof Date) {
-    submitData.date = submitData.date.toISOString();
-  } else if (!submitData.date) {
-    submitData.date = new Date().toISOString();
-  }
 
   const dtoClass = props.isEdit ? UpdateRefuelDto : CreateRefuelDto;
   const dtoInstance = plainToInstance(dtoClass, submitData);
@@ -52,7 +45,7 @@ defineExpose({ validateForm });
 
 const formattedDate = computed({
   get() {
-    if (form.value.date) {
+    if (form.value.date && form.value.date instanceof Date) {
       return form.value.date.toISOString().split("T")[0];
     } else {
       form.value.date! = new Date();
@@ -71,7 +64,11 @@ const formattedDate = computed({
   <div class="row">
     <div class="col-md-6 mb-3">
       <label for="editEntryVehicle" class="form-label">Vehicle</label>
-      <select class="form-select form-select-sm" :class="{ 'is-invalid': errors.vehicleId }" v-model="form.vehicleId">
+      <select
+        class="form-select form-select-sm"
+        :class="{ 'is-invalid': errors.vehicleId }"
+        v-model="form.vehicleId"
+      >
         <option value="" hidden>Select Vehicle</option>
         <option
           v-for="vehicle in props.vehicles"
@@ -81,7 +78,9 @@ const formattedDate = computed({
           {{ vehicle.make }} {{ vehicle.model }}
         </option>
       </select>
-      <div class="invalid-feedback" v-if="errors.vehicleId">{{ errors.vehicleId }}</div>
+      <div class="invalid-feedback" v-if="errors.vehicleId">
+        {{ errors.vehicleId }}
+      </div>
     </div>
     <div class="col-md-6 mb-3">
       <label for="editDate" class="form-label">Date</label>
@@ -105,7 +104,9 @@ const formattedDate = computed({
         v-model.number="form.fuelAmount"
         required
       />
-      <div class="invalid-feedback" v-if="errors.fuelAmount">{{ errors.fuelAmount }}</div>
+      <div class="invalid-feedback" v-if="errors.fuelAmount">
+        {{ errors.fuelAmount }}
+      </div>
     </div>
     <div class="col-md-6 mb-3">
       <label for="editFuelPrice" class="form-label">Fuel price</label>
@@ -116,7 +117,9 @@ const formattedDate = computed({
         v-model.number="form.fuelPrice"
         required
       />
-      <div class="invalid-feedback" v-if="errors.fuelPrice">{{ errors.fuelPrice }}</div>
+      <div class="invalid-feedback" v-if="errors.fuelPrice">
+        {{ errors.fuelPrice }}
+      </div>
     </div>
   </div>
   <div class="row">
@@ -133,7 +136,9 @@ const formattedDate = computed({
         <option value="1">Diesel</option>
         <option value="2">Electricity</option>
       </select>
-      <div class="invalid-feedback" v-if="errors.fuelType">{{ errors.fuelType }}</div>
+      <div class="invalid-feedback" v-if="errors.fuelType">
+        {{ errors.fuelType }}
+      </div>
     </div>
     <div class="col-md-6 mb-3">
       <label for="editMileageAtRefuel" class="form-label">Mileage</label>
@@ -144,7 +149,9 @@ const formattedDate = computed({
         v-model.number="form.mileageAtRefuel"
         required
       />
-      <div class="invalid-feedback" v-if="errors.mileageAtRefuel">{{ errors.mileageAtRefuel }}</div>
+      <div class="invalid-feedback" v-if="errors.mileageAtRefuel">
+        {{ errors.mileageAtRefuel }}
+      </div>
     </div>
   </div>
   <div class="mb-3">
@@ -156,7 +163,9 @@ const formattedDate = computed({
       v-model="form.gasStation"
       required
     />
-    <div class="invalid-feedback" v-if="errors.gasStation">{{ errors.gasStation }}</div>
+    <div class="invalid-feedback" v-if="errors.gasStation">
+      {{ errors.gasStation }}
+    </div>
   </div>
   <div class="mb-3">
     <label for="editInvoiceLink" class="form-label">Invoice link</label>
@@ -167,6 +176,8 @@ const formattedDate = computed({
       v-model="form.invoiceLink"
       required
     />
-    <div class="invalid-feedback" v-if="errors.invoiceLink">{{ errors.invoiceLink }}</div>
+    <div class="invalid-feedback" v-if="errors.invoiceLink">
+      {{ errors.invoiceLink }}
+    </div>
   </div>
 </template>

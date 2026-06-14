@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { onMounted, type PropType, ref } from "vue";
-import { Vehicle } from "../../../../chariot/src/vehicle/vehicle.entity.ts";
-import type { UpdateVehicleDto } from "@chariot/shared";
+import type { IVehicle, UpdateVehicleDto } from "@chariot/shared";
 import VehicleForm from "../VehicleForm.vue";
 
 const emits = defineEmits<{
@@ -12,7 +11,7 @@ const emits = defineEmits<{
 
 const props = defineProps({
   vehicle: {
-    type: Object as PropType<Vehicle>,
+    type: Object as PropType<IVehicle>,
     required: true,
   },
 });

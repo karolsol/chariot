@@ -1,6 +1,6 @@
 import type { Router } from "vue-router";
 import type { Pinia } from "pinia";
-import { useUserStore } from "../stores/userStore.ts";
+import { useUserStore } from "../stores/userStore";
 
 export function setupGuards(router: Router, pinia: Pinia): void {
   router.beforeEach(async (to) => {

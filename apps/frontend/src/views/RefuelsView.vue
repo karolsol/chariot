@@ -1,22 +1,20 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
-import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import { vehicleService } from "../services/vehiclesService.ts";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 import { useModalStore } from "../stores/modalStore.ts";
 import { omitEmptyFields } from "../utils/omitEmptyFields.ts";
-import type { Refuel } from "../../../chariot/src/refuel/refuel.entity.ts";
 import { refuelService } from "../services/refuelService.ts";
 import RefuelTableRow from "../components/RefuelTableRow.vue";
 import AddRefuelModal from "../components/modals/AddRefuelModal.vue";
 import EditRefuelModal from "../components/modals/EditRefuelModal.vue";
-import type { UpdateRefuelDto } from "@chariot/shared";
+import type { IRefuel, IVehicle, UpdateRefuelDto } from "@chariot/shared";
 
-const refuels = ref<Refuel[]>([]);
-const vehicles = ref<Vehicle[]>([]);
+const refuels = ref<IRefuel[]>([]);
+const vehicles = ref<IVehicle[]>([]);
 
-const selectedRefuel = ref<Refuel>({} as Refuel);
+const selectedRefuel = ref<IRefuel>({} as IRefuel);
 
 const modalStore = useModalStore();
 
@@ -52,7 +50,7 @@ const onEditAccept = (id: string, refuel: UpdateRefuelDto) => {
 };
 
 const onDelete = (id: String) => {
-  selectedRefuel.value = refuels.value.find((v) => v.id === id) as Refuel;
+  selectedRefuel.value = refuels.value.find((v) => v.id === id) as IRefuel;
   modalStore.open(ConfirmationPopup, {
     props: {
       title: "Delete refuel",
@@ -88,11 +86,11 @@ const onCreate = (): void => {
   });
 };
 
-const onCreateAccept = async (refuel: Partial<Refuel>): Promise<void> => {
+const onCreateAccept = async (refuel: Partial<IRefuel>): Promise<void> => {
   const newRefuel = await refuelService.create(omitEmptyFields(refuel) as any);
   newRefuel.vehicle = (await vehicleService.getById(
     newRefuel.vehicleId,
-  )) as Vehicle;
+  )) as IVehicle;
   refuels.value.push(newRefuel);
   modalStore.close();
 };

@@ -9,9 +9,10 @@ import {
 import { Vehicle } from "../vehicle/vehicle.entity";
 import { User } from "../user/user.entity";
 import { v7 as uuidv7 } from "uuid";
+import type { IMaintenance } from "@chariot/shared";
 
 @Entity()
-export class Maintenance {
+export class Maintenance implements IMaintenance {
   @PrimaryColumn("uuid")
   id!: string;
 

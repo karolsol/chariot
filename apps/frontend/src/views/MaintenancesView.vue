@@ -1,22 +1,24 @@
 <script setup lang="ts">
 import MaintenanceTableRow from "../components/MaintenanceTableRow.vue";
 import { onMounted, ref } from "vue";
-import type { Maintenance } from "../../../chariot/src/maintenance/maintenance.entity.ts";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
 import { maintenanceService } from "../services/maintenanceService.ts";
-import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
 import { vehicleService } from "../services/vehiclesService.ts";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 import { useModalStore } from "../stores/modalStore.ts";
 import EditMaintenanceModal from "../components/modals/EditMaintenanceModal.vue";
-import type { UpdateMaintenanceDto } from "@chariot/shared";
+import type {
+  IMaintenance,
+  IVehicle,
+  UpdateMaintenanceDto,
+} from "@chariot/shared";
 import AddMaintenanceModal from "../components/modals/AddMaintenanceModal.vue";
 import { omitEmptyFields } from "../utils/omitEmptyFields.ts";
 
-const maintenances = ref<Maintenance[]>([]);
-const vehicles = ref<Vehicle[]>([]);
+const maintenances = ref<IMaintenance[]>([]);
+const vehicles = ref<IVehicle[]>([]);
 
-const selectedMaintenance = ref<Maintenance>({} as Maintenance);
+const selectedMaintenance = ref<IMaintenance>({} as IMaintenance);
 
 const modalStore = useModalStore();
 
@@ -54,7 +56,7 @@ const onEditAccept = (id: string, maintenance: UpdateMaintenanceDto) => {
 const onDelete = (id: String) => {
   selectedMaintenance.value = maintenances.value.find(
     (v) => v.id === id,
-  ) as Maintenance;
+  ) as IMaintenance;
   modalStore.open(ConfirmationPopup, {
     props: {
       title: "Delete maintenance",
@@ -90,13 +92,15 @@ const onCreate = (): void => {
   });
 };
 
-const onCreateAccept = async (maintenance: Partial<Maintenance>): Promise<void> => {
+const onCreateAccept = async (
+  maintenance: Partial<IMaintenance>,
+): Promise<void> => {
   const newMaintenance = await maintenanceService.create(
     omitEmptyFields(maintenance as any) as any,
   );
   newMaintenance.Vehicle = (await vehicleService.getById(
     newMaintenance.vehicleId,
-  )) as Vehicle;
+  )) as IVehicle;
   maintenances.value.push(newMaintenance);
   modalStore.close();
 };

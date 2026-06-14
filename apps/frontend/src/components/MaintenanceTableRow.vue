@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import type { Maintenance } from "../../../chariot/src/maintenance/maintenance.entity.ts";
 import type { PropType } from "vue";
-import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
+import type { IMaintenance, IVehicle } from "@chariot/shared";
 
 const props = defineProps({
   maintenance: {
-    type: Object as PropType<Maintenance>,
+    type: Object as PropType<IMaintenance>,
     required: true,
   },
 });
@@ -23,7 +22,7 @@ const onDelete = (): void => {
   emits("delete", props.maintenance.id);
 };
 
-const getVehicleName = (vehicle: Vehicle) => {
+const getVehicleName = (vehicle: IVehicle) => {
   return `${vehicle.make} ${vehicle.model}`;
 };
 </script>

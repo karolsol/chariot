@@ -1,16 +1,16 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import type { User } from "../../../chariot/src/user/user.entity.ts";
 import api from "../services/api.ts";
 import router from "../router";
+import type { IUser } from "@chariot/shared";
 
 export const useUserStore = defineStore("user", () => {
-  const user = ref<User | null>(null);
+  const user = ref<IUser | null>(null);
   const isAuthenticated = ref(false);
 
   async function fetchInfo(): Promise<void> {
     try {
-      const { data } = await api.get<User>("/auth/info", {
+      const { data } = await api.get<IUser>("/auth/info", {
         withCredentials: true,
       });
       user.value = data;

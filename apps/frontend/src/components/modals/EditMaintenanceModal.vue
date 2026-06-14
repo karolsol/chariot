@@ -1,28 +1,27 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { onMounted, type PropType, ref } from "vue";
-import { Vehicle } from "../../../../chariot/src/vehicle/vehicle.entity.ts";
 import MaintenanceForm from "../MaintenanceForm.vue";
-import type { Maintenance } from "../../../../chariot/src/maintenance/maintenance.entity.ts";
+import type { IMaintenance, IVehicle } from "@chariot/shared";
 
 const emits = defineEmits<{
   (e: "close"): void;
-  (e: "submit", id: string, maintenance: Partial<Maintenance>): void;
+  (e: "submit", id: string, maintenance: Partial<IMaintenance>): void;
 }>();
 
 const props = defineProps({
   maintenance: {
-    type: Object as PropType<Maintenance>,
+    type: Object as PropType<IMaintenance>,
     required: true,
   },
   vehicles: {
-    type: Array as PropType<Vehicle[]>,
+    type: Array as PropType<IVehicle[]>,
     required: true,
-  }
+  },
 });
 
-const form = ref<Partial<Maintenance>>({} as Partial<Maintenance>);
-const vehicles = ref<Vehicle[]>([]);
+const form = ref<Partial<IMaintenance>>({} as Partial<IMaintenance>);
+const vehicles = ref<IVehicle[]>([]);
 const editedId = ref<string>("");
 const formRef = ref<InstanceType<typeof MaintenanceForm> | null>(null);
 
@@ -55,7 +54,12 @@ onMounted(() => {
     <button type="button" class="btn-close" @click="handleClose" />
   </div>
   <div class="modal-body">
-    <MaintenanceForm ref="formRef" v-model="form" :vehicles="vehicles" :isEdit="true" />
+    <MaintenanceForm
+      ref="formRef"
+      v-model="form"
+      :vehicles="vehicles"
+      :isEdit="true"
+    />
   </div>
   <div class="modal-footer">
     <button

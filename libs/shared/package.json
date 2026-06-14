@@ -1,11 +1,10 @@
 {
   "name": "@chariot/shared",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "class-validator": "0.15.1",
-    "typescript": "6.0.3"
+    "class-validator": "0.15.1"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

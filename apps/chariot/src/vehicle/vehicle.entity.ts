@@ -8,13 +8,13 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { VehicleType } from "@chariot/shared";
+import { IVehicle, VehicleType } from "@chariot/shared";
 import { FuelType } from "@chariot/shared";
 import { User } from "../user/user.entity";
 import { v7 as uuidv7 } from "uuid";
 
 @Entity()
-export class Vehicle {
+export class Vehicle implements IVehicle{
   @PrimaryColumn("uuid")
   id!: string;
   @Column()

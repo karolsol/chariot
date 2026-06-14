@@ -1,24 +1,23 @@
 <script setup lang="ts">
 import { onMounted, type PropType, ref } from "vue";
-import { Vehicle } from "../../../../chariot/src/vehicle/vehicle.entity.ts";
-import type { Refuel } from "../../../../chariot/src/refuel/refuel.entity.ts";
 import { Icon } from "@iconify/vue";
 import RefuelForm from "../RefuelForm.vue";
+import type { IRefuel, IVehicle } from "@chariot/shared";
 
 const emits = defineEmits<{
   (e: "close"): void;
-  (e: "submit", refuel: Partial<Refuel>): void;
+  (e: "submit", refuel: Partial<IRefuel>): void;
 }>();
 
 const props = defineProps({
   vehicles: {
-    type: Array as PropType<Vehicle[]>,
+    type: Array as PropType<IVehicle[]>,
     required: true,
   },
 });
 
-const form = ref<Partial<Refuel>>({} as Partial<Refuel>);
-const vehicles = ref<Vehicle[]>([]);
+const form = ref<Partial<IRefuel>>({} as Partial<IRefuel>);
+const vehicles = ref<IVehicle[]>([]);
 const formRef = ref<InstanceType<typeof RefuelForm> | null>(null);
 
 const handleSubmit = async () => {

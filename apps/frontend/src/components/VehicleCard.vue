@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import type { Vehicle } from "../../../chariot/src/vehicle/vehicle.entity.ts";
+
+import type { IVehicle } from "@chariot/shared";
 
 defineProps<{
-  vehicle: Vehicle;
+  vehicle: IVehicle;
 }>();
 
 defineEmits<{
   (e: "stats", id: string): void;
-  (e: "edit", vehicle: Vehicle): void;
+  (e: "edit", vehicle: IVehicle): void;
   (e: "delete", id: string): void;
 }>();
 </script>

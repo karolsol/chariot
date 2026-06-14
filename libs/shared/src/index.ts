@@ -9,3 +9,8 @@ export * from "./create-maintenance.dto.js";
 export * from "./update-maintenance.dto.js";
 export * from "./vehicle-type.enum.js";
 export * from "./fuel-type.enum.js";
+
+export * from "./vehicle.interface.js"
+export * from "./refuel.interface.js"
+export * from "./maintenance.interface.js"
+export * from "./user.interface.js"
