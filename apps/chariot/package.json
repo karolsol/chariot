@@ -5,7 +5,12 @@
   "scripts": {
     "start": "nest start",
     "dev": "nest start --watch",
-    "build": "nest build"
+    "build": "nest build",
+    "typeorm": "NODE_OPTIONS='-r tsconfig-paths/register' TS_NODE_PROJECT='apps/chariot/tsconfig.app.json' pnpm exec typeorm-ts-node-commonjs",
+    "migration:generate": "sh -c 'pnpm typeorm migration:generate apps/chariot/src/migrations/$1 -d apps/chariot/src/config/data-source.ts' --",
+    "migration:run": "pnpm typeorm migration:run -d apps/chariot/src/config/data-source.ts",
+    "migration:revert": "pnpm typeorm migration:revert -d apps/chariot/src/config/data-source.ts",
+    "schema:log": "pnpm typeorm schema:log -d apps/chariot/src/config/data-source.ts"
   },
   "dependencies": {
     "@chariot/shared": "workspace:*",
