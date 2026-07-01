@@ -42,7 +42,7 @@ export class Maintenance implements IMaintenance {
     onUpdate: "RESTRICT",
   })
   @JoinColumn({ name: "vehicleId" })
-  Vehicle!: Vehicle;
+  vehicle!: Vehicle;
 
   @Column({ nullable: false })
   userId!: string;

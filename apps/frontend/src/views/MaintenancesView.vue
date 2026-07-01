@@ -98,7 +98,7 @@ const onCreateAccept = async (
   const newMaintenance = await maintenanceService.create(
     omitEmptyFields(maintenance as any) as any,
   );
-  newMaintenance.Vehicle = (await vehicleService.getById(
+  newMaintenance.vehicle = (await vehicleService.getById(
     newMaintenance.vehicleId,
   )) as IVehicle;
   maintenances.value.push(newMaintenance);

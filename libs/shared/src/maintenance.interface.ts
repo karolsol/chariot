@@ -11,6 +11,6 @@ export interface IMaintenance {
   invoiceLink?: string;
   mileage: number;
   userId: string;
-  Vehicle: IVehicle;
+  vehicle: IVehicle;
   user: IUser;
 }

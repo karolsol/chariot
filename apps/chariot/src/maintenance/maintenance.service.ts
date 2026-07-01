@@ -60,7 +60,7 @@ export class MaintenanceService {
   findAllForUser(userId: string): Promise<Maintenance[]> {
     return this.maintenanceRepository
       .createQueryBuilder("maintenance")
-      .leftJoinAndSelect("maintenance.Vehicle", "vehicle")
+      .leftJoinAndSelect("maintenance.vehicle", "vehicle")
       .where("vehicle.userId = :userId", { userId })
       .getMany();
   }

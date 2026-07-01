@@ -29,7 +29,7 @@ const getVehicleName = (vehicle: IVehicle) => {
 
 <template>
   <tr>
-    <td>{{ getVehicleName(props.maintenance?.Vehicle) }}</td>
+    <td>{{ getVehicleName(props.maintenance?.vehicle) }}</td>
     <td>{{ props.maintenance.title }}</td>
     <td>{{ new Date(props.maintenance.date).toLocaleDateString() }}</td>
     <td>{{ props.maintenance.mileage }} km</td>
