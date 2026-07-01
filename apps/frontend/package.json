@@ -17,8 +17,8 @@
     "axios": "1.18.1",
     "bootstrap": "5.3.8",
     "pinia": "3.0.4",
-    "vue": "3.5.33",
-    "vue-router": "5.0.6"
+    "vue": "3.5.39",
+    "vue-router": "5.1.0"
   },
   "devDependencies": {
     "@tsconfig/node24": "24.0.4",
@@ -26,7 +26,7 @@
     "@types/jsdom": "28.0.0",
     "@types/node": "25.6.0",
     "@vitejs/plugin-vue": "6.0.6",
-    "@vue/test-utils": "2.4.10",
+    "@vue/test-utils": "2.4.11",
     "@vue/tsconfig": "0.9.1",
     "jsdom": "29.1.1",
     "npm-run-all2": "9.0.2",
@@ -34,6 +34,6 @@
     "vite": "8.0.16",
     "vite-plugin-vue-devtools": "8.1.2",
     "vitest": "4.1.8",
-    "vue-tsc": "3.2.7"
+    "vue-tsc": "3.3.6"
   }
 }
