@@ -14,7 +14,7 @@
   "dependencies": {
     "@chariot/shared": "workspace:*",
     "@iconify/vue": "5.0.1",
-    "axios": "1.16.0",
+    "axios": "1.18.1",
     "bootstrap": "5.3.8",
     "pinia": "3.0.4",
     "vue": "3.5.33",
