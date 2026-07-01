@@ -1,4 +1,4 @@
-FROM node:26.2.0-slim AS base
+FROM node:26.4.0-slim AS base
 RUN npm install -g corepack --force && corepack enable
 WORKDIR /app
 
