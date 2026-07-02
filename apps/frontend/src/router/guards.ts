@@ -6,12 +6,16 @@ export function setupGuards(router: Router, pinia: Pinia): void {
   router.beforeEach(async (to) => {
     const userStore = useUserStore(pinia);
 
-    if (to.meta.public) {
-      return;
-    }
-
     if (!userStore.isAuthenticated) {
       await userStore.fetchInfo();
+    }
+
+    if (userStore.isAuthenticated && to.meta.public) {
+      return { path: "/dashboard" };
+    }
+
+    if (to.meta.public) {
+      return;
     }
 
     if (!userStore.isAuthenticated) {
