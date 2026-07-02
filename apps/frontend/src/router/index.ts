@@ -5,7 +5,6 @@ const router = createRouter({
   routes: [
     {
       path: "/login",
-      alias: "/",
       name: "login",
       component: () => import("../views/LoginView.vue"),
       meta: {
@@ -24,6 +23,7 @@ const router = createRouter({
     },
     {
       path: "/dashboard",
+      alias: "/",
       name: "dashboard",
       component: () => import("../views/DashboardView.vue"),
     },
