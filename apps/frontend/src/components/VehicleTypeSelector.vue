@@ -6,7 +6,7 @@ defineExpose({ selected });
 </script>
 
 <template>
-  <label for="vehicleFilter" class="form-label">Type</label>
+  <label for="vehicleFilter" class="form-label small text-muted">Type</label>
   <select
     class="form-select form-select-sm"
     v-model="selected"

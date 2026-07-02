@@ -14,6 +14,7 @@ import type {
 } from "@chariot/shared";
 import AddMaintenanceModal from "../components/modals/AddMaintenanceModal.vue";
 import { omitEmptyFields } from "../utils/omitEmptyFields.ts";
+import { Icon } from "@iconify/vue";
 
 const maintenances = ref<IMaintenance[]>([]);
 const vehicles = ref<IVehicle[]>([]);
@@ -111,9 +112,11 @@ const onCreateAccept = async (
     <div class="row">
       <div class="col-12">
         <h2>Your maintenance:</h2>
-        <div class="row mb-4 align-items-end">
-          <div class="col-md-3">
-            <label for="vehicleFilter" class="form-label">Vehicle</label>
+        <div class="row g-3 mb-4 align-items-end">
+          <div class="col-6 col-md-3">
+            <label for="vehicleFilter" class="form-label small text-muted"
+              >Vehicle</label
+            >
             <select class="form-select" id="vehicleFilter">
               <option value="all" selected>All</option>
               <option
@@ -125,8 +128,11 @@ const onCreateAccept = async (
               </option>
             </select>
           </div>
-          <div class="col-md-3">
-            <label for="dateRange" class="form-label">Date Range</label>
+
+          <div class="col-6 col-md-3">
+            <label for="dateRange" class="form-label small text-muted"
+              >Date Range</label
+            >
             <select class="form-select" id="dateRange">
               <option value="all" selected>All</option>
               <option value="7">Last 7 days</option>
@@ -134,12 +140,14 @@ const onCreateAccept = async (
               <option value="365">Last Year</option>
             </select>
           </div>
-          <div class="col-md-6 d-flex justify-content-end">
+
+          <div class="col-12 col-md-6 d-grid d-md-flex justify-content-md-end">
             <button
-              class="btn btn-primary btn-sm"
+              class="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2"
               type="button"
               @click="onCreate"
             >
+              <Icon icon="mdi:plus" width="18" height="18" />
               Add new entry
             </button>
           </div>

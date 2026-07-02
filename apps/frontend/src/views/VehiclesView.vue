@@ -12,6 +12,7 @@ import FuelTypeSelector from "../components/FuelTypeSelector.vue";
 import StatsVehicleModal from "../components/modals/StatsVehicleModal.vue";
 import { useModalStore } from "../stores/modalStore.ts";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
+import { Icon } from "@iconify/vue";
 
 let vehicles = ref<IVehicle[]>([]);
 
@@ -104,18 +105,19 @@ const onStats = (id: string) => {
       <div class="col-12">
         <h2>Your vehicles:</h2>
         <div class="row mb-4 align-items-end">
-          <div class="col-md-3">
+          <div class="col-6 col-md-3">
             <VehicleTypeSelector ref="vehicleTypeSelector" />
           </div>
-          <div class="col-md-3">
+          <div class="col-6 col-md-3">
             <FuelTypeSelector ref="fuelTypeSelector" />
           </div>
-          <div class="col-md-6 d-flex justify-content-end">
+          <div class="col-12 col-md-6 d-grid d-md-flex justify-content-md-end">
             <button
-              class="btn btn-primary btn-sm"
+              class="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2"
               type="button"
               @click="onCreate"
             >
+              <Icon icon="mdi:plus" width="18" height="18" />
               Add new entry
             </button>
           </div>

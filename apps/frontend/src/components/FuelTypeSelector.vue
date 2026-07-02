@@ -6,7 +6,9 @@ defineExpose({ selected });
 </script>
 
 <template>
-  <label for="fuelTypeFilter" class="form-label">Fuel type</label>
+  <label for="fuelTypeFilter" class="form-label small text-muted"
+    >Fuel type</label
+  >
   <select
     class="form-select form-select-sm"
     id="fuelTypeFilter"
