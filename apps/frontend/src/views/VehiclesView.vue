@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import VehicleCard from "../components/VehicleCard.vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
 import { vehicleService } from "../services/vehiclesService.ts";
-import type { CreateVehicleDto, IVehicle } from "@chariot/shared";
+import {
+  type CreateVehicleDto,
+  FuelType,
+  type IVehicle,
+  VehicleType,
+} from "@chariot/shared";
 import AddVehicleModal from "../components/modals/AddVehicleModal.vue";
 import EditVehicleModal from "../components/modals/EditVehicleModal.vue";
 import type { UpdateVehicleDto } from "@chariot/shared";
@@ -13,17 +18,27 @@ import StatsVehicleModal from "../components/modals/StatsVehicleModal.vue";
 import { useModalStore } from "../stores/modalStore.ts";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 import { Icon } from "@iconify/vue";
-
-let vehicles = ref<IVehicle[]>([]);
+import { useVehicles } from "../composables/useVehicles.ts";
 
 const modalStore = useModalStore();
 
 let selectedVehicle = ref<IVehicle>({} as IVehicle);
 
-onMounted(async () => {
-  vehicles.value = await vehicleService.getAll();
-});
+const vehicleTypeFilter = ref<VehicleType | undefined>();
 
+const fuelTypeFilter = ref<FuelType | undefined>();
+const { vehicles, isLoading, isError, addVehicle, editVehicle, removeVehicle } =
+  useVehicles(vehicleTypeFilter, fuelTypeFilter);
+const onCreate = () => {
+  modalStore.open(AddVehicleModal, {
+    functions: {
+      submit: (createVehicleDto: CreateVehicleDto) => {
+        addVehicle(createVehicleDto);
+        modalStore.close();
+      },
+    },
+  });
+};
 const onEdit = (vehicle: IVehicle) => {
   selectedVehicle.value = vehicle;
   modalStore.open(EditVehicleModal, {
@@ -31,47 +46,20 @@ const onEdit = (vehicle: IVehicle) => {
       vehicle: selectedVehicle.value,
     },
     functions: {
-      submit: onEditAccept,
+      submit: (id: string, updatedData: UpdateVehicleDto) => {
+        editVehicle({ id, payload: updatedData });
+        modalStore.close();
+      },
     },
   });
-};
-
-const onEditAccept = (id: string, vehicle: UpdateVehicleDto) => {
-  vehicleService.update(id, vehicle).then((updatedVehicle) => {
-    const index = vehicles.value.findIndex((v) => v.id === id);
-    if (index !== -1) {
-      vehicles.value[index] = updatedVehicle;
-    }
-    modalStore.close();
-  });
-};
-
-const onCreate = () => {
-  modalStore.open(AddVehicleModal, {
-    functions: {
-      submit: onCreateAccept,
-    },
-  });
-};
-
-const onCreateAccept = (createVehicleDto: CreateVehicleDto) => {
-  vehicleService.create(createVehicleDto).then((newVehicle) => {
-    vehicles.value.push(newVehicle);
-    modalStore.close();
-  });
-};
-
-const onDeleteAccept = () => {
-  vehicleService.delete(selectedVehicle.value.id).then(() => {
-    vehicles.value = vehicles.value.filter(
-      (v) => v.id !== selectedVehicle.value.id,
-    );
-  });
-  modalStore.close();
 };
 
 const onDelete = (id: string) => {
-  selectedVehicle.value = vehicles.value.find((v) => v.id === id) as IVehicle;
+  const foundVehicle = vehicles.value?.find((v) => v.id === id);
+  if (!foundVehicle) return;
+
+  selectedVehicle.value = foundVehicle;
+
   modalStore.open(ConfirmationPopup, {
     props: {
       title: "Delete vehicle",
@@ -82,14 +70,16 @@ const onDelete = (id: string) => {
       variant: "danger",
     },
     functions: {
-      submit: onDeleteAccept,
+      submit: () => {
+        removeVehicle(selectedVehicle.value.id);
+        modalStore.close();
+      },
     },
   });
 };
 
 const onStats = (id: string) => {
-  vehicleService.stats(id).then((stats) => {
-    console.log(stats);
+  void vehicleService.stats(id).then((stats) => {
     modalStore.open(StatsVehicleModal, {
       props: {
         stats: stats,
@@ -106,10 +96,10 @@ const onStats = (id: string) => {
         <h2>Your vehicles:</h2>
         <div class="row mb-4 align-items-end">
           <div class="col-6 col-md-3">
-            <VehicleTypeSelector ref="vehicleTypeSelector" />
+            <VehicleTypeSelector v-model="vehicleTypeFilter" />
           </div>
           <div class="col-6 col-md-3">
-            <FuelTypeSelector ref="fuelTypeSelector" />
+            <FuelTypeSelector v-model="fuelTypeFilter" />
           </div>
           <div class="col-12 col-md-6 d-grid d-md-flex justify-content-md-end">
             <button
@@ -123,21 +113,36 @@ const onStats = (id: string) => {
           </div>
         </div>
         <div class="row g-4 mt-4" id="vehiclesCards">
-          <template v-if="vehicles?.length > 0">
-            <div class="col-md-4" v-for="vehicle in vehicles" :key="vehicle.id">
-              <VehicleCard
-                :vehicle="vehicle"
-                @edit="onEdit"
-                @delete="onDelete"
-                @stats="onStats"
-              />
+          <div v-if="isLoading" class="col-12 text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
+          </div>
+
+          <div v-else-if="isError" class="col-12 text-center text-danger py-5">
+            Something went wrong while fetching vehicles.
+          </div>
+          <template v-else>
+            <template v-if="vehicles && vehicles.length > 0">
+              <div
+                class="col-md-4"
+                v-for="vehicle in vehicles"
+                :key="vehicle.id"
+              >
+                <VehicleCard
+                  :vehicle="vehicle"
+                  @edit="onEdit"
+                  @delete="onDelete"
+                  @stats="onStats"
+                />
+              </div>
+            </template>
+            <NoEntitiesCard
+              main-text="No vehicles found"
+              secondary-text="You haven't added any vehicles to your garage yet."
+              v-else
+            />
           </template>
-          <NoEntitiesCard
-            main-text="No vehicles found"
-            secondary-text="You haven't added any vehicles to your garage yet."
-            v-else
-          />
         </div>
       </div>
     </div>

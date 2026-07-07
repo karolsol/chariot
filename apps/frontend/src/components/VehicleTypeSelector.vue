@@ -1,19 +1,14 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { VehicleType } from "@chariot/shared";
 
-const selected = ref("all");
-defineExpose({ selected });
+const model = defineModel<VehicleType | undefined>({ default: undefined });
 </script>
 
 <template>
   <label for="vehicleFilter" class="form-label small text-muted">Type</label>
-  <select
-    class="form-select form-select-sm"
-    v-model="selected"
-    id="vehicleFilter"
-  >
-    <option value="all" selected>All</option>
-    <option value="0">Car</option>
-    <option value="1">Motorcycle</option>
+  <select class="form-select form-select-sm" v-model="model" id="vehicleFilter">
+    <option :value="undefined" selected>All</option>
+    <option :value="VehicleType.CAR">Car</option>
+    <option :value="VehicleType.MOTORCYCLE">Motorcycle</option>
   </select>
 </template>

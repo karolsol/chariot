@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { FuelType } from "@chariot/shared";
 
-const selected = ref("all");
-defineExpose({ selected });
+const model = defineModel<FuelType | undefined>({ default: undefined });
 </script>
 
 <template>
@@ -12,12 +11,12 @@ defineExpose({ selected });
   <select
     class="form-select form-select-sm"
     id="fuelTypeFilter"
-    v-model="selected"
+    v-model="model"
   >
-    <option value="all" selected>All</option>
-    <option value="0">Gasoline</option>
-    <option value="1">Diesel</option>
-    <option value="2">Electric</option>
-    <option value="3">Hybrid</option>
+    <option :value="undefined" selected>All</option>
+    <option :value="FuelType.GASOLINE">Gasoline</option>
+    <option :value="FuelType.DIESEL">Diesel</option>
+    <option :value="FuelType.ELECTRIC">Electric</option>
+    <option :value="FuelType.HYBRID">Hybrid</option>
   </select>
 </template>
