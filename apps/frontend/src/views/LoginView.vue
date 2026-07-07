@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useUserStore } from "../stores/userStore.ts";
 
-const router = useRouter();
+const userStore = useUserStore();
 
 const username = ref("");
 const password = ref("");
@@ -12,29 +12,11 @@ const handleLogin = async () => {
     errorMessage.value = "Please enter both username and password";
     return;
   }
-  fetch("/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      username: username.value,
-      password: password.value,
-    }),
-  })
-  .then(async (response) => {
-    if (response.ok) {
-      const data = await response.json();
-      localStorage.setItem("access_token", data.access_token);
-      localStorage.setItem("refresh_token", data.refresh_token);
-
-      router.push("/dashboard");
-    } else {
-      errorMessage.value = "Incorrect username or password";
-    }
-  })
-  .catch((error) => {
-    console.error("Login error:", error);
-    errorMessage.value = "An error occurred during login. Please try again.";
-  });
+  userStore
+    .login({ username: username.value, password: password.value })
+    .catch((error) => {
+      errorMessage.value = error;
+    });
 };
 </script>
 

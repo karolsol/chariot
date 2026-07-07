@@ -39,7 +39,7 @@ const handleClose = () => {
 };
 
 onMounted(() => {
-  const { id, Vehicle, userId, user, date, ...cleanMaintenance } =
+  const { id, vehicle, userId, user, date, ...cleanMaintenance } =
     props.maintenance;
   form.value = { ...cleanMaintenance, date: new Date(date) };
   editedId.value = id;
