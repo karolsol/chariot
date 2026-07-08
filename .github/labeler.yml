@@ -1,0 +1,15 @@
+frontend:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/frontend/**/*'
+
+backend:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/chariot/**/*'
+
+shared:
+  - changed-files:
+      - any-glob-to-any-file: 'libs/shared/**/*'
+
+global:
+    - changed-files:
+        - any-glob-to-any-file: '*'
