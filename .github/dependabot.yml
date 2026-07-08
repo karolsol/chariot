@@ -11,3 +11,46 @@ updates:
       prefix: "deps:"
     assignees:
       - "karolsol"
+    groups:
+      vue:
+        patterns:
+          - "vue*"
+          - "@vue/*"
+          - "vite*"
+          - "@vitejs/*"
+          - "pinia"
+          - "@iconify/vue"
+          - "@tanstack/vue-query"
+      nestjs:
+        patterns:
+          - "@nestjs/*"
+          - "rxjs"
+          - "reflect-metadata"
+      database:
+        patterns:
+          - "typeorm"
+          - "@nestjs/typeorm"
+          - "pg"
+      authentication:
+        patterns:
+          - "passport*"
+          - "@nestjs/passport"
+          - "bcrypt"
+          - "@types/bcrypt"
+          - "cookie-parser"
+      linters-and-types:
+        patterns:
+          - "eslint*"
+          - "@eslint/*"
+          - "prettier*"
+          - "typescript*"
+          - "@typescript-eslint/*"
+          - "@types/*"
+          - "@tsconfig/*"
+      testing:
+        patterns:
+          - "vitest"
+          - "jsdom"
+          - "@vue/test-utils"
+          - "supertest"
+          - "@types/supertest"
