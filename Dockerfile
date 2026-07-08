@@ -5,7 +5,7 @@ WORKDIR /app
 FROM base AS deps
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/frontend/package.json ./apps/frontend/
-COPY apps/chariot/package.json ./apps/chariot/
+COPY apps/backend/package.json ./apps/chariot/
 COPY libs/shared/package.json ./libs/shared/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 

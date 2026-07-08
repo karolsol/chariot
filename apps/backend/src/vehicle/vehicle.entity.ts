@@ -14,7 +14,7 @@ import { User } from "../user/user.entity";
 import { v7 as uuidv7 } from "uuid";
 
 @Entity()
-export class Vehicle implements IVehicle{
+export class Vehicle implements IVehicle {
   @PrimaryColumn("uuid")
   id!: string;
   @Column()

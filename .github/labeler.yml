@@ -4,7 +4,7 @@ frontend:
 
 backend:
   - changed-files:
-      - any-glob-to-any-file: 'apps/chariot/**/*'
+      - any-glob-to-any-file: 'apps/backend/**/*'
 
 shared:
   - changed-files:
