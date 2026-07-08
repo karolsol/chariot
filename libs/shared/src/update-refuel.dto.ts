@@ -1,24 +1,34 @@
 import { FuelType } from "./fuel-type.enum.js";
-import { IsDateString, IsNumber, IsOptional, Min } from "class-validator";
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  Min,
+} from "class-validator";
 
 export class UpdateRefuelDto {
-  @IsOptional()
   @IsDateString()
-  date?: string;
-  @IsOptional()
+  @IsNotEmpty()
+  date!: string;
+
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
-  fuelAmount?: number;
-  @IsOptional()
+  fuelAmount!: number;
+
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
-  fuelPrice?: number;
-  @IsOptional()
-  fuelType?: FuelType;
-  @IsOptional()
-  gasStation?: string;
-  @IsOptional()
-  mileageAtRefuel?: number;
+  fuelPrice!: number;
+
+  @IsNotEmpty()
+  fuelType!: FuelType;
+
+  @IsNotEmpty()
+  gasStation!: string;
+
+  @Min(0)
+  mileageAtRefuel!: number;
+
   @IsOptional()
   invoiceLink?: string;
 }

@@ -1,37 +1,36 @@
-import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
+import { IsEnum, IsInt, IsNotEmpty, IsString, Min } from "class-validator";
 import { VehicleType } from "./vehicle-type.enum.js";
 import { FuelType } from "./fuel-type.enum.js";
 
 export class UpdateVehicleDto {
   @IsString()
-  @IsOptional()
-  vin?: string;
+  @IsNotEmpty()
+  vin!: string;
 
   @IsString()
-  @IsOptional()
-  registrationNumber?: string;
+  @IsNotEmpty()
+  registrationNumber!: string;
 
   @IsString()
-  @IsOptional()
-  make?: string;
+  @IsNotEmpty()
+  make!: string;
 
   @IsString()
-  @IsOptional()
-  model?: string;
+  @IsNotEmpty()
+  model!: string;
 
   @IsInt()
-  @IsOptional()
-  year?: number;
+  year!: number;
 
   @IsInt()
-  @IsOptional()
-  initialMileage?: number;
+  @Min(0)
+  initialMileage!: number;
 
   @IsEnum(VehicleType)
-  @IsOptional()
-  vehicleType?: VehicleType;
+  @IsNotEmpty()
+  vehicleType!: VehicleType;
 
   @IsEnum(FuelType)
-  @IsOptional()
-  fuelType?: FuelType;
+  @IsNotEmpty()
+  fuelType!: FuelType;
 }

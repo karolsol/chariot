@@ -1,32 +1,34 @@
 import {
   IsDateString,
   IsInt,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
+  Min,
 } from "class-validator";
 
 export class UpdateMaintenanceDto {
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  title?: string;
+  title!: string;
 
   @IsOptional()
   @IsString()
   description?: string;
 
-  @IsOptional()
   @IsDateString()
-  date?: string;
+  @IsNotEmpty()
+  date!: string;
 
-  @IsOptional()
   @IsNumber({ maxDecimalPlaces: 2 })
-  cost?: number;
+  @Min(0)
+  cost!: number;
 
   @IsOptional()
   invoiceLink?: string;
 
-  @IsOptional()
   @IsInt()
-  mileage?: number;
+  @Min(0)
+  mileage!: number;
 }
