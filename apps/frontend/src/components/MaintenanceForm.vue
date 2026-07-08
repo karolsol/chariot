@@ -27,11 +27,7 @@ const validateForm = async (): Promise<boolean> => {
   errors.value = {};
 
   const submitData = { ...form.value };
-  if (submitData.date instanceof Date) {
-    submitData.date = submitData.date.toISOString();
-  } else if (!submitData.date) {
-    submitData.date = new Date().toISOString();
-  }
+  submitData.date = formattedDate.value;
 
   const dtoClass = props.isEdit ? UpdateMaintenanceDto : CreateMaintenanceDto;
   const dtoInstance = plainToInstance(dtoClass, submitData);

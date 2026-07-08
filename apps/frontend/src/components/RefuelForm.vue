@@ -23,6 +23,7 @@ const validateForm = async (): Promise<boolean> => {
   errors.value = {};
 
   const submitData = { ...form.value };
+  submitData.date = formattedDate.value;
 
   const dtoClass = props.isEdit ? UpdateRefuelDto : CreateRefuelDto;
   const dtoInstance = plainToInstance(dtoClass, submitData);
