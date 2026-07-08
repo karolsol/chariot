@@ -12,4 +12,4 @@ shared:
 
 global:
     - changed-files:
-        - any-glob-to-any-file: '*'
+        - any-glob-to-any-file: 'package.json'
