@@ -2,12 +2,21 @@ import api from "./api.ts";
 import type {
   CreateMaintenanceDto,
   IMaintenance,
+  IVehicle,
   UpdateMaintenanceDto,
 } from "@chariot/shared";
 
 export const maintenanceService = {
-  getAll: async (): Promise<IMaintenance[]> => {
-    const { data } = await api.get<IMaintenance[]>("/maintenances/");
+  getAll: async (
+    vehicle?: IVehicle,
+    dataRange?: string,
+  ): Promise<IMaintenance[]> => {
+    const { data } = await api.get<IMaintenance[]>("/maintenances/", {
+      params: {
+        vehicleId: vehicle != undefined ? vehicle.id : {},
+        dataRange: dataRange != undefined ? dataRange : {},
+      },
+    });
     return data;
   },
 

@@ -1,63 +1,71 @@
 <script setup lang="ts">
 import MaintenanceTableRow from "../components/MaintenanceTableRow.vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
-import { maintenanceService } from "../services/maintenanceService.ts";
-import { vehicleService } from "../services/vehiclesService.ts";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 import { useModalStore } from "../stores/modalStore.ts";
 import EditMaintenanceModal from "../components/modals/EditMaintenanceModal.vue";
-import type {
-  IMaintenance,
-  IVehicle,
-  UpdateMaintenanceDto,
+import {
+  CreateMaintenanceDto,
+  type IMaintenance,
+  type UpdateMaintenanceDto,
 } from "@chariot/shared";
 import AddMaintenanceModal from "../components/modals/AddMaintenanceModal.vue";
-import { omitEmptyFields } from "../utils/omitEmptyFields.ts";
 import { Icon } from "@iconify/vue";
+import { useVehicles } from "../composables/useVehicles.ts";
+import { useMaintenances } from "../composables/useMaintenances.ts";
 
-const maintenances = ref<IMaintenance[]>([]);
-const vehicles = ref<IVehicle[]>([]);
+const { vehicles } = useVehicles();
+const {
+  maintenances,
+  isLoading,
+  isError,
+  addMaintenance,
+  editMaintenance,
+  removeMaintenance,
+} = useMaintenances();
 
 const selectedMaintenance = ref<IMaintenance>({} as IMaintenance);
 
 const modalStore = useModalStore();
 
-onMounted(async () => {
-  maintenances.value = await maintenanceService.getAll();
-  vehicles.value = await vehicleService.getAll();
-});
-
+const onCreate = () => {
+  modalStore.open(AddMaintenanceModal, {
+    props: {
+      vehicles: vehicles.value,
+    },
+    functions: {
+      submit: (createMaintenanceDto: CreateMaintenanceDto) => {
+        addMaintenance(createMaintenanceDto);
+        modalStore.close();
+      },
+    },
+  });
+};
 const onEdit = (id: string) => {
-  selectedMaintenance.value = maintenances.value.find((v) => v.id === id)!;
+  selectedMaintenance.value = maintenances.value!.find(
+    (v) => v.id === id,
+  ) as IMaintenance;
   modalStore.open(EditMaintenanceModal, {
     props: {
       maintenance: selectedMaintenance.value,
       vehicles: vehicles.value,
     },
     functions: {
-      submit: onEditAccept,
+      submit: (id: string, refuel: UpdateMaintenanceDto) => {
+        editMaintenance({ id, payload: refuel });
+        modalStore.close();
+      },
     },
   });
 };
 
-const onEditAccept = (id: string, maintenance: UpdateMaintenanceDto) => {
-  maintenanceService.update(id, maintenance).then((updatedMaintenance) => {
-    const index = maintenances.value.findIndex((v) => v.id === id);
-    if (index !== -1) {
-      maintenances.value[index] = {
-        ...maintenances.value[index],
-        ...updatedMaintenance,
-      };
-    }
-    modalStore.close();
-  });
-};
+const onDelete = (id: string) => {
+  const foundRefuel = maintenances.value?.find((v) => v.id === id);
+  if (!foundRefuel) return;
 
-const onDelete = (id: String) => {
-  selectedMaintenance.value = maintenances.value.find(
-    (v) => v.id === id,
-  ) as IMaintenance;
+  selectedMaintenance.value = foundRefuel;
+
   modalStore.open(ConfirmationPopup, {
     props: {
       title: "Delete maintenance",
@@ -68,42 +76,12 @@ const onDelete = (id: String) => {
       variant: "danger",
     },
     functions: {
-      submit: onDeleteAccept,
+      submit: () => {
+        removeMaintenance(selectedMaintenance.value.id);
+        modalStore.close();
+      },
     },
   });
-};
-
-const onDeleteAccept = () => {
-  maintenanceService.delete(selectedMaintenance.value.id).then(() => {
-    maintenances.value = maintenances.value.filter(
-      (v) => v.id !== selectedMaintenance.value.id,
-    );
-  });
-  modalStore.close();
-};
-
-const onCreate = (): void => {
-  modalStore.open(AddMaintenanceModal, {
-    props: {
-      vehicles: vehicles.value,
-    },
-    functions: {
-      submit: onCreateAccept,
-    },
-  });
-};
-
-const onCreateAccept = async (
-  maintenance: Partial<IMaintenance>,
-): Promise<void> => {
-  const newMaintenance = await maintenanceService.create(
-    omitEmptyFields(maintenance as any) as any,
-  );
-  newMaintenance.vehicle = (await vehicleService.getById(
-    newMaintenance.vehicleId,
-  )) as IVehicle;
-  maintenances.value.push(newMaintenance);
-  modalStore.close();
 };
 </script>
 
@@ -153,35 +131,49 @@ const onCreateAccept = async (
           </div>
         </div>
         <h4>Maintenance Overview</h4>
-        <div class="table-responsive" v-if="maintenances.length > 0">
-          <table class="table table-striped table-hover">
-            <thead class="table-primary">
-              <tr>
-                <th>Vehicle</th>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Mileage</th>
-                <th>Cost</th>
-                <th>Invoice</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <MaintenanceTableRow
-                v-for="maintenance in maintenances"
-                :key="maintenance.id"
-                :maintenance="maintenance"
-                @edit="onEdit"
-                @delete="onDelete"
-              />
-            </tbody>
-          </table>
+        <div v-if="isLoading" class="col-12 text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
-        <NoEntitiesCard
-          main-text="No maintenances found"
-          secondary-text="You haven't added any maintenances yet."
-          v-else
-        />
+
+        <div v-else-if="isError" class="col-12 text-center text-danger py-5">
+          Something went wrong while fetching vehicles.
+        </div>
+        <template v-else>
+          <template
+            class="table-responsive"
+            v-if="maintenances && maintenances.length > 0"
+          >
+            <table class="table table-striped table-hover">
+              <thead class="table-primary">
+                <tr>
+                  <th>Vehicle</th>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Mileage</th>
+                  <th>Cost</th>
+                  <th>Invoice</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <MaintenanceTableRow
+                  v-for="maintenance in maintenances"
+                  :key="maintenance.id"
+                  :maintenance="maintenance"
+                  @edit="onEdit"
+                  @delete="onDelete"
+                />
+              </tbody>
+            </table>
+          </template>
+          <NoEntitiesCard
+            main-text="No maintenances found"
+            secondary-text="You haven't added any maintenances yet."
+            v-else
+          />
+        </template>
       </div>
     </div>
   </div>
