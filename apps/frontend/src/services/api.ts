@@ -16,16 +16,12 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     const userStore = useUserStore();
     const originalRequest = error.config as CustomAxiosRequestConfig;
-    const url = originalRequest?.url ?? "";
     if (
       error.response?.status === 401 &&
       originalRequest &&
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
-      if (url.includes("/auth/info")) {
-        return Promise.reject(error);
-      }
 
       try {
         await axios.post("/api/auth/refresh", {}, { withCredentials: true });
