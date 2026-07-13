@@ -1,57 +1,64 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
-import { vehicleService } from "../services/vehiclesService.ts";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 import { useModalStore } from "../stores/modalStore.ts";
-import { omitEmptyFields } from "../utils/omitEmptyFields.ts";
-import { refuelService } from "../services/refuelService.ts";
 import RefuelTableRow from "../components/RefuelTableRow.vue";
 import AddRefuelModal from "../components/modals/AddRefuelModal.vue";
 import EditRefuelModal from "../components/modals/EditRefuelModal.vue";
-import type { IRefuel, IVehicle, UpdateRefuelDto } from "@chariot/shared";
+import {
+  CreateRefuelDto,
+  type IRefuel,
+  type UpdateRefuelDto,
+} from "@chariot/shared";
 import { Icon } from "@iconify/vue";
-
-const refuels = ref<IRefuel[]>([]);
-const vehicles = ref<IVehicle[]>([]);
+import { useVehicles } from "../composables/useVehicles.ts";
+import { useRefuels } from "../composables/useRefuels.ts";
 
 const selectedRefuel = ref<IRefuel>({} as IRefuel);
 
 const modalStore = useModalStore();
 
-onMounted(async () => {
-  refuels.value = await refuelService.getAll();
-  vehicles.value = await vehicleService.getAll();
-});
+const { vehicles } = useVehicles();
 
+const { refuels, isLoading, isError, addRefuel, editRefuel, removeRefuel } =
+  useRefuels();
+
+const onCreate = () => {
+  modalStore.open(AddRefuelModal, {
+    props: {
+      vehicles: vehicles.value,
+    },
+    functions: {
+      submit: (createRefuelDto: CreateRefuelDto) => {
+        addRefuel(createRefuelDto);
+        modalStore.close();
+      },
+    },
+  });
+};
 const onEdit = (id: string) => {
-  selectedRefuel.value = refuels.value.find((v) => v.id === id)!;
+  selectedRefuel.value = refuels.value!.find((v) => v.id === id) as IRefuel;
   modalStore.open(EditRefuelModal, {
     props: {
       refuel: selectedRefuel.value,
       vehicles: vehicles.value,
     },
     functions: {
-      submit: onEditAccept,
+      submit: (id: string, refuel: UpdateRefuelDto) => {
+        editRefuel({ id, payload: refuel });
+        modalStore.close();
+      },
     },
   });
 };
 
-const onEditAccept = (id: string, refuel: UpdateRefuelDto) => {
-  refuelService.update(id, refuel).then((updatedRefuel) => {
-    const index = refuels.value.findIndex((v) => v.id === id);
-    if (index !== -1) {
-      refuels.value[index] = {
-        ...refuels.value[index],
-        ...updatedRefuel,
-      };
-    }
-    modalStore.close();
-  });
-};
+const onDelete = (id: string) => {
+  const foundRefuel = refuels.value?.find((v) => v.id === id);
+  if (!foundRefuel) return;
 
-const onDelete = (id: String) => {
-  selectedRefuel.value = refuels.value.find((v) => v.id === id) as IRefuel;
+  selectedRefuel.value = foundRefuel;
+
   modalStore.open(ConfirmationPopup, {
     props: {
       title: "Delete refuel",
@@ -62,38 +69,12 @@ const onDelete = (id: String) => {
       variant: "danger",
     },
     functions: {
-      submit: onDeleteAccept,
+      submit: () => {
+        removeRefuel(selectedRefuel.value.id);
+        modalStore.close();
+      },
     },
   });
-};
-
-const onDeleteAccept = () => {
-  refuelService.delete(selectedRefuel.value.id).then(() => {
-    refuels.value = refuels.value.filter(
-      (v) => v.id !== selectedRefuel.value.id,
-    );
-  });
-  modalStore.close();
-};
-
-const onCreate = (): void => {
-  modalStore.open(AddRefuelModal, {
-    props: {
-      vehicles: vehicles.value,
-    },
-    functions: {
-      submit: onCreateAccept,
-    },
-  });
-};
-
-const onCreateAccept = async (refuel: Partial<IRefuel>): Promise<void> => {
-  const newRefuel = await refuelService.create(omitEmptyFields(refuel) as any);
-  newRefuel.vehicle = (await vehicleService.getById(
-    newRefuel.vehicleId,
-  )) as IVehicle;
-  refuels.value.push(newRefuel);
-  modalStore.close();
 };
 </script>
 
@@ -142,37 +123,51 @@ const onCreateAccept = async (refuel: Partial<IRefuel>): Promise<void> => {
           </div>
         </div>
         <h4>Refueling Overview</h4>
-        <div class="table-responsive" v-if="refuels.length > 0">
-          <table class="table table-striped table-hover">
-            <thead class="table-primary">
-              <tr>
-                <th>Vehicle</th>
-                <th>Date</th>
-                <th>Fuel price</th>
-                <th>Fuel Amount</th>
-                <th>Total Cost</th>
-                <th>Mileage</th>
-                <th>Gas Station</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <RefuelTableRow
-                :refuel="refuel"
-                @edit="onEdit"
-                @delete="onDelete"
-                v-for="refuel in refuels"
-                :key="refuel.id"
-              />
-            </tbody>
-          </table>
+        <div v-if="isLoading" class="col-12 text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
-        <NoEntitiesCard
-          main-text="No refuels found"
-          secondary-text="You haven't added any refuels yet."
-          v-else
-        />
+
+        <div v-else-if="isError" class="col-12 text-center text-danger py-5">
+          Something went wrong while fetching vehicles.
+        </div>
+        <template v-else>
+          <template
+            class="table-responsive"
+            v-if="refuels && refuels.length > 0"
+          >
+            <table class="table table-striped table-hover">
+              <thead class="table-primary">
+                <tr>
+                  <th>Vehicle</th>
+                  <th>Date</th>
+                  <th>Fuel price</th>
+                  <th>Fuel Amount</th>
+                  <th>Total Cost</th>
+                  <th>Mileage</th>
+                  <th>Gas Station</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <RefuelTableRow
+                  :refuel="refuel"
+                  @edit="onEdit"
+                  @delete="onDelete"
+                  v-for="refuel in refuels"
+                  :key="refuel.id"
+                />
+              </tbody>
+            </table>
+          </template>
+          <NoEntitiesCard
+            main-text="No refuels found"
+            secondary-text="You haven't added any refuels yet."
+            v-else
+          />
+        </template>
       </div>
     </div>
   </div>
