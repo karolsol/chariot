@@ -7,6 +7,7 @@ import { useUserStore } from "./stores/userStore";
 const userStore = useUserStore();
 const route = useRoute();
 </script>
+
 <template>
   <div
     v-if="!(userStore.isAuthenticated || route.meta.hideNavbar)"

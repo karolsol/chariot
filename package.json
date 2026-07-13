@@ -9,7 +9,8 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\" --fix",
-    "dev": "pnpm --parallel dev"
+    "dev": "pnpm --parallel dev",
+    "clean": "pnpm -r exec rm -rf node_modules && rm -rf node_modules"
   },
   "dependencies": {
     "class-transformer": "0.5.1",
