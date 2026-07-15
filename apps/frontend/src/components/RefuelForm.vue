@@ -69,6 +69,7 @@ const formattedDate = computed({
         class="form-select form-select-sm"
         :class="{ 'is-invalid': errors.vehicleId }"
         v-model="form.vehicleId"
+        id="editEntryVehicle"
       >
         <option value="" hidden>Select Vehicle</option>
         <option
@@ -90,6 +91,7 @@ const formattedDate = computed({
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.date }"
         v-model="formattedDate"
+        id="editDate"
         required
       />
       <div class="invalid-feedback" v-if="errors.date">{{ errors.date }}</div>
@@ -103,6 +105,7 @@ const formattedDate = computed({
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.fuelAmount }"
         v-model.number="form.fuelAmount"
+        id="editFuelAmount"
         required
       />
       <div class="invalid-feedback" v-if="errors.fuelAmount">
@@ -116,6 +119,7 @@ const formattedDate = computed({
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.fuelPrice }"
         v-model.number="form.fuelPrice"
+        id="editFuelPrice"
         required
       />
       <div class="invalid-feedback" v-if="errors.fuelPrice">
@@ -130,6 +134,7 @@ const formattedDate = computed({
         class="form-select form-select-sm"
         :class="{ 'is-invalid': errors.fuelType }"
         v-model.number="form.fuelType"
+        id="editFuelType"
         required
       >
         <option value="" hidden>Select fuel type</option>
@@ -148,6 +153,7 @@ const formattedDate = computed({
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.mileageAtRefuel }"
         v-model.number="form.mileageAtRefuel"
+        id="editMileageAtRefuel"
         required
       />
       <div class="invalid-feedback" v-if="errors.mileageAtRefuel">
@@ -162,6 +168,7 @@ const formattedDate = computed({
       class="form-control form-control-sm"
       :class="{ 'is-invalid': errors.gasStation }"
       v-model="form.gasStation"
+      id="editGasStation"
       required
     />
     <div class="invalid-feedback" v-if="errors.gasStation">
@@ -175,6 +182,7 @@ const formattedDate = computed({
       class="form-control form-control-sm"
       :class="{ 'is-invalid': errors.invoiceLink }"
       v-model="form.invoiceLink"
+      id="editInvoiceLink"
       required
     />
     <div class="invalid-feedback" v-if="errors.invoiceLink">
