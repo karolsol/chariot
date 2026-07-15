@@ -9,7 +9,7 @@ import {
 } from "class-validator";
 
 export class CreateMaintenanceDto {
-  @IsString()
+  @IsString({ message: "Selecting vehicle is required" })
   vehicleId!: string;
 
   @IsString()

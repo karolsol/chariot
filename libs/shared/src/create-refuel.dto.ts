@@ -11,7 +11,7 @@ import {
 import { FuelType } from "./fuel-type.enum.js";
 
 export class CreateRefuelDto {
-  @IsString()
+  @IsString({ message: "Selecting vehicle is required" })
   vehicleId!: string;
 
   @IsDateString()
