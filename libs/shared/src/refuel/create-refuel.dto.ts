@@ -8,7 +8,7 @@ import {
   IsUrl,
   Min,
 } from "class-validator";
-import { FuelType } from "./fuel-type.enum.js";
+import { FuelType } from "../common/fuel-type.enum.js";
 
 export class CreateRefuelDto {
   @IsString({ message: "Selecting vehicle is required" })

@@ -1,5 +1,5 @@
-import { FuelType } from "./fuel-type.enum.js";
-import { IVehicle } from "./vehicle.interface.js";
+import { FuelType } from "../common/fuel-type.enum.js";
+import { IVehicle } from "../vehicle/vehicle.interface.js";
 
 export interface IRefuel {
   id: string;

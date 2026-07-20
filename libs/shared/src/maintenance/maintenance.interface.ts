@@ -1,5 +1,5 @@
-import { IVehicle } from "./vehicle.interface.js";
-import { IUser } from "./user.interface.js";
+import { IVehicle } from "../vehicle/vehicle.interface.js";
+import { IUser } from "../user/user.interface.js";
 
 export interface IMaintenance {
   id: string;

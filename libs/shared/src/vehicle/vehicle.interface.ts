@@ -1,6 +1,6 @@
 import { VehicleType } from "./vehicle-type.enum.js";
-import { FuelType } from "./fuel-type.enum.js";
-import { IUser } from "./user.interface.js";
+import { FuelType } from "../common/fuel-type.enum.js";
+import { IUser } from "../user/user.interface.js";
 
 export interface IVehicle {
   id: string;

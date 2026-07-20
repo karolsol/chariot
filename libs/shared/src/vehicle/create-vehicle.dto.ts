@@ -1,6 +1,6 @@
 import { IsEnum, IsInt, IsString } from "class-validator";
 import { VehicleType } from "./vehicle-type.enum.js";
-import { FuelType } from "./fuel-type.enum.js";
+import { FuelType } from "../common/fuel-type.enum.js";
 
 export class CreateVehicleDto {
   @IsString()

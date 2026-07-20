@@ -1,4 +1,4 @@
-import { FuelType } from "./fuel-type.enum.js";
+import { FuelType } from "../common/fuel-type.enum.js";
 import {
   IsDateString,
   IsNotEmpty,
