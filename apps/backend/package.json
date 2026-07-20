@@ -13,8 +13,8 @@
     "schema:log": "pnpm typeorm schema:log -d src/config/data-source.ts"
   },
   "dependencies": {
-    "@chariot/shared": "workspace:*",
     "@casl/ability": "7.0.1",
+    "@chariot/shared": "workspace:*",
     "@nestjs/common": "11.1.28",
     "@nestjs/config": "4.0.4",
     "@nestjs/core": "11.1.19",
@@ -30,7 +30,6 @@
     "passport-jwt": "4.0.1",
     "passport-local": "1.0.0",
     "pg": "8.20.0",
-    "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
     "typeorm": "1.0.0",
     "uuid": "14.0.0"

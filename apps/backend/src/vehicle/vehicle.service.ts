@@ -1,12 +1,13 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { FindOptionsWhere, Repository } from "typeorm";
 import { CreateVehicleDto } from "@chariot/shared";
 import { UpdateVehicleDto } from "@chariot/shared";
 import { Vehicle } from "./vehicle.entity";
 import { UserService } from "../user/user.service";
 import { VehicleStatsDto } from "@chariot/shared";
 import { Refuel } from "../refuel/refuel.entity";
+import { FilterVehicle } from "@chariot/shared";
 
 @Injectable()
 export class VehicleService {
@@ -59,10 +60,18 @@ export class VehicleService {
     await this.vehiclesRepository.delete(id);
   }
 
-  findAllForUser(userId: string): Promise<Vehicle[]> {
-    return this.vehiclesRepository.find({
-      where: { userId: userId },
-    });
+  findAllForUser(userId: string, filterDto: FilterVehicle): Promise<Vehicle[]> {
+    const where: FindOptionsWhere<Vehicle> = { userId: userId };
+
+    if (filterDto.vehicleType !== undefined) {
+      where.vehicleType = filterDto.vehicleType;
+    }
+
+    if (filterDto.fuelType !== undefined) {
+      where.fuelType = filterDto.fuelType;
+    }
+
+    return this.vehiclesRepository.find({ where });
   }
 
   async getStats(vehicleId: string): Promise<VehicleStatsDto> {

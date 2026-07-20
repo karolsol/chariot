@@ -15,3 +15,5 @@ export * from "./vehicle/vehicle.interface.js";
 export * from "./refuel/refuel.interface.js";
 export * from "./maintenance/maintenance.interface.js";
 export * from "./user/user.interface.js";
+
+export * from "./vehicle/filter-vehicle.dto.js";

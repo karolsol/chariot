@@ -9,6 +9,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Req,
 } from "@nestjs/common";
 import { VehicleService } from "./vehicle.service";
@@ -19,6 +20,7 @@ import type { RequestWithUser } from "../common/request-with-user.interface";
 import { CaslAbilityFactory } from "../casl/casl-ability.factory";
 import { Action } from "../casl/casl-action.enum";
 import { VehicleStatsDto } from "@chariot/shared";
+import { FilterVehicle } from "@chariot/shared";
 
 @Controller("api/vehicles")
 export class VehicleController {
@@ -28,8 +30,11 @@ export class VehicleController {
   ) {}
 
   @Get()
-  findAll(@Req() req: RequestWithUser): Promise<Vehicle[]> {
-    return this.vehicleService.findAllForUser(req.user.id);
+  findAll(
+    @Req() req: RequestWithUser,
+    @Query() filterDto: FilterVehicle,
+  ): Promise<Vehicle[]> {
+    return this.vehicleService.findAllForUser(req.user.id, filterDto);
   }
 
   @Get(":id")

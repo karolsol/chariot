@@ -22,7 +22,11 @@ export function useVehicles(
     error,
   } = useQuery({
     queryKey: VEHICLES_KEY,
-    queryFn: () => vehicleService.getAll(vehicleType?.value, fuelType?.value),
+    queryFn: () =>
+      vehicleService.getAll({
+        vehicleType: vehicleType?.value,
+        fuelType: fuelType?.value,
+      }),
   });
 
   const createMutation = useMutation({
