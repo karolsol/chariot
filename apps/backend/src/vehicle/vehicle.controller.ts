@@ -20,7 +20,7 @@ import type { RequestWithUser } from "../common/request-with-user.interface";
 import { CaslAbilityFactory } from "../casl/casl-ability.factory";
 import { Action } from "../casl/casl-action.enum";
 import { VehicleStatsDto } from "@chariot/shared";
-import { FilterVehicle } from "@chariot/shared";
+import { FilterVehicleDto } from "@chariot/shared";
 
 @Controller("api/vehicles")
 export class VehicleController {
@@ -32,7 +32,7 @@ export class VehicleController {
   @Get()
   findAll(
     @Req() req: RequestWithUser,
-    @Query() filterDto: FilterVehicle,
+    @Query() filterDto: FilterVehicleDto,
   ): Promise<Vehicle[]> {
     return this.vehicleService.findAllForUser(req.user.id, filterDto);
   }

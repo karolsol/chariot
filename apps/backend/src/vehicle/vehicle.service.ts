@@ -7,7 +7,7 @@ import { Vehicle } from "./vehicle.entity";
 import { UserService } from "../user/user.service";
 import { VehicleStatsDto } from "@chariot/shared";
 import { Refuel } from "../refuel/refuel.entity";
-import { FilterVehicle } from "@chariot/shared";
+import { FilterVehicleDto } from "@chariot/shared";
 
 @Injectable()
 export class VehicleService {
@@ -60,7 +60,10 @@ export class VehicleService {
     await this.vehiclesRepository.delete(id);
   }
 
-  findAllForUser(userId: string, filterDto: FilterVehicle): Promise<Vehicle[]> {
+  findAllForUser(
+    userId: string,
+    filterDto: FilterVehicleDto,
+  ): Promise<Vehicle[]> {
     const where: FindOptionsWhere<Vehicle> = { userId: userId };
 
     if (filterDto.vehicleType !== undefined) {

@@ -3,7 +3,7 @@ import { FuelType } from "../common/fuel-type.enum.js";
 import { IsEnum, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 
-export class FilterVehicle {
+export class FilterVehicleDto {
   @IsOptional()
   @Type(() => Number)
   @IsEnum(VehicleType)

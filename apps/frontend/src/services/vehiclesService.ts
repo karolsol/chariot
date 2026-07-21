@@ -1,6 +1,6 @@
 import api from "./api.ts";
 import {
-  FilterVehicle,
+  FilterVehicleDto,
   type IVehicle,
   type UpdateVehicleDto,
 } from "@chariot/shared";
@@ -8,7 +8,7 @@ import type { CreateVehicleDto } from "@chariot/shared";
 import type { VehicleStatsDto } from "@chariot/shared";
 
 export const vehicleService = {
-  getAll: async (filterDto: FilterVehicle): Promise<IVehicle[]> => {
+  getAll: async (filterDto: FilterVehicleDto): Promise<IVehicle[]> => {
     const { data } = await api.get<IVehicle[]>("/vehicles", {
       params: filterDto,
     });
