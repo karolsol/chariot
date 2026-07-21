@@ -1,5 +1,9 @@
-import { IsDate, IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { Type } from "class-transformer";
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from "class-validator";
 
 export class FilterRefuelDto {
   @IsOptional()
@@ -7,7 +11,6 @@ export class FilterRefuelDto {
   @IsNotEmpty()
   vehicleId?: string;
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  fromDate?: Date;
+  @IsDateString()
+  fromDate?: string;
 }

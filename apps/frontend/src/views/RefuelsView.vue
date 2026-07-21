@@ -9,7 +9,6 @@ import EditRefuelModal from "../components/modals/EditRefuelModal.vue";
 import {
   CreateRefuelDto,
   type IRefuel,
-  type IVehicle,
   type UpdateRefuelDto,
 } from "@chariot/shared";
 import { Icon } from "@iconify/vue";

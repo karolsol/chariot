@@ -18,11 +18,11 @@ export function useRefuels(
   } = useQuery({
     queryKey: REFUELS_KEY,
     queryFn: async () => {
-      let fromDate: Date | undefined = undefined;
+      let fromDate: string | undefined = undefined;
       if (date && !isNaN(Number(date.value))) {
         const d = new Date();
         d.setDate(d.getDate() - Number(date.value));
-        fromDate = d;
+        fromDate = d.toISOString();
       }
       return await refuelService.getAll({
         vehicleId: vehicle?.value,

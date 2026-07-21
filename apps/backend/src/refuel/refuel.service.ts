@@ -68,7 +68,7 @@ export class RefuelService {
     }
     if (filterDto.fromDate !== undefined) {
       query.andWhere("refuel.date >= :fromDate", {
-        fromDate: filterDto.fromDate,
+        fromDate: new Date(filterDto.fromDate),
       });
     }
 
