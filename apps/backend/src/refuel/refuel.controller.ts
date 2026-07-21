@@ -9,10 +9,11 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Req,
 } from "@nestjs/common";
 import { RefuelService } from "./refuel.service";
-import { CreateRefuelDto } from "@chariot/shared";
+import { CreateRefuelDto, FilterRefuelDto } from "@chariot/shared";
 import { UpdateRefuelDto } from "@chariot/shared";
 import { Refuel } from "./refuel.entity";
 import type { RequestWithUser } from "../common/request-with-user.interface";
@@ -27,8 +28,8 @@ export class RefuelController {
   ) {}
 
   @Get()
-  findAll(@Req() req: RequestWithUser): Promise<Refuel[]> {
-    return this.refuelService.findAllForUser(req.user.id);
+  findAll(@Req() req: RequestWithUser, @Query() filterDto: FilterRefuelDto): Promise<Refuel[]> {
+    return this.refuelService.findAllForUser(req.user.id, filterDto);
   }
 
   @Get(":id")

@@ -9,6 +9,7 @@ import EditRefuelModal from "../components/modals/EditRefuelModal.vue";
 import {
   CreateRefuelDto,
   type IRefuel,
+  type IVehicle,
   type UpdateRefuelDto,
 } from "@chariot/shared";
 import { Icon } from "@iconify/vue";
@@ -17,12 +18,15 @@ import { useRefuels } from "../composables/useRefuels.ts";
 
 const selectedRefuel = ref<IRefuel>({} as IRefuel);
 
+const vehicleFilter = ref<string | undefined>();
+const dateRangeFilter = ref<string | undefined>();
+
 const modalStore = useModalStore();
 
 const { vehicles } = useVehicles();
 
 const { refuels, isLoading, isError, addRefuel, editRefuel, removeRefuel } =
-  useRefuels();
+  useRefuels(vehicleFilter, dateRangeFilter);
 
 const onCreate = () => {
   modalStore.open(AddRefuelModal, {
@@ -88,8 +92,12 @@ const onDelete = (id: string) => {
             <label for="vehicleFilter" class="form-label small text-muted"
               >Vehicle</label
             >
-            <select class="form-select form-select-sm" id="vehicleFilter">
-              <option value="all" selected>All</option>
+            <select
+              class="form-select form-select-sm"
+              id="vehicleFilter"
+              v-model="vehicleFilter"
+            >
+              <option :value="undefined" selected>All</option>
               <option
                 v-for="vehicle in vehicles"
                 :key="vehicle.id"
@@ -103,8 +111,12 @@ const onDelete = (id: string) => {
             <label for="dateRange" class="form-label small text-muted"
               >Date Range</label
             >
-            <select class="form-select form-select-sm" id="dateRange">
-              <option value="all" selected>All</option>
+            <select
+              class="form-select form-select-sm"
+              id="dateRange"
+              v-model="dateRangeFilter"
+            >
+              <option :value="undefined" selected>All</option>
               <option value="7">Last 7 days</option>
               <option value="30">Last 30 days</option>
               <option value="365">Last Year</option>

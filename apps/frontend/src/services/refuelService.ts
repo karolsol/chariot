@@ -1,17 +1,15 @@
 import api from "./api.ts";
-import type { CreateRefuelDto, IRefuel, IVehicle } from "@chariot/shared";
+import {
+  type CreateRefuelDto,
+  FilterRefuelDto,
+  type IRefuel,
+} from "@chariot/shared";
 import type { UpdateRefuelDto } from "@chariot/shared";
 
 export const refuelService = {
-  getAll: async (
-    vehicle?: IVehicle,
-    dataRange?: string,
-  ): Promise<IRefuel[]> => {
+  getAll: async (filterDto: FilterRefuelDto): Promise<IRefuel[]> => {
     const { data } = await api.get<IRefuel[]>("/refuels", {
-      params: {
-        vehicleId: vehicle != undefined ? vehicle.id : {},
-        dataRange: dataRange != undefined ? dataRange : {},
-      },
+      params: filterDto,
     });
     return data;
   },

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateRefuelDto } from "@chariot/shared";
+import { CreateRefuelDto, FilterRefuelDto } from "@chariot/shared";
 import { UpdateRefuelDto } from "@chariot/shared";
 import { Refuel } from "./refuel.entity";
 import { VehicleService } from "../vehicle/vehicle.service";
@@ -52,12 +52,27 @@ export class RefuelService {
     await this.refuelsRepository.delete(id);
   }
 
-  findAllForUser(userId: string): Promise<Refuel[]> {
-    return this.refuelsRepository
+  findAllForUser(
+    userId: string,
+    filterDto: FilterRefuelDto,
+  ): Promise<Refuel[]> {
+    const query = this.refuelsRepository
       .createQueryBuilder("refuel")
       .leftJoinAndSelect("refuel.vehicle", "vehicle")
-      .where("vehicle.userId = :userId", { userId })
-      .getMany();
+      .where("vehicle.userId = :userId", { userId });
+
+    if (filterDto.vehicleId !== undefined) {
+      query.andWhere("vehicle.id = :vehicleId", {
+        vehicleId: filterDto.vehicleId,
+      });
+    }
+    if (filterDto.fromDate !== undefined) {
+      query.andWhere("refuel.date >= :fromDate", {
+        fromDate: filterDto.fromDate,
+      });
+    }
+
+    return query.getMany();
   }
 
   async findAllForVehicle(

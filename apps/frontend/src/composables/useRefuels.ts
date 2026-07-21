@@ -1,14 +1,10 @@
 import type { Ref } from "vue";
-import {
-  CreateRefuelDto,
-  type IVehicle,
-  UpdateRefuelDto,
-} from "@chariot/shared";
+import { CreateRefuelDto, UpdateRefuelDto } from "@chariot/shared";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
 import { refuelService } from "../services/refuelService.ts";
 
 export function useRefuels(
-  vehicle?: Ref<IVehicle | undefined>,
+  vehicle?: Ref<string | undefined>,
   date?: Ref<string | undefined>,
 ) {
   const queryClient = useQueryClient();
@@ -21,7 +17,18 @@ export function useRefuels(
     error,
   } = useQuery({
     queryKey: REFUELS_KEY,
-    queryFn: () => refuelService.getAll(vehicle?.value, date?.value),
+    queryFn: async () => {
+      let fromDate: Date | undefined = undefined;
+      if (date && !isNaN(Number(date.value))) {
+        const d = new Date();
+        d.setDate(d.getDate() - Number(date.value));
+        fromDate = d;
+      }
+      return await refuelService.getAll({
+        vehicleId: vehicle?.value,
+        fromDate: fromDate,
+      });
+    },
   });
 
   const createMutation = useMutation({
