@@ -1,15 +1,16 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { ValidationPipe } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import cookieParser from "cookie-parser";
 import { AppDataSource } from "./config/data-source";
 
 async function bootstrap() {
-  console.log("Initializing database and running migrations...");
+  const logger = new Logger("MigrationRunner", { timestamp: true });
+  logger.log("Initializing database and running migrations...");
   await AppDataSource.initialize();
   await AppDataSource.runMigrations();
   await AppDataSource.destroy();
-  console.log("Database initialized and migrations run successfully.");
+  logger.log("Database initialized and migrations run successfully.");
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.use(cookieParser());
