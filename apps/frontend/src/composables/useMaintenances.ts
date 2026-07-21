@@ -1,14 +1,10 @@
 import type { Ref } from "vue";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query";
-import {
-  CreateMaintenanceDto,
-  type IVehicle,
-  UpdateMaintenanceDto,
-} from "@chariot/shared";
+import { CreateMaintenanceDto, UpdateMaintenanceDto } from "@chariot/shared";
 import { maintenanceService } from "../services/maintenanceService.ts";
 
 export function useMaintenances(
-  vehicle?: Ref<IVehicle | undefined>,
+  vehicle?: Ref<string | undefined>,
   date?: Ref<string | undefined>,
 ) {
   const queryClient = useQueryClient();
@@ -21,7 +17,18 @@ export function useMaintenances(
     error,
   } = useQuery({
     queryKey: MAINTENANCES_KEY,
-    queryFn: () => maintenanceService.getAll(vehicle?.value, date?.value),
+    queryFn: async () => {
+      let fromDate: string | undefined = undefined;
+      if (date && !isNaN(Number(date.value))) {
+        const d = new Date();
+        d.setDate(d.getDate() - Number(date.value));
+        fromDate = d.toISOString();
+      }
+      return await maintenanceService.getAll({
+        vehicleId: vehicle?.value,
+        fromDate: fromDate,
+      });
+    },
   });
 
   const createMutation = useMutation({

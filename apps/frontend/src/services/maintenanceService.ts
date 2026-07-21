@@ -2,20 +2,14 @@ import api from "./api.ts";
 import type {
   CreateMaintenanceDto,
   IMaintenance,
-  IVehicle,
   UpdateMaintenanceDto,
 } from "@chariot/shared";
+import type { FilterMaintenanceDto } from "@chariot/shared";
 
 export const maintenanceService = {
-  getAll: async (
-    vehicle?: IVehicle,
-    dataRange?: string,
-  ): Promise<IMaintenance[]> => {
+  getAll: async (filterDto: FilterMaintenanceDto): Promise<IMaintenance[]> => {
     const { data } = await api.get<IMaintenance[]>("/maintenances/", {
-      params: {
-        vehicleId: vehicle != undefined ? vehicle.id : {},
-        dataRange: dataRange != undefined ? dataRange : {},
-      },
+      params: filterDto,
     });
     return data;
   },

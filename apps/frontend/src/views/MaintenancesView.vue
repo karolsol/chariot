@@ -15,6 +15,11 @@ import { Icon } from "@iconify/vue";
 import { useVehicles } from "../composables/useVehicles.ts";
 import { useMaintenances } from "../composables/useMaintenances.ts";
 
+const selectedMaintenance = ref<IMaintenance>({} as IMaintenance);
+
+const vehicleFilter = ref<string | undefined>();
+const dateRangeFilter = ref<string | undefined>();
+
 const { vehicles } = useVehicles();
 const {
   maintenances,
@@ -23,9 +28,7 @@ const {
   addMaintenance,
   editMaintenance,
   removeMaintenance,
-} = useMaintenances();
-
-const selectedMaintenance = ref<IMaintenance>({} as IMaintenance);
+} = useMaintenances(vehicleFilter, dateRangeFilter);
 
 const modalStore = useModalStore();
 
@@ -95,8 +98,12 @@ const onDelete = (id: string) => {
             <label for="vehicleFilter" class="form-label small text-muted"
               >Vehicle</label
             >
-            <select class="form-select" id="vehicleFilter">
-              <option value="all" selected>All</option>
+            <select
+              class="form-select"
+              id="vehicleFilter"
+              v-model="vehicleFilter"
+            >
+              <option :value="undefined" selected>All</option>
               <option
                 v-for="vehicle in vehicles"
                 :key="vehicle.id"
@@ -111,8 +118,12 @@ const onDelete = (id: string) => {
             <label for="dateRange" class="form-label small text-muted"
               >Date Range</label
             >
-            <select class="form-select" id="dateRange">
-              <option value="all" selected>All</option>
+            <select
+              class="form-select"
+              id="dateRange"
+              v-model="dateRangeFilter"
+            >
+              <option :value="undefined" selected>All</option>
               <option value="7">Last 7 days</option>
               <option value="30">Last 30 days</option>
               <option value="365">Last Year</option>

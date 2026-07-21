@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateMaintenanceDto } from "@chariot/shared";
+import { CreateMaintenanceDto, FilterMaintenanceDto } from "@chariot/shared";
 import { UpdateMaintenanceDto } from "@chariot/shared";
 import { Maintenance } from "./maintenance.entity";
 import { VehicleService } from "../vehicle/vehicle.service";
@@ -57,12 +57,27 @@ export class MaintenanceService {
     await this.maintenanceRepository.delete(id);
   }
 
-  findAllForUser(userId: string): Promise<Maintenance[]> {
-    return this.maintenanceRepository
+  findAllForUser(
+    userId: string,
+    filterDto: FilterMaintenanceDto,
+  ): Promise<Maintenance[]> {
+    const query = this.maintenanceRepository
       .createQueryBuilder("maintenance")
       .leftJoinAndSelect("maintenance.vehicle", "vehicle")
-      .where("vehicle.userId = :userId", { userId })
-      .getMany();
+      .where("vehicle.userId = :userId", { userId });
+
+    if (filterDto.vehicleId !== undefined) {
+      query.andWhere("vehicle.id = :vehicleId", {
+        vehicleId: filterDto.vehicleId,
+      });
+    }
+    if (filterDto.fromDate !== undefined) {
+      query.andWhere("maintenance.date >= :fromDate", {
+        fromDate: new Date(filterDto.fromDate),
+      });
+    }
+
+    return query.getMany();
   }
 
   async findAllForVehicle(vehicleId: string): Promise<Maintenance[]> {

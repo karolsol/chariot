@@ -9,10 +9,11 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Req,
 } from "@nestjs/common";
 import { MaintenanceService } from "./maintenance.service";
-import { CreateMaintenanceDto } from "@chariot/shared";
+import { CreateMaintenanceDto, FilterMaintenanceDto } from "@chariot/shared";
 import { UpdateMaintenanceDto } from "@chariot/shared";
 import { Maintenance } from "./maintenance.entity";
 import type { RequestWithUser } from "../common/request-with-user.interface";
@@ -29,8 +30,11 @@ export class MaintenanceController {
   ) {}
 
   @Get()
-  findAll(@Req() req: RequestWithUser): Promise<Maintenance[]> {
-    return this.maintenanceService.findAllForUser(req.user.id);
+  findAll(
+    @Req() req: RequestWithUser,
+    @Query() filterDto: FilterMaintenanceDto,
+  ): Promise<Maintenance[]> {
+    return this.maintenanceService.findAllForUser(req.user.id, filterDto);
   }
 
   @Get(":id")
