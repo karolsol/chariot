@@ -33,5 +33,5 @@ export class CreateMaintenanceDto {
   @IsOptional()
   @IsInt()
   @Min(0)
-  mileage?: number;
+  mileage!: number;
 }
