@@ -1,0 +1,24 @@
+FROM node:26-slim AS build
+RUN npm install -g corepack --force && corepack enable
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json ./
+COPY apps/backend/package.json ./apps/backend/
+COPY libs/shared/package.json ./libs/shared/
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --filter backend...
+
+COPY apps/backend ./apps/backend
+COPY libs/shared ./libs/shared
+
+RUN pnpm --filter backend... build
+RUN pnpm --filter backend deploy --prod /backend
+
+FROM gcr.io/distroless/nodejs26-debian13:nonroot AS runner
+WORKDIR /app
+
+COPY --from=build --chown=nonroot:nonroot /backend/. /app
+
+USER nonroot
+EXPOSE 3000
+CMD ["dist/main.js"]
