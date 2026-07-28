@@ -3,7 +3,11 @@ services:
     image: ghcr.io/karolsol/chariot-backend:latest
     container_name: chariot-backend
     restart: unless-stopped
-    env: .env
+    env_file:
+      - .env
+    depends_on:
+      database:
+        condition: service_healthy
   frontend:
     image: ghcr.io/karolsol/chariot-frontend:latest
     container_name: chariot-frontend
@@ -13,12 +17,23 @@ services:
       BACKEND_PORT: ${BACKEND_PORT}
     ports:
       - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      backend:
+        condition: service_started
   database:
     image: postgres:latest
     container_name: chariot-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${DB_USER}
+      POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
-    env: .env
+    env_file: 
+      .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
