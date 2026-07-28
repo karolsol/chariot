@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: ghcr.io/karolsol/chariot-backend:latest
+    container_name: chariot-backend
+    restart: unless-stopped
+    env: .env
+  frontend:
+    image: ghcr.io/karolsol/chariot-frontend:latest
+    container_name: chariot-frontend
+    restart: unless-stopped
+    environment:
+      BACKEND_HOST: ${BACKEND_HOST}
+      BACKEND_PORT: ${BACKEND_PORT}
+    ports:
+      - "3000:3000"
+  database:
+    image: postgres:latest
+    container_name: chariot-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    env: .env

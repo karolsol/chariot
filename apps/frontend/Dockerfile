@@ -14,5 +14,5 @@ COPY libs/shared ./libs/shared
 RUN pnpm --filter frontend... build
 
 FROM nginx:alpine AS runner
-WORKDIR /app
+COPY ./docker/nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=build --chown=nginx:nginx /app/apps/frontend/dist /usr/share/nginx/html
