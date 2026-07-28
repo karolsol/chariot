@@ -16,9 +16,9 @@ jobs:
       matrix:
         include:
           - image-name: chariot-frontend
-            dockerfile: ./apps/frontend/Dockerfile
+            dockerfile: ./docker/Dockerfile.frontend
           - image-name: chariot-backend
-            dockerfile: ./apps/backend/Dockerfile
+            dockerfile: ./docker/Dockerfile.backend
 
     steps:
       - name: Checkout repository
