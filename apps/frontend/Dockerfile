@@ -1,5 +1,5 @@
 FROM node:26-slim AS build
-RUN npm install -g corepack --force && corepack enable
+RUN npm install -g corepack && corepack enable
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json ./
@@ -13,6 +13,6 @@ COPY libs/shared ./libs/shared
 
 RUN pnpm --filter frontend... build
 
-FROM nginx AS runner
+FROM nginx:alpine AS runner
 WORKDIR /app
 COPY --from=build --chown=nginx:nginx /app/apps/frontend/dist /usr/share/nginx/html
