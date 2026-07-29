@@ -14,6 +14,7 @@ import {
 import { Icon } from "@iconify/vue";
 import { useVehicles } from "../composables/useVehicles.ts";
 import { useRefuels } from "../composables/useRefuels.ts";
+import FetchingErrorCard from "../components/FetchingErrorCard.vue";
 
 const selectedRefuel = ref<IRefuel>({} as IRefuel);
 
@@ -140,9 +141,7 @@ const onDelete = (id: string) => {
           </div>
         </div>
 
-        <div v-else-if="isError" class="col-12 text-center text-danger py-5">
-          Something went wrong while fetching vehicles.
-        </div>
+        <FetchingErrorCard v-else-if="isError" />
         <template v-else>
           <template
             class="table-responsive"

@@ -43,8 +43,11 @@ export class UserController {
 
   @Post()
   @Public()
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.userService.add(createUserDto);
+  create(@Body() createUserDto: CreateUserDto): Promise<User | null> {
+    if (process.env.ALLOW_REGISTER == "true") {
+      return this.userService.add(createUserDto);
+    }
+    throw new ForbiddenException("Registration is not allowed");
   }
 
   @Put(":id")

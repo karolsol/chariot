@@ -19,6 +19,7 @@ import { useModalStore } from "../stores/modalStore.ts";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 import { Icon } from "@iconify/vue";
 import { useVehicles } from "../composables/useVehicles.ts";
+import FetchingErrorCard from "../components/FetchingErrorCard.vue";
 
 const modalStore = useModalStore();
 
@@ -119,9 +120,7 @@ const onStats = (id: string) => {
             </div>
           </div>
 
-          <div v-else-if="isError" class="col-12 text-center text-danger py-5">
-            Something went wrong while fetching vehicles.
-          </div>
+          <FetchingErrorCard v-else-if="isError" />
           <template v-else>
             <template v-if="vehicles && vehicles.length > 0">
               <div

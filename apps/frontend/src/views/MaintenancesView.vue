@@ -14,6 +14,7 @@ import AddMaintenanceModal from "../components/modals/AddMaintenanceModal.vue";
 import { Icon } from "@iconify/vue";
 import { useVehicles } from "../composables/useVehicles.ts";
 import { useMaintenances } from "../composables/useMaintenances.ts";
+import FetchingErrorCard from "../components/FetchingErrorCard.vue";
 
 const selectedMaintenance = ref<IMaintenance>({} as IMaintenance);
 
@@ -148,9 +149,7 @@ const onDelete = (id: string) => {
           </div>
         </div>
 
-        <div v-else-if="isError" class="col-12 text-center text-danger py-5">
-          Something went wrong while fetching vehicles.
-        </div>
+        <FetchingErrorCard v-else-if="isError" />
         <template v-else>
           <template
             class="table-responsive"

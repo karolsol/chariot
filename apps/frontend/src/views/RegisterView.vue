@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import { validate } from "class-validator";
 import { plainToInstance } from "class-transformer";
 import { CreateUserDto } from "@chariot/shared";
+import axios from "axios";
 
 const router = useRouter();
 
@@ -39,27 +40,29 @@ const handleRegister = async () => {
     errorMessage.value = "Passwords do not match";
     return;
   }
-  fetch("/api/users", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+  try {
+    await axios.post("/api/users", {
       username: username.value,
       password: password.value,
-    }),
-  })
-    .then(async (response) => {
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        router.push("/login");
-      } else {
-        errorMessage.value = "Username already taken";
-      }
-    })
-    .catch((error) => {
-      console.error("Registration error:", error);
-      errorMessage.value = "An error occurred during registration. Please try again.";
     });
+    router.push("/login");
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      switch (error.response?.status) {
+        case 409:
+          errorMessage.value = "This username is already taken";
+          break;
+        case 403:
+          errorMessage.value = "Registration disabled. See docs if that is not intentional";
+          break;
+        default:
+          errorMessage.value = `Server error: (${error.response?.status}). Try again later.`;
+      }
+    } else {
+      errorMessage.value = "Can't connect to server try again later";
+    }
+    console.error("Registration error:", error);
+  }
 };
 </script>
 <template>
