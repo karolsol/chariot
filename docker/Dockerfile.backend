@@ -18,6 +18,7 @@ FROM gcr.io/distroless/nodejs26-debian13:nonroot AS runner
 WORKDIR /app
 
 COPY --from=build --chown=nonroot:nonroot /backend/. /app
+COPY docker/healthcheck.js /app/dist/healthcheck.js
 
 USER nonroot
 EXPOSE 3000
