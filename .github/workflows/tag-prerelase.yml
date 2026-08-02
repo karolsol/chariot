@@ -1,0 +1,59 @@
+name: Create Prerelease on Tag
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  prerelease:
+    name: Publish prerelease
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get previous tag
+        id: get_previous_tag
+        run: |
+          git fetch --tags --force
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          echo "prev_tag=$PREV_TAG" >> "$GITHUB_ENV"
+          echo "Previous tag: $PREV_TAG"
+        shell: bash
+
+      - name: Generate release notes with commits
+        id: generate_notes
+        run: |
+          {
+            echo "Automated prerelease for tag **${{ github.ref_name }}**."
+            echo ""
+            if [ -n "$prev_tag" ]; then
+              echo "Changes since [$prev_tag](${{ github.server_url }}/${{ github.repository }}/releases/tag/$prev_tag):"
+              echo ""
+              git log "$prev_tag"..HEAD --oneline --pretty=format:"- %s" || echo "- No new commits."
+            else
+              echo "All commits included (first release):"
+              echo ""
+              git log --oneline --pretty=format:"- %s"
+            fi
+          } > release_body.txt
+        shell: bash
+
+      - name: Create Prerelease
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref_name }}
+          name: Prerelease ${{ github.ref_name }}
+          draft: false
+          prerelease: true
+          allowUpdates: true
+          updateOnlyUnreleased: true
+          bodyFile: ./release_body.txt
+          token: ${{ secrets.GITHUB_TOKEN }}
