@@ -32,9 +32,9 @@ const getVehicleName = (vehicle: IVehicle) => {
     <td>{{ getVehicleName(refuel.vehicle) }}</td>
     <td>{{ new Date(props.refuel.date).toLocaleDateString() }}</td>
     <td>{{ refuel.fuelPrice }}</td>
-    <td>{{ refuel.fuelAmount }} km</td>
-    <td>{{ refuel.fuelAmount * refuel.fuelPrice }}</td>
-    <td>{{ refuel.mileageAtRefuel }}</td>
+    <td>{{ refuel.fuelAmount }} l</td>
+    <td>{{ (refuel.fuelAmount * refuel.fuelPrice).toFixed(2) }}</td>
+    <td>{{ refuel.mileageAtRefuel }} km</td>
     <td>{{ refuel.gasStation }}</td>
     <td>
       <a
