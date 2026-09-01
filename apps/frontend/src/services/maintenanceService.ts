@@ -1,16 +1,21 @@
-import api from "./api.ts";
-import type {
-  CreateMaintenanceDto,
-  IMaintenance,
-  UpdateMaintenanceDto,
+import api from "./api";
+import {
+  type CreateMaintenanceDto,
+  FilterDto,
+  type IMaintenance,
+  type UpdateMaintenanceDto,
 } from "@chariot/shared";
-import type { FilterMaintenanceDto } from "@chariot/shared";
 
 export const maintenanceService = {
-  getAll: async (filterDto: FilterMaintenanceDto): Promise<IMaintenance[]> => {
-    const { data } = await api.get<IMaintenance[]>("/maintenances/", {
-      params: filterDto,
-    });
+  getAll: async (
+    filterDto: FilterDto,
+  ): Promise<{ items: IMaintenance[]; total: number }> => {
+    const { data } = await api.get<{ items: IMaintenance[]; total: number }>(
+      "/maintenances/",
+      {
+        params: filterDto,
+      },
+    );
     return data;
   },
 

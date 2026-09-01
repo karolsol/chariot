@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { h, ref, watch } from "vue";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
-import { useModalStore } from "../stores/modalStore.ts";
-import RefuelTableRow from "../components/RefuelTableRow.vue";
+import { useModalStore } from "../stores/modalStore";
 import AddRefuelModal from "../components/modals/AddRefuelModal.vue";
 import EditRefuelModal from "../components/modals/EditRefuelModal.vue";
 import {
@@ -12,21 +11,39 @@ import {
   type UpdateRefuelDto,
 } from "@chariot/shared";
 import { Icon } from "@iconify/vue";
-import { useVehicles } from "../composables/useVehicles.ts";
-import { useRefuels } from "../composables/useRefuels.ts";
+import { useVehicles } from "../composables/useVehicles";
+import { useRefuels } from "../composables/useRefuels";
 import FetchingErrorCard from "../components/FetchingErrorCard.vue";
+import DataTable from "../components/DataTable.vue";
+import {
+  createColumnHelper,
+  type PaginationState,
+  type SortingState,
+  tableFeatures,
+} from "@tanstack/vue-table";
 
 const selectedRefuel = ref<IRefuel>({} as IRefuel);
 
 const vehicleFilter = ref<string | undefined>();
 const dateRangeFilter = ref<string | undefined>();
 
+const pagination = ref<PaginationState>({
+  pageIndex: 0,
+  pageSize: 10,
+});
+
+const sorting = ref<SortingState>([]);
+
+watch([vehicleFilter, dateRangeFilter], () => {
+  pagination.value.pageIndex = 0;
+});
+
 const modalStore = useModalStore();
 
 const { vehicles } = useVehicles();
 
-const { refuels, isLoading, isError, addRefuel, editRefuel, removeRefuel } =
-  useRefuels(vehicleFilter, dateRangeFilter);
+const { refuels, pageCount, isLoading, isError, addRefuel, editRefuel, removeRefuel } =
+  useRefuels(vehicleFilter, dateRangeFilter, pagination, sorting);
 
 const onCreate = () => {
   modalStore.open(AddRefuelModal, {
@@ -80,6 +97,51 @@ const onDelete = (id: string) => {
     },
   });
 };
+
+const features = tableFeatures({});
+const columnHelper = createColumnHelper<typeof features, IRefuel>();
+
+const columns = [
+  columnHelper.accessor((row) => `${row.vehicle.make} ${row.vehicle.model}`, {
+    id: "vehicle",
+    header: "Vehicle",
+  }),
+  columnHelper.accessor("date", {
+    header: "Date",
+    cell: (info) => new Date(info.getValue()).toLocaleDateString(),
+  }),
+  columnHelper.accessor("fuelPrice", { header: "Fuel price" }),
+  columnHelper.accessor("fuelAmount", { header: "Fuel Amount" }),
+  columnHelper.accessor((row) => row.fuelPrice * row.fuelAmount, {
+    header: "Total Cost",
+  }),
+  columnHelper.accessor("mileageAtRefuel", { header: "Mileage" }),
+  columnHelper.accessor("gasStation", { header: "Gas Station" }),
+
+  columnHelper.display({
+    id: "actions",
+    header: "",
+    cell: ({ row }) =>
+      h("div", { class: "d-flex gap-2 justify-content-end" }, [
+        h(
+          "button",
+          {
+            class: "btn btn-sm btn-outline-primary",
+            onClick: () => onEdit(row.original.id),
+          },
+          [h(Icon, { icon: "mdi:pencil", width: 16, height: 16 })],
+        ),
+        h(
+          "button",
+          {
+            class: "btn btn-sm btn-outline-danger",
+            onClick: () => onDelete(row.original.id),
+          },
+          [h(Icon, { icon: "mdi:delete", width: 16, height: 16 })],
+        ),
+      ]),
+  }),
+];
 </script>
 
 <template>
@@ -122,11 +184,9 @@ const onDelete = (id: string) => {
               <option value="365">Last Year</option>
             </select>
           </div>
-
           <div class="col-12 col-md-6 d-grid d-md-flex justify-content-md-end">
             <button
               class="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2"
-              type="button"
               @click="onCreate"
             >
               <Icon icon="mdi:plus" width="18" height="18" />
@@ -134,50 +194,28 @@ const onDelete = (id: string) => {
             </button>
           </div>
         </div>
-        <h4>Refueling Overview</h4>
-        <div v-if="isLoading" class="col-12 text-center py-5">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
 
-        <FetchingErrorCard v-else-if="isError" />
-        <template v-else>
-          <template
-            class="table-responsive"
-            v-if="refuels && refuels.length > 0"
-          >
-            <table class="table table-striped table-hover">
-              <thead class="table-primary">
-                <tr>
-                  <th>Vehicle</th>
-                  <th>Date</th>
-                  <th>Fuel price</th>
-                  <th>Fuel Amount</th>
-                  <th>Total Cost</th>
-                  <th>Mileage</th>
-                  <th>Gas Station</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <RefuelTableRow
-                  :refuel="refuel"
-                  @edit="onEdit"
-                  @delete="onDelete"
-                  v-for="refuel in refuels"
-                  :key="refuel.id"
-                />
-              </tbody>
-            </table>
+        <h4>Refueling Overview</h4>
+
+        <DataTable
+          :data="refuels ?? []"
+          :columns="columns"
+          :is-loading="isLoading"
+          :is-error="isError"
+          v-model:pagination="pagination"
+          :page-count="pageCount"
+          v-model:sorting="sorting"
+        >
+          <template #error>
+            <FetchingErrorCard />
           </template>
-          <NoEntitiesCard
-            main-text="No refuels found"
-            secondary-text="You haven't added any refuels yet."
-            v-else
-          />
-        </template>
+          <template #empty>
+            <NoEntitiesCard
+              main-text="No refuels found"
+              secondary-text="You haven't added any refuels yet."
+            />
+          </template>
+        </DataTable>
       </div>
     </div>
   </div>

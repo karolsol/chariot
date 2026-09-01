@@ -1,16 +1,17 @@
-import api from "./api.ts";
-import {
-  type CreateRefuelDto,
-  FilterRefuelDto,
-  type IRefuel,
-} from "@chariot/shared";
+import api from "./api";
+import { type CreateRefuelDto, FilterDto, type IRefuel } from "@chariot/shared";
 import type { UpdateRefuelDto } from "@chariot/shared";
 
 export const refuelService = {
-  getAll: async (filterDto: FilterRefuelDto): Promise<IRefuel[]> => {
-    const { data } = await api.get<IRefuel[]>("/refuels", {
-      params: filterDto,
-    });
+  getAll: async (
+    filterDto: FilterDto,
+  ): Promise<{ items: IRefuel[]; total: number }> => {
+    const { data } = await api.get<{ items: IRefuel[]; total: number }>(
+      "/refuels",
+      {
+        params: filterDto,
+      },
+    );
     return data;
   },
 

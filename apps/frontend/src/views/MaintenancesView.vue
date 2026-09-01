@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import MaintenanceTableRow from "../components/MaintenanceTableRow.vue";
-import { ref } from "vue";
+import { h, ref, watch } from "vue";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
-import { useModalStore } from "../stores/modalStore.ts";
+import { useModalStore } from "../stores/modalStore";
 import EditMaintenanceModal from "../components/modals/EditMaintenanceModal.vue";
 import {
   CreateMaintenanceDto,
@@ -12,24 +11,43 @@ import {
 } from "@chariot/shared";
 import AddMaintenanceModal from "../components/modals/AddMaintenanceModal.vue";
 import { Icon } from "@iconify/vue";
-import { useVehicles } from "../composables/useVehicles.ts";
-import { useMaintenances } from "../composables/useMaintenances.ts";
+import { useVehicles } from "../composables/useVehicles";
+import { useMaintenances } from "../composables/useMaintenances";
 import FetchingErrorCard from "../components/FetchingErrorCard.vue";
+import {
+  createColumnHelper,
+  type PaginationState,
+  type SortingState,
+  tableFeatures,
+} from "@tanstack/vue-table";
+import DataTable from "../components/DataTable.vue";
 
 const selectedMaintenance = ref<IMaintenance>({} as IMaintenance);
 
 const vehicleFilter = ref<string | undefined>();
 const dateRangeFilter = ref<string | undefined>();
 
+const pagination = ref<PaginationState>({
+  pageIndex: 0,
+  pageSize: 10,
+});
+
+const sorting = ref<SortingState>([]);
+
+watch([vehicleFilter, dateRangeFilter], () => {
+  pagination.value.pageIndex = 0;
+});
+
 const { vehicles } = useVehicles();
 const {
   maintenances,
+  pageCount,
   isLoading,
   isError,
   addMaintenance,
   editMaintenance,
   removeMaintenance,
-} = useMaintenances(vehicleFilter, dateRangeFilter);
+} = useMaintenances(vehicleFilter, dateRangeFilter, pagination, sorting);
 
 const modalStore = useModalStore();
 
@@ -87,6 +105,60 @@ const onDelete = (id: string) => {
     },
   });
 };
+
+const features = tableFeatures({});
+const columnHelper = createColumnHelper<typeof features, IMaintenance>();
+
+const columns = [
+  columnHelper.accessor((row) => `${row.vehicle.make} ${row.vehicle.model}`, {
+    id: "vehicle",
+    header: "Vehicle",
+  }),
+  columnHelper.accessor("title", { header: "Title" }),
+  columnHelper.accessor("date", {
+    header: "Date",
+    cell: (info) => new Date(info.getValue()).toLocaleDateString(),
+  }),
+  columnHelper.accessor("mileage", { header: "Mileage" }),
+  columnHelper.accessor("cost", { header: "Cost" }),
+  columnHelper.display({
+    id: "invoice",
+    header: "Invoice",
+    cell: ({ row }) =>
+      h(
+        "a",
+        {
+          href: row.original.invoiceLink,
+          target: "_blank",
+          rel: "noopener noreferrer",
+        },
+        "View Invoice",
+      ),
+  }),
+  columnHelper.display({
+    id: "actions",
+    header: "",
+    cell: ({ row }) =>
+      h("div", { class: "d-flex gap-2 justify-content-end" }, [
+        h(
+          "button",
+          {
+            class: "btn btn-sm btn-outline-primary",
+            onClick: () => onEdit(row.original.id),
+          },
+          [h(Icon, { icon: "mdi:pencil", width: 16, height: 16 })],
+        ),
+        h(
+          "button",
+          {
+            class: "btn btn-sm btn-outline-danger",
+            onClick: () => onDelete(row.original.id),
+          },
+          [h(Icon, { icon: "mdi:delete", width: 16, height: 16 })],
+        ),
+      ]),
+  }),
+];
 </script>
 
 <template>
@@ -143,47 +215,25 @@ const onDelete = (id: string) => {
           </div>
         </div>
         <h4>Maintenance Overview</h4>
-        <div v-if="isLoading" class="col-12 text-center py-5">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
-
-        <FetchingErrorCard v-else-if="isError" />
-        <template v-else>
-          <template
-            class="table-responsive"
-            v-if="maintenances && maintenances.length > 0"
-          >
-            <table class="table table-striped table-hover">
-              <thead class="table-primary">
-                <tr>
-                  <th>Vehicle</th>
-                  <th>Title</th>
-                  <th>Date</th>
-                  <th>Mileage</th>
-                  <th>Cost</th>
-                  <th>Invoice</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <MaintenanceTableRow
-                  v-for="maintenance in maintenances"
-                  :key="maintenance.id"
-                  :maintenance="maintenance"
-                  @edit="onEdit"
-                  @delete="onDelete"
-                />
-              </tbody>
-            </table>
+        <DataTable
+          :data="maintenances ?? []"
+          :columns="columns"
+          :is-loading="isLoading"
+          :is-error="isError"
+          v-model:pagination="pagination"
+          :page-count="pageCount"
+          v-model:sorting="sorting"
+        >
+          <template #error>
+            <FetchingErrorCard />
           </template>
-          <NoEntitiesCard
-            main-text="No maintenances found"
-            secondary-text="You haven't added any maintenances yet."
-            v-else
-          />
-        </template>
+          <template #empty>
+            <NoEntitiesCard
+              main-text="No maintenances found"
+              secondary-text="You haven't added any maintenances yet."
+            />
+          </template>
+        </DataTable>
       </div>
     </div>
   </div>

@@ -13,7 +13,7 @@ import {
   Req,
 } from "@nestjs/common";
 import { MaintenanceService } from "./maintenance.service";
-import { CreateMaintenanceDto, FilterMaintenanceDto } from "@chariot/shared";
+import { CreateMaintenanceDto, FilterDto } from "@chariot/shared";
 import { UpdateMaintenanceDto } from "@chariot/shared";
 import { Maintenance } from "./maintenance.entity";
 import type { RequestWithUser } from "../common/request-with-user.interface";
@@ -32,8 +32,8 @@ export class MaintenanceController {
   @Get()
   findAll(
     @Req() req: RequestWithUser,
-    @Query() filterDto: FilterMaintenanceDto,
-  ): Promise<Maintenance[]> {
+    @Query() filterDto: FilterDto,
+  ): Promise<{ items: Maintenance[]; total: number }> {
     return this.maintenanceService.findAllForUser(req.user.id, filterDto);
   }
 

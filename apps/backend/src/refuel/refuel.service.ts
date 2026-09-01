@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateRefuelDto, FilterRefuelDto } from "@chariot/shared";
+import { CreateRefuelDto, FilterDto } from "@chariot/shared";
 import { UpdateRefuelDto } from "@chariot/shared";
 import { Refuel } from "./refuel.entity";
 import { VehicleService } from "../vehicle/vehicle.service";
@@ -52,10 +52,10 @@ export class RefuelService {
     await this.refuelsRepository.delete(id);
   }
 
-  findAllForUser(
+  async findAllForUser(
     userId: string,
-    filterDto: FilterRefuelDto,
-  ): Promise<Refuel[]> {
+    filterDto: FilterDto,
+  ): Promise<{ items: Refuel[]; total: number }> {
     const query = this.refuelsRepository
       .createQueryBuilder("refuel")
       .leftJoinAndSelect("refuel.vehicle", "vehicle")
@@ -72,7 +72,30 @@ export class RefuelService {
       });
     }
 
-    return query.getMany();
+    if (filterDto.sortBy !== undefined && filterDto.sortOrder !== undefined) {
+      const validColumns = this.refuelsRepository.metadata.columns.map(
+        (col) => col.propertyName,
+      );
+
+      const targetSortField = validColumns.includes(filterDto.sortBy)
+        ? filterDto.sortBy
+        : "date";
+
+      query.orderBy(
+        `refuel.${targetSortField}`,
+        filterDto.sortOrder.toUpperCase() as "ASC" | "DESC",
+      );
+    } else {
+      query.orderBy("refuel.date", "DESC");
+    }
+    if (filterDto.page !== undefined && filterDto.limit !== undefined) {
+      const skip = (filterDto.page - 1) * filterDto.limit;
+      query.skip(skip).take(filterDto.limit);
+    }
+
+    const [data, total] = await query.getManyAndCount();
+
+    return { items: data, total };
   }
 
   async findAllForVehicle(

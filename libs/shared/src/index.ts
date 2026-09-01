@@ -13,11 +13,10 @@ export * from "./vehicle/filter-vehicle.dto.js";
 export * from "./refuel/refuel.interface.js";
 export * from "./refuel/create-refuel.dto.js";
 export * from "./refuel/update-refuel.dto.js";
-export * from "./refuel/filter-refuel.dto.js";
+export * from "./refuel/filter.dto.js";
 
 export * from "./maintenance/maintenance.interface.js";
 export * from "./maintenance/create-maintenance.dto.js";
 export * from "./maintenance/update-maintenance.dto.js";
-export * from "./maintenance/filter-maintenance.dto.js";
 
 export * from "./common/fuel-type.enum.js";

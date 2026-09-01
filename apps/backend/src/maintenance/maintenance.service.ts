@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateMaintenanceDto, FilterMaintenanceDto } from "@chariot/shared";
+import { CreateMaintenanceDto, FilterDto } from "@chariot/shared";
 import { UpdateMaintenanceDto } from "@chariot/shared";
 import { Maintenance } from "./maintenance.entity";
 import { VehicleService } from "../vehicle/vehicle.service";
@@ -57,10 +57,10 @@ export class MaintenanceService {
     await this.maintenanceRepository.delete(id);
   }
 
-  findAllForUser(
+  async findAllForUser(
     userId: string,
-    filterDto: FilterMaintenanceDto,
-  ): Promise<Maintenance[]> {
+    filterDto: FilterDto,
+  ): Promise<{ items: Maintenance[]; total: number }> {
     const query = this.maintenanceRepository
       .createQueryBuilder("maintenance")
       .leftJoinAndSelect("maintenance.vehicle", "vehicle")
@@ -77,7 +77,30 @@ export class MaintenanceService {
       });
     }
 
-    return query.getMany();
+    if (filterDto.sortBy !== undefined && filterDto.sortOrder !== undefined) {
+      const validColumns = this.maintenanceRepository.metadata.columns.map(
+        (col) => col.propertyName,
+      );
+
+      const targetSortField = validColumns.includes(filterDto.sortBy)
+        ? filterDto.sortBy
+        : "date";
+
+      query.orderBy(
+        `maintenance.${targetSortField}`,
+        filterDto.sortOrder.toUpperCase() as "ASC" | "DESC",
+      );
+    } else {
+      query.orderBy("maintenance.date", "DESC");
+    }
+    if (filterDto.page !== undefined && filterDto.limit !== undefined) {
+      const skip = (filterDto.page - 1) * filterDto.limit;
+      query.skip(skip).take(filterDto.limit);
+    }
+
+    const [data, total] = await query.getManyAndCount();
+
+    return { items: data, total };
   }
 
   async findAllForVehicle(vehicleId: string): Promise<Maintenance[]> {
