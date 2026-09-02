@@ -21,6 +21,7 @@ import {
   tableFeatures,
 } from "@tanstack/vue-table";
 import DataTable from "../components/DataTable.vue";
+import ActionButton from "../components/ActionButton.vue";
 
 const selectedMaintenance = ref<IMaintenance>({} as IMaintenance);
 
@@ -122,41 +123,40 @@ const columns = [
   columnHelper.accessor("mileage", { header: "Mileage" }),
   columnHelper.accessor("cost", { header: "Cost" }),
   columnHelper.display({
-    id: "invoice",
-    header: "Invoice",
-    cell: ({ row }) =>
-      h(
-        "a",
-        {
-          href: row.original.invoiceLink,
-          target: "_blank",
-          rel: "noopener noreferrer",
-        },
-        "View Invoice",
-      ),
-  }),
-  columnHelper.display({
     id: "actions",
     header: "",
-    cell: ({ row }) =>
-      h("div", { class: "d-flex gap-2 justify-content-end" }, [
-        h(
-          "button",
-          {
-            class: "btn btn-sm btn-outline-primary",
-            onClick: () => onEdit(row.original.id),
-          },
-          [h(Icon, { icon: "mdi:pencil", width: 16, height: 16 })],
-        ),
-        h(
-          "button",
-          {
-            class: "btn btn-sm btn-outline-danger",
-            onClick: () => onDelete(row.original.id),
-          },
-          [h(Icon, { icon: "mdi:delete", width: 16, height: 16 })],
-        ),
-      ]),
+    cell: ({ row }) => {
+      const { id, invoiceLink } = row.original;
+
+      return h(
+        "div",
+        { class: "d-flex gap-2 justify-content-end" },
+        [
+          // Only show the invoice button if there is an invoice link
+          invoiceLink &&
+            h(ActionButton, {
+              icon: "mdi:file-document-outline",
+              variant: "secondary",
+              title: "Invoice",
+              onClick: () => window.open(invoiceLink, "_blank"),
+            }),
+
+          h(ActionButton, {
+            icon: "mdi:pencil",
+            variant: "primary",
+            title: "Edit",
+            onClick: () => onEdit(id),
+          }),
+
+          h(ActionButton, {
+            icon: "mdi:delete",
+            variant: "danger",
+            title: "Delete",
+            onClick: () => onDelete(id),
+          }),
+        ].filter(Boolean),
+      );
+    },
   }),
 ];
 </script>

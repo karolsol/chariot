@@ -13,14 +13,14 @@ import {
 } from "@tanstack/vue-table";
 
 const props = defineProps<{
-    data: TData[];
-    columns: ColumnDef<any, TData, any>[];
-    isLoading?: boolean;
-    isError?: boolean;
-    pageCount?: number;
-    pagination: PaginationState;
-    sorting: SortingState;
-  }>();
+  data: TData[];
+  columns: ColumnDef<any, TData, any>[];
+  isLoading?: boolean;
+  isError?: boolean;
+  pageCount?: number;
+  pagination: PaginationState;
+  sorting: SortingState;
+}>();
 
 const emit = defineEmits<{
   "update:pagination": [PaginationState];
