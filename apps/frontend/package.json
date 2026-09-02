@@ -13,6 +13,7 @@
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix"
   },
+  "sideEffects": ["reflect-metadata", "**/*.css"],
   "dependencies": {
     "@chariot/shared": "workspace:*",
     "@iconify/vue": "5.0.1",
