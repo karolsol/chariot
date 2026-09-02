@@ -1,6 +1,4 @@
 import { ClassSerializerInterceptor, Module } from "@nestjs/common";
-import { ServeStaticModule } from "@nestjs/serve-static";
-import { join } from "path";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserModule } from "./user/user.module";
 import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
@@ -14,9 +12,6 @@ import { createDataSourceOptions } from "./config/data-source";
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "..", "..", "..", "/dist/apps/frontend"),
-    }),
     UserModule,
     AuthModule,
     CaslModule,
