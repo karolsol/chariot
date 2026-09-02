@@ -12,8 +12,7 @@ import { Vehicle } from "../vehicle/vehicle.entity";
 import { Maintenance } from "../maintenance/maintenance.entity";
 
 type Subjects =
-  | InferSubjects<typeof User | typeof Vehicle | typeof Maintenance>
-  | "all";
+  InferSubjects<typeof User | typeof Vehicle | typeof Maintenance> | "all";
 
 export type AppAbility = MongoAbility<[Action, Subjects]>;
 
