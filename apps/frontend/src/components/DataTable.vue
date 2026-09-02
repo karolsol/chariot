@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="TData extends Record<string, any>">
 import { computed } from "vue";
+import { Icon } from "@iconify/vue";
 import {
   useTable,
   FlexRender,
@@ -120,11 +121,15 @@ const table = useTable({
                   :render="header.column.columnDef.header"
                   :props="header.getContext()"
                 />
-                <span v-if="header.column.getIsSorted() === 'asc'">▲</span>
+                <span v-if="header.column.getIsSorted() === 'asc'"
+                  ><Icon icon="mdi:arrow-up"
+                /></span>
                 <span v-else-if="header.column.getIsSorted() === 'desc'"
-                  >▼</span
-                >
-                <span v-else>⇅</span>
+                  ><Icon icon="mdi:arrow-down"
+                /></span>
+                <span v-else>
+                  <Icon icon="mdi:sort" />
+                </span>
               </div>
             </th>
           </tr>
