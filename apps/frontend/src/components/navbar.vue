@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { onMounted, ref } from "vue";
-import { useUserStore } from "../stores/userStore.ts";
-import { useThemeStore } from "../stores/themeStore.ts";
+import { useUserStore } from "../stores/userStore";
+import { useThemeStore } from "../stores/themeStore";
 
 const userStore = useUserStore();
 const themeStore = useThemeStore();

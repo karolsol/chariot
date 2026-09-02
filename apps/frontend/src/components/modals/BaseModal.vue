@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useModalStore } from "../../stores/modalStore.ts";
+import { useModalStore } from "../../stores/modalStore";
 import { computed } from "vue";
 
 const store = useModalStore();

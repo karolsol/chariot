@@ -2,7 +2,7 @@
 import VehicleCard from "../components/VehicleCard.vue";
 import { ref } from "vue";
 import NoEntitiesCard from "../components/NoEntitiesCard.vue";
-import { vehicleService } from "../services/vehiclesService.ts";
+import { vehicleService } from "../services/vehiclesService";
 import {
   type CreateVehicleDto,
   FuelType,
@@ -15,10 +15,10 @@ import type { UpdateVehicleDto } from "@chariot/shared";
 import VehicleTypeSelector from "../components/VehicleTypeSelector.vue";
 import FuelTypeSelector from "../components/FuelTypeSelector.vue";
 import StatsVehicleModal from "../components/modals/StatsVehicleModal.vue";
-import { useModalStore } from "../stores/modalStore.ts";
+import { useModalStore } from "../stores/modalStore";
 import ConfirmationPopup from "../components/modals/ConfirmationPopup.vue";
 import { Icon } from "@iconify/vue";
-import { useVehicles } from "../composables/useVehicles.ts";
+import { useVehicles } from "../composables/useVehicles";
 import FetchingErrorCard from "../components/FetchingErrorCard.vue";
 
 const modalStore = useModalStore();

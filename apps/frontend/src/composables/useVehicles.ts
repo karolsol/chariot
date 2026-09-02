@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/vue-query";
-import { vehicleService } from "../services/vehiclesService.ts";
+import { vehicleService } from "../services/vehiclesService";
 import {
   type UpdateVehicleDto,
   type CreateVehicleDto,
