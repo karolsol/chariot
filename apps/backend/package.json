@@ -6,6 +6,7 @@
     "start": "nest start",
     "dev": "nest start --watch",
     "build": "nest build",
+    "type-check": "tsc --noEmit",
     "typeorm": "NODE_OPTIONS='-r tsconfig-paths/register' TS_NODE_PROJECT='tsconfig.app.json' pnpm exec typeorm-ts-node-commonjs",
     "migration:generate": "sh -c 'pnpm typeorm migration:generate src/migrations/$1 -d src/config/data-source.ts' --",
     "migration:run": "pnpm typeorm migration:run -d src/config/data-source.ts",
