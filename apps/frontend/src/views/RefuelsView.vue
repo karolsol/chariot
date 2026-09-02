@@ -149,7 +149,7 @@ const columns = [
     <div class="row">
       <div class="col-12">
         <h2>Your refuels:</h2>
-        <div class="row g-3 mb-4 align-items-end">
+        <div class="row mb-4 align-items-end">
           <div class="col-6 col-md-3">
             <label for="vehicleFilter" class="form-label small text-muted"
               >Vehicle</label
