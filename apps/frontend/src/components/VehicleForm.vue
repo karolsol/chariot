@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { ref } from "vue";
 import { validate } from "class-validator";
 import { plainToInstance } from "class-transformer";
@@ -46,6 +45,7 @@ defineExpose({ validateForm });
     <div class="col-md-6 mb-3">
       <label for="make" class="form-label">Make</label>
       <input
+        v-autofocus
         id="make"
         type="text"
         class="form-control form-control-sm"
@@ -91,7 +91,9 @@ defineExpose({ validateForm });
         v-model.number="form.initialMileage"
         required
       />
-      <div class="invalid-feedback" v-if="errors.initialMileage">{{ errors.initialMileage }}</div>
+      <div class="invalid-feedback" v-if="errors.initialMileage">
+        {{ errors.initialMileage }}
+      </div>
     </div>
   </div>
   <div class="row">
@@ -110,7 +112,9 @@ defineExpose({ validateForm });
         <option value="2">Electric</option>
         <option value="3">Hybrid</option>
       </select>
-      <div class="invalid-feedback" v-if="errors.fuelType">{{ errors.fuelType }}</div>
+      <div class="invalid-feedback" v-if="errors.fuelType">
+        {{ errors.fuelType }}
+      </div>
     </div>
     <div class="col-md-6 mb-3">
       <label for="vehicleType" class="form-label">Vehicle type</label>
@@ -125,7 +129,9 @@ defineExpose({ validateForm });
         <option value="0">Car</option>
         <option value="1">Motorcycle</option>
       </select>
-      <div class="invalid-feedback" v-if="errors.vehicleType">{{ errors.vehicleType }}</div>
+      <div class="invalid-feedback" v-if="errors.vehicleType">
+        {{ errors.vehicleType }}
+      </div>
     </div>
   </div>
   <div class="mb-3">
@@ -152,6 +158,8 @@ defineExpose({ validateForm });
       v-model="form.registrationNumber"
       required
     />
-    <div class="invalid-feedback" v-if="errors.registrationNumber">{{ errors.registrationNumber }}</div>
+    <div class="invalid-feedback" v-if="errors.registrationNumber">
+      {{ errors.registrationNumber }}
+    </div>
   </div>
 </template>

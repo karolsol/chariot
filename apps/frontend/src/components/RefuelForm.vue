@@ -66,6 +66,7 @@ const formattedDate = computed({
     <div class="col-md-6 mb-3">
       <label for="editEntryVehicle" class="form-label">Vehicle</label>
       <select
+        v-autofocus
         class="form-select form-select-sm"
         :class="{ 'is-invalid': errors.vehicleId }"
         v-model="form.vehicleId"

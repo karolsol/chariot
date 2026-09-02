@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
+import { vAutofocus } from "../../directives/vAutofocus";
 
 type Variant =
-  | "danger"
-  | "warning"
-  | "success"
-  | "info"
-  | "primary"
-  | "secondary";
+  "danger" | "warning" | "success" | "info" | "primary" | "secondary";
 
 const props = defineProps<{
   title: string;
@@ -17,8 +13,6 @@ const props = defineProps<{
   icon: string;
   variant: Variant;
 }>();
-
-console.log(props)
 
 const emit = defineEmits<{
   (e: "submit"): void;
@@ -54,6 +48,7 @@ function handleClose(): void {
 
   <div class="modal-footer border-0 pt-0 justify-content-end">
     <button
+      v-autofocus
       type="button"
       class="btn btn-outline-secondary"
       @click="handleClose"
