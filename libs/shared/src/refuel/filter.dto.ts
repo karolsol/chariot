@@ -7,7 +7,7 @@ import {
   IsString,
   Min,
 } from "class-validator";
-import { Type } from "class-transformer";
+import { Transform } from "class-transformer";
 
 export class FilterDto {
   @IsOptional()
@@ -20,12 +20,12 @@ export class FilterDto {
   @IsOptional()
   @IsNumber()
   @Min(0)
-  @Type(() => Number)
+  @Transform(({ value }) => (value === undefined ? undefined : Number(value)))
   page?: number;
   @IsOptional()
   @IsNumber()
   @Min(1)
-  @Type(() => Number)
+  @Transform(({ value }) => (value === undefined ? undefined : Number(value)))
   limit?: number;
 
   @IsOptional()

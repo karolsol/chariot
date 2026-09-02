@@ -1,15 +1,16 @@
 import { VehicleType } from "./vehicle-type.enum.js";
 import { FuelType } from "../common/fuel-type.enum.js";
 import { IsEnum, IsOptional } from "class-validator";
-import { Type } from "class-transformer";
+import { Transform } from "class-transformer";
 
 export class FilterVehicleDto {
   @IsOptional()
-  @Type(() => Number)
   @IsEnum(VehicleType)
+  @Transform(({ value }) => (value === undefined ? undefined : Number(value)))
   vehicleType?: VehicleType;
+
   @IsOptional()
-  @Type(() => Number)
   @IsEnum(FuelType)
+  @Transform(({ value }) => (value === undefined ? undefined : Number(value)))
   fuelType?: FuelType;
 }
