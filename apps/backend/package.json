@@ -52,6 +52,6 @@
     "@types/passport-local": "1.0.38",
     "@vitest/coverage-v8": "^5.0.1",
     "unplugin-swc": "^1.6.0",
-    "vitest": "^5.0.1"
+    "vitest": "^4.1.11"
   }
 }
