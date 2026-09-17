@@ -13,7 +13,9 @@
     "migration:generate": "sh -c 'pnpm typeorm migration:generate src/migrations/$1 -d src/config/data-source.ts' --",
     "migration:run": "pnpm typeorm migration:run -d src/config/data-source.ts",
     "migration:revert": "pnpm typeorm migration:revert -d src/config/data-source.ts",
-    "schema:log": "pnpm typeorm schema:log -d src/config/data-source.ts"
+    "schema:log": "pnpm typeorm schema:log -d src/config/data-source.ts",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage"
   },
   "dependencies": {
     "@casl/ability": "7.0.1",
@@ -41,12 +43,15 @@
     "@nestjs/cli": "11.0.24",
     "@nestjs/schematics": "11.1.0",
     "@nestjs/testing": "11.1.28",
+    "@swc/core": "^1.16.2",
     "@types/bcrypt": "6.0.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/express": "5.0.6",
     "@types/node": "26.1.2",
     "@types/passport-jwt": "4.0.1",
     "@types/passport-local": "1.0.38",
-    "@types/supertest": "7.2.1"
+    "@vitest/coverage-v8": "^5.0.1",
+    "unplugin-swc": "^1.6.0",
+    "vitest": "^5.0.1"
   }
 }

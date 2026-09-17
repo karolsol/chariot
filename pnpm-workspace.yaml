@@ -2,3 +2,7 @@ packages:
   - 'apps/backend'
   - 'apps/frontend'
   - 'libs/shared'
+allowBuilds:
+  '@swc/core': true
+  bcrypt: true
+  vue-demi: true
