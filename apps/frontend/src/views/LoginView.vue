@@ -26,39 +26,58 @@ const handleLogin = async () => {
       <div class="col-md-6 col-lg-4">
         <div class="card shadow">
           <div class="card-body p-5">
-            <h3 class="card-title text-center mb-4">Login</h3>
+            <h3 class="card-title text-center mb-4">
+              Login
+            </h3>
 
-            <div v-if="errorMessage" class="alert alert-danger" role="alert">
+            <div
+              v-if="errorMessage"
+              class="alert alert-danger"
+              role="alert"
+            >
               {{ errorMessage }}
             </div>
 
             <form @submit.prevent="handleLogin">
               <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label
+                  for="username"
+                  class="form-label"
+                >Username</label>
                 <input
+                  id="username"
                   v-model="username"
                   type="text"
                   class="form-control"
-                  id="username"
                   required
-                />
+                >
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label
+                  for="password"
+                  class="form-label"
+                >Password</label>
                 <input
+                  id="password"
                   v-model="password"
                   type="password"
                   class="form-control"
-                  id="password"
                   required
-                />
+                >
               </div>
-              <button type="submit" class="btn btn-primary w-100">Login</button>
+              <button
+                type="submit"
+                class="btn btn-primary w-100"
+              >
+                Login
+              </button>
             </form>
 
             <p class="text-center mt-3 mb-0">
               Not registered?
-              <router-link to="/register">Create account</router-link>
+              <router-link to="/register">
+                Create account
+              </router-link>
             </p>
           </div>
         </div>

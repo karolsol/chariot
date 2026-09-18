@@ -43,122 +43,198 @@ defineExpose({ validateForm });
 <template>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="make" class="form-label">Make</label>
+      <label
+        for="make"
+        class="form-label"
+      >Make</label>
       <input
-        v-autofocus
         id="make"
+        v-model="form.make"
+        v-autofocus
         type="text"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.make }"
-        v-model="form.make"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.make">{{ errors.make }}</div>
+      >
+      <div
+        v-if="errors.make"
+        class="invalid-feedback"
+      >
+        {{ errors.make }}
+      </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="model" class="form-label">Model</label>
+      <label
+        for="model"
+        class="form-label"
+      >Model</label>
       <input
         id="model"
+        v-model="form.model"
         type="text"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.model }"
-        v-model="form.model"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.model">{{ errors.model }}</div>
+      >
+      <div
+        v-if="errors.model"
+        class="invalid-feedback"
+      >
+        {{ errors.model }}
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="year" class="form-label">Year</label>
+      <label
+        for="year"
+        class="form-label"
+      >Year</label>
       <input
         id="year"
+        v-model.number="form.year"
         type="number"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.year }"
-        v-model.number="form.year"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.year">{{ errors.year }}</div>
+      >
+      <div
+        v-if="errors.year"
+        class="invalid-feedback"
+      >
+        {{ errors.year }}
+      </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="initialMileage" class="form-label">Initial mileage</label>
+      <label
+        for="initialMileage"
+        class="form-label"
+      >Initial mileage</label>
       <input
         id="initialMileage"
+        v-model.number="form.initialMileage"
         type="number"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.initialMileage }"
-        v-model.number="form.initialMileage"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.initialMileage">
+      >
+      <div
+        v-if="errors.initialMileage"
+        class="invalid-feedback"
+      >
         {{ errors.initialMileage }}
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="fuelType" class="form-label">Fuel type</label>
+      <label
+        for="fuelType"
+        class="form-label"
+      >Fuel type</label>
       <select
         id="fuelType"
+        v-model.number="form.fuelType"
         class="form-select form-select-sm"
         :class="{ 'is-invalid': errors.fuelType }"
-        v-model.number="form.fuelType"
         required
       >
-        <option value="" hidden>Select fuel type</option>
-        <option value="0">Gasoline</option>
-        <option value="1">Diesel</option>
-        <option value="2">Electric</option>
-        <option value="3">Hybrid</option>
+        <option
+          value=""
+          hidden
+        >
+          Select fuel type
+        </option>
+        <option value="0">
+          Gasoline
+        </option>
+        <option value="1">
+          Diesel
+        </option>
+        <option value="2">
+          Electric
+        </option>
+        <option value="3">
+          Hybrid
+        </option>
       </select>
-      <div class="invalid-feedback" v-if="errors.fuelType">
+      <div
+        v-if="errors.fuelType"
+        class="invalid-feedback"
+      >
         {{ errors.fuelType }}
       </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="vehicleType" class="form-label">Vehicle type</label>
+      <label
+        for="vehicleType"
+        class="form-label"
+      >Vehicle type</label>
       <select
         id="vehicleType"
+        v-model.number="form.vehicleType"
         class="form-select form-select-sm"
         :class="{ 'is-invalid': errors.vehicleType }"
-        v-model.number="form.vehicleType"
         required
       >
-        <option value="" hidden>Select vehicle type</option>
-        <option value="0">Car</option>
-        <option value="1">Motorcycle</option>
+        <option
+          value=""
+          hidden
+        >
+          Select vehicle type
+        </option>
+        <option value="0">
+          Car
+        </option>
+        <option value="1">
+          Motorcycle
+        </option>
       </select>
-      <div class="invalid-feedback" v-if="errors.vehicleType">
+      <div
+        v-if="errors.vehicleType"
+        class="invalid-feedback"
+      >
         {{ errors.vehicleType }}
       </div>
     </div>
   </div>
   <div class="mb-3">
-    <label for="vin" class="form-label">VIN</label>
+    <label
+      for="vin"
+      class="form-label"
+    >VIN</label>
     <input
       id="vin"
+      v-model="form.vin"
       type="text"
       class="form-control form-control-sm"
       :class="{ 'is-invalid': errors.vin }"
-      v-model="form.vin"
       required
-    />
-    <div class="invalid-feedback" v-if="errors.vin">{{ errors.vin }}</div>
+    >
+    <div
+      v-if="errors.vin"
+      class="invalid-feedback"
+    >
+      {{ errors.vin }}
+    </div>
   </div>
   <div class="mb-3">
-    <label for="registrationNumber" class="form-label"
-      >Registration number</label
-    >
+    <label
+      for="registrationNumber"
+      class="form-label"
+    >Registration number</label>
     <input
       id="registrationNumber"
+      v-model="form.registrationNumber"
       type="text"
       class="form-control form-control-sm"
       :class="{ 'is-invalid': errors.registrationNumber }"
-      v-model="form.registrationNumber"
       required
-    />
-    <div class="invalid-feedback" v-if="errors.registrationNumber">
+    >
+    <div
+      v-if="errors.registrationNumber"
+      class="invalid-feedback"
+    >
       {{ errors.registrationNumber }}
     </div>
   </div>

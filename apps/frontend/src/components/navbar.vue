@@ -37,18 +37,25 @@ const handleLogout = () => {
         class="navbar-brand fw-bold d-flex align-items-center gap-2"
         @click="closeMenu"
       >
-        <Icon icon="fa-solid:car" class="text-primary" />
+        <Icon
+          icon="fa-solid:car"
+          class="text-primary"
+        />
         <span>Chariot</span>
       </router-link>
 
-      <button class="navbar-toggler" type="button" @click="toggleMenu">
-        <span class="navbar-toggler-icon"></span>
+      <button
+        class="navbar-toggler"
+        type="button"
+        @click="toggleMenu"
+      >
+        <span class="navbar-toggler-icon" />
       </button>
 
       <div
+        id="navbarNav"
         class="collapse navbar-collapse"
         :class="{ show: isExpanded }"
-        id="navbarNav"
       >
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 pt-2 pt-lg-0">
           <li class="nav-item">
@@ -89,11 +96,15 @@ const handleLogout = () => {
             @click="themeStore.toggleTheme"
           >
             <Icon
-              icon="fa-solid:moon"
               v-if="themeStore.theme === 'dark'"
+              icon="fa-solid:moon"
               class="fs-5 text-info"
             />
-            <Icon icon="fa-solid:sun" v-else class="fs-5 text-warning" />
+            <Icon
+              v-else
+              icon="fa-solid:sun"
+              class="fs-5 text-warning"
+            />
           </button>
 
           <button

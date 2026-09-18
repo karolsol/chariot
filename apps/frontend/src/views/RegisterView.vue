@@ -71,62 +71,83 @@ const handleRegister = async () => {
       <div class="col-md-6 col-lg-4">
         <div class="card shadow">
           <div class="card-body p-5">
-            <h3 class="card-title text-center mb-4">Register</h3>
-            <div v-if="errorMessage" class="alert alert-danger" role="alert">
+            <h3 class="card-title text-center mb-4">
+              Register
+            </h3>
+            <div
+              v-if="errorMessage"
+              class="alert alert-danger"
+              role="alert"
+            >
               {{ errorMessage }}
             </div>
             <form @submit.prevent="handleRegister">
               <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label
+                  for="username"
+                  class="form-label"
+                >Username</label>
                 <input
+                  id="username"
+                  v-model="username"
                   type="text"
                   class="form-control"
                   :class="{ 'is-invalid': errors.username }"
-                  id="username"
-                  v-model="username"
                   required
-                />
-                <div class="invalid-feedback" v-if="errors.username">
+                >
+                <div
+                  v-if="errors.username"
+                  class="invalid-feedback"
+                >
                   {{ errors.username }}
                 </div>
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label
+                  for="password"
+                  class="form-label"
+                >Password</label>
                 <input
+                  id="password"
+                  v-model="password"
                   type="password"
                   class="form-control"
                   :class="{ 'is-invalid': errors.password }"
-                  id="password"
-                  v-model="password"
                   required
-                />
-                <div class="invalid-feedback" v-if="errors.password">
+                >
+                <div
+                  v-if="errors.password"
+                  class="invalid-feedback"
+                >
                   {{ errors.password }}
                 </div>
               </div>
               <div class="mb-3">
-                <label for="confirmPassword" class="form-label"
-                  >Confirm Password</label
-                >
+                <label
+                  for="confirmPassword"
+                  class="form-label"
+                >Confirm Password</label>
                 <input
-                  type="password"
-                  class="form-control"
                   id="confirmPassword"
                   v-model="confirmPassword"
+                  type="password"
+                  class="form-control"
                   required
-                />
+                >
               </div>
               <button
+                id="registerButton"
                 type="submit"
                 class="btn btn-primary w-100"
-                id="registerButton"
               >
                 Register
               </button>
             </form>
             <p class="text-center mt-3 mb-0">
               Already have an account?
-              <router-link to="/login">Login here</router-link>
+              <router-link to="/login">
+                Login here
+              </router-link>
             </p>
           </div>
         </div>

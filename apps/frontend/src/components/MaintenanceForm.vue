@@ -68,16 +68,25 @@ const formattedDate = computed({
 <template>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="entryVehicle" class="form-label">Vehicle</label>
+      <label
+        for="entryVehicle"
+        class="form-label"
+      >Vehicle</label>
       <select
+        id="entryVehicle"
+        v-model="form.vehicleId"
         v-autofocus
         class="form-select form-select-sm"
         :class="{ 'is-invalid': errors.vehicleId }"
-        id="entryVehicle"
         required
-        v-model="form.vehicleId"
       >
-        <option value="" hidden selected>Select Vehicle</option>
+        <option
+          value=""
+          hidden
+          selected
+        >
+          Select Vehicle
+        </option>
         <option
           v-for="vehicle in props.vehicles"
           :key="vehicle.id"
@@ -86,86 +95,131 @@ const formattedDate = computed({
           {{ vehicle.make }} {{ vehicle.model }}
         </option>
       </select>
-      <div class="invalid-feedback" v-if="errors.vehicleId">
+      <div
+        v-if="errors.vehicleId"
+        class="invalid-feedback"
+      >
         {{ errors.vehicleId }}
       </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="date" class="form-label">Date</label>
+      <label
+        for="date"
+        class="form-label"
+      >Date</label>
       <input
+        id="date"
+        v-model="formattedDate"
         type="date"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.date }"
-        v-model="formattedDate"
-        id="date"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.date">{{ errors.date }}</div>
+      >
+      <div
+        v-if="errors.date"
+        class="invalid-feedback"
+      >
+        {{ errors.date }}
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="cost" class="form-label">Cost</label>
+      <label
+        for="cost"
+        class="form-label"
+      >Cost</label>
       <input
+        id="cost"
+        v-model.number="form.cost"
         type="number"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.cost }"
-        v-model.number="form.cost"
-        id="cost"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.cost">{{ errors.cost }}</div>
+      >
+      <div
+        v-if="errors.cost"
+        class="invalid-feedback"
+      >
+        {{ errors.cost }}
+      </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="mileage" class="form-label">Mileage</label>
+      <label
+        for="mileage"
+        class="form-label"
+      >Mileage</label>
       <input
+        id="mileage"
+        v-model.number="form.mileage"
         type="number"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.mileage }"
-        v-model.number="form.mileage"
-        id="mileage"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.mileage">
+      >
+      <div
+        v-if="errors.mileage"
+        class="invalid-feedback"
+      >
         {{ errors.mileage }}
       </div>
     </div>
   </div>
   <div class="mb-3">
-    <label for="title" class="form-label">Title</label>
+    <label
+      for="title"
+      class="form-label"
+    >Title</label>
     <input
+      id="title"
+      v-model="form.title"
       type="text"
       class="form-control form-control-sm"
       :class="{ 'is-invalid': errors.title }"
-      v-model="form.title"
-      id="title"
       required
-    />
-    <div class="invalid-feedback" v-if="errors.title">{{ errors.title }}</div>
+    >
+    <div
+      v-if="errors.title"
+      class="invalid-feedback"
+    >
+      {{ errors.title }}
+    </div>
   </div>
   <div class="mb-3">
-    <label for="invoiceLink" class="form-label">Invoice link</label>
+    <label
+      for="invoiceLink"
+      class="form-label"
+    >Invoice link</label>
     <input
+      id="invoiceLink"
+      v-model="form.invoiceLink"
       type="text"
       class="form-control form-control-sm"
       :class="{ 'is-invalid': errors.invoiceLink }"
-      v-model="form.invoiceLink"
-      id="invoiceLink"
-    />
-    <div class="invalid-feedback" v-if="errors.invoiceLink">
+    >
+    <div
+      v-if="errors.invoiceLink"
+      class="invalid-feedback"
+    >
       {{ errors.invoiceLink }}
     </div>
   </div>
   <div class="mb-3">
-    <label for="description" class="form-label">Description</label>
+    <label
+      for="description"
+      class="form-label"
+    >Description</label>
     <textarea
+      id="description"
+      v-model="form.description"
       type="text"
       class="form-control form-control-sm"
       :class="{ 'is-invalid': errors.description }"
-      v-model="form.description"
-      id="description"
-    ></textarea>
-    <div class="invalid-feedback" v-if="errors.description">
+    />
+    <div
+      v-if="errors.description"
+      class="invalid-feedback"
+    >
       {{ errors.description }}
     </div>
   </div>

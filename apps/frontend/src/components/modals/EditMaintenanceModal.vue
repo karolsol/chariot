@@ -49,16 +49,25 @@ onMounted(() => {
 
 <template>
   <div class="modal-header">
-    <Icon icon="bi:pencil-square" class="fs-4 me-3 text-primary" />
-    <h5 class="modal-title mb-0">Edit maintenance</h5>
-    <button type="button" class="btn-close" @click="handleClose" />
+    <Icon
+      icon="bi:pencil-square"
+      class="fs-4 me-3 text-primary"
+    />
+    <h5 class="modal-title mb-0">
+      Edit maintenance
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      @click="handleClose"
+    />
   </div>
   <div class="modal-body">
     <MaintenanceForm
       ref="formRef"
       v-model="form"
       :vehicles="vehicles"
-      :isEdit="true"
+      :is-edit="true"
     />
   </div>
   <div class="modal-footer">
@@ -69,8 +78,15 @@ onMounted(() => {
     >
       Cancel
     </button>
-    <button type="submit" class="btn btn-success btn-sm" @click="handleSubmit">
-      <Icon icon="bi:check-circle" class="me-1" />
+    <button
+      type="submit"
+      class="btn btn-success btn-sm"
+      @click="handleSubmit"
+    >
+      <Icon
+        icon="bi:check-circle"
+        class="me-1"
+      />
       Apply
     </button>
   </div>

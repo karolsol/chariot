@@ -64,15 +64,23 @@ const formattedDate = computed({
 <template>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="editEntryVehicle" class="form-label">Vehicle</label>
+      <label
+        for="editEntryVehicle"
+        class="form-label"
+      >Vehicle</label>
       <select
+        id="editEntryVehicle"
+        v-model="form.vehicleId"
         v-autofocus
         class="form-select form-select-sm"
         :class="{ 'is-invalid': errors.vehicleId }"
-        v-model="form.vehicleId"
-        id="editEntryVehicle"
       >
-        <option value="" hidden>Select Vehicle</option>
+        <option
+          value=""
+          hidden
+        >
+          Select Vehicle
+        </option>
         <option
           v-for="vehicle in props.vehicles"
           :key="vehicle.id"
@@ -81,112 +89,170 @@ const formattedDate = computed({
           {{ vehicle.make }} {{ vehicle.model }}
         </option>
       </select>
-      <div class="invalid-feedback" v-if="errors.vehicleId">
+      <div
+        v-if="errors.vehicleId"
+        class="invalid-feedback"
+      >
         {{ errors.vehicleId }}
       </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="editDate" class="form-label">Date</label>
+      <label
+        for="editDate"
+        class="form-label"
+      >Date</label>
       <input
+        id="editDate"
+        v-model="formattedDate"
         type="date"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.date }"
-        v-model="formattedDate"
-        id="editDate"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.date">{{ errors.date }}</div>
+      >
+      <div
+        v-if="errors.date"
+        class="invalid-feedback"
+      >
+        {{ errors.date }}
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="editFuelAmount" class="form-label">Fuel amount</label>
+      <label
+        for="editFuelAmount"
+        class="form-label"
+      >Fuel amount</label>
       <input
+        id="editFuelAmount"
+        v-model.number="form.fuelAmount"
         type="number"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.fuelAmount }"
-        v-model.number="form.fuelAmount"
-        id="editFuelAmount"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.fuelAmount">
+      >
+      <div
+        v-if="errors.fuelAmount"
+        class="invalid-feedback"
+      >
         {{ errors.fuelAmount }}
       </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="editFuelPrice" class="form-label">Fuel price</label>
+      <label
+        for="editFuelPrice"
+        class="form-label"
+      >Fuel price</label>
       <input
+        id="editFuelPrice"
+        v-model.number="form.fuelPrice"
         type="number"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.fuelPrice }"
-        v-model.number="form.fuelPrice"
-        id="editFuelPrice"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.fuelPrice">
+      >
+      <div
+        v-if="errors.fuelPrice"
+        class="invalid-feedback"
+      >
         {{ errors.fuelPrice }}
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="editFuelType" class="form-label">Fuel type</label>
+      <label
+        for="editFuelType"
+        class="form-label"
+      >Fuel type</label>
       <select
+        id="editFuelType"
+        v-model.number="form.fuelType"
         class="form-select form-select-sm"
         :class="{ 'is-invalid': errors.fuelType }"
-        v-model.number="form.fuelType"
-        id="editFuelType"
         required
       >
-        <option value="" hidden>Select fuel type</option>
-        <option value="0">Gasoline</option>
-        <option value="1">Diesel</option>
-        <option value="2">Electricity</option>
+        <option
+          value=""
+          hidden
+        >
+          Select fuel type
+        </option>
+        <option value="0">
+          Gasoline
+        </option>
+        <option value="1">
+          Diesel
+        </option>
+        <option value="2">
+          Electricity
+        </option>
       </select>
-      <div class="invalid-feedback" v-if="errors.fuelType">
+      <div
+        v-if="errors.fuelType"
+        class="invalid-feedback"
+      >
         {{ errors.fuelType }}
       </div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="editMileageAtRefuel" class="form-label">Mileage</label>
+      <label
+        for="editMileageAtRefuel"
+        class="form-label"
+      >Mileage</label>
       <input
+        id="editMileageAtRefuel"
+        v-model.number="form.mileageAtRefuel"
         type="number"
         class="form-control form-control-sm"
         :class="{ 'is-invalid': errors.mileageAtRefuel }"
-        v-model.number="form.mileageAtRefuel"
-        id="editMileageAtRefuel"
         required
-      />
-      <div class="invalid-feedback" v-if="errors.mileageAtRefuel">
+      >
+      <div
+        v-if="errors.mileageAtRefuel"
+        class="invalid-feedback"
+      >
         {{ errors.mileageAtRefuel }}
       </div>
     </div>
   </div>
   <div class="mb-3">
-    <label for="editGasStation" class="form-label">Gas station</label>
+    <label
+      for="editGasStation"
+      class="form-label"
+    >Gas station</label>
     <input
+      id="editGasStation"
+      v-model="form.gasStation"
       type="text"
       class="form-control form-control-sm"
       :class="{ 'is-invalid': errors.gasStation }"
-      v-model="form.gasStation"
-      id="editGasStation"
       required
-    />
-    <div class="invalid-feedback" v-if="errors.gasStation">
+    >
+    <div
+      v-if="errors.gasStation"
+      class="invalid-feedback"
+    >
       {{ errors.gasStation }}
     </div>
   </div>
   <div class="mb-3">
-    <label for="editInvoiceLink" class="form-label">Invoice link</label>
+    <label
+      for="editInvoiceLink"
+      class="form-label"
+    >Invoice link</label>
     <input
+      id="editInvoiceLink"
+      v-model="form.invoiceLink"
       type="text"
       class="form-control form-control-sm"
       :class="{ 'is-invalid': errors.invoiceLink }"
-      v-model="form.invoiceLink"
-      id="editInvoiceLink"
       required
-    />
-    <div class="invalid-feedback" v-if="errors.invoiceLink">
+    >
+    <div
+      v-if="errors.invoiceLink"
+      class="invalid-feedback"
+    >
       {{ errors.invoiceLink }}
     </div>
   </div>

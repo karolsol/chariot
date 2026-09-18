@@ -17,6 +17,10 @@ defineEmits(["click"]);
     :title="title"
     @click="$emit('click')"
   >
-    <Icon :icon="icon" :width="16" :height="16" />
+    <Icon
+      :icon="icon"
+      :width="16"
+      :height="16"
+    />
   </button>
 </template>

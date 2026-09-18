@@ -168,15 +168,21 @@ const columns = [
         <h2>Your maintenance:</h2>
         <div class="row mb-4 align-items-end">
           <div class="col-6 col-md-3">
-            <label for="vehicleFilter" class="form-label small text-muted"
-              >Vehicle</label
-            >
+            <label
+              for="vehicleFilter"
+              class="form-label small text-muted"
+            >Vehicle</label>
             <select
-              class="form-select form-select-sm"
               id="vehicleFilter"
               v-model="vehicleFilter"
+              class="form-select form-select-sm"
             >
-              <option :value="undefined" selected>All</option>
+              <option
+                :value="undefined"
+                selected
+              >
+                All
+              </option>
               <option
                 v-for="vehicle in vehicles"
                 :key="vehicle.id"
@@ -188,18 +194,30 @@ const columns = [
           </div>
 
           <div class="col-6 col-md-3">
-            <label for="dateRange" class="form-label small text-muted"
-              >Date Range</label
-            >
+            <label
+              for="dateRange"
+              class="form-label small text-muted"
+            >Date Range</label>
             <select
-              class="form-select form-select-sm"
               id="dateRange"
               v-model="dateRangeFilter"
+              class="form-select form-select-sm"
             >
-              <option :value="undefined" selected>All</option>
-              <option value="7">Last 7 days</option>
-              <option value="30">Last 30 days</option>
-              <option value="365">Last Year</option>
+              <option
+                :value="undefined"
+                selected
+              >
+                All
+              </option>
+              <option value="7">
+                Last 7 days
+              </option>
+              <option value="30">
+                Last 30 days
+              </option>
+              <option value="365">
+                Last Year
+              </option>
             </select>
           </div>
 
@@ -209,20 +227,24 @@ const columns = [
               type="button"
               @click="onCreate"
             >
-              <Icon icon="mdi:plus" width="18" height="18" />
+              <Icon
+                icon="mdi:plus"
+                width="18"
+                height="18"
+              />
               Add new entry
             </button>
           </div>
         </div>
         <h4>Maintenance Overview</h4>
         <DataTable
+          v-model:pagination="pagination"
+          v-model:sorting="sorting"
           :data="maintenances ?? []"
           :columns="columns"
           :is-loading="isLoading"
           :is-error="isError"
-          v-model:pagination="pagination"
           :page-count="pageCount"
-          v-model:sorting="sorting"
         >
           <template #error>
             <FetchingErrorCard />

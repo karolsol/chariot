@@ -37,13 +37,21 @@ function handleClose(): void {
         class="fs-4"
         :class="`text-${props.variant}`"
       />
-      <h5 class="modal-title fw-semibold mb-0">{{ props.title }}</h5>
+      <h5 class="modal-title fw-semibold mb-0">
+        {{ props.title }}
+      </h5>
     </div>
-    <button type="button" class="btn-close" @click="handleClose" />
+    <button
+      type="button"
+      class="btn-close"
+      @click="handleClose"
+    />
   </div>
 
   <div class="modal-body pt-2">
-    <p class="mb-0 text-body-secondary">{{ props.message }}</p>
+    <p class="mb-0 text-body-secondary">
+      {{ props.message }}
+    </p>
   </div>
 
   <div class="modal-footer border-0 pt-0 justify-content-end">

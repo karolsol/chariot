@@ -8,8 +8,15 @@ const componentListeners = computed(() => store.modalFunctions || {});
 </script>
 
 <template>
-  <div v-if="store.activeModal" class="modal-backdrop fade show"></div>
-  <div v-if="store.activeModal" class="modal fade show d-block" tabindex="-1">
+  <div
+    v-if="store.activeModal"
+    class="modal-backdrop fade show"
+  />
+  <div
+    v-if="store.activeModal"
+    class="modal fade show d-block"
+    tabindex="-1"
+  >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <component

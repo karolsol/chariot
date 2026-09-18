@@ -83,20 +83,36 @@ const table = useTable({
 </script>
 
 <template>
-  <slot name="loading" v-if="isLoading">
+  <slot
+    v-if="isLoading"
+    name="loading"
+  >
     <div class="text-center py-5">
-      <div class="spinner-border text-primary" role="status">
+      <div
+        class="spinner-border text-primary"
+        role="status"
+      >
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
   </slot>
 
-  <slot name="error" v-else-if="isError">
-    <div class="alert alert-danger">Failed to load data.</div>
+  <slot
+    v-else-if="isError"
+    name="error"
+  >
+    <div class="alert alert-danger">
+      Failed to load data.
+    </div>
   </slot>
 
-  <slot name="empty" v-else-if="data.length === 0">
-    <div class="text-center py-5 text-muted">No data available.</div>
+  <slot
+    v-else-if="data.length === 0"
+    name="empty"
+  >
+    <div class="text-center py-5 text-muted">
+      No data available.
+    </div>
   </slot>
 
   <template v-else>
@@ -121,12 +137,8 @@ const table = useTable({
                   :render="header.column.columnDef.header"
                   :props="header.getContext()"
                 />
-                <span v-if="header.column.getIsSorted() === 'asc'"
-                  ><Icon icon="mdi:arrow-up"
-                /></span>
-                <span v-else-if="header.column.getIsSorted() === 'desc'"
-                  ><Icon icon="mdi:arrow-down"
-                /></span>
+                <span v-if="header.column.getIsSorted() === 'asc'"><Icon icon="mdi:arrow-up" /></span>
+                <span v-else-if="header.column.getIsSorted() === 'desc'"><Icon icon="mdi:arrow-down" /></span>
                 <span v-else>
                   <Icon icon="mdi:sort" />
                 </span>
@@ -135,8 +147,14 @@ const table = useTable({
           </tr>
         </thead>
         <tbody>
-          <tr v-for="row in table.getRowModel().rows" :key="row.id">
-            <td v-for="cell in row.getAllCells()" :key="cell.id">
+          <tr
+            v-for="row in table.getRowModel().rows"
+            :key="row.id"
+          >
+            <td
+              v-for="cell in row.getAllCells()"
+              :key="cell.id"
+            >
               <FlexRender
                 :render="cell.column.columnDef.cell"
                 :props="cell.getContext()"
@@ -147,28 +165,48 @@ const table = useTable({
       </table>
     </div>
 
-    <nav v-if="pageCount ?? 0 > 1" aria-label="Table pagination" class="mt-3">
+    <nav
+      v-if="pageCount ?? 0 > 1"
+      aria-label="Table pagination"
+      class="mt-3"
+    >
       <ul class="pagination pagination-sm justify-content-end mb-0">
         <li
           class="page-item"
           :class="{ disabled: !table.getCanPreviousPage() }"
         >
-          <button class="page-link" @click="table.previousPage()">Prev</button>
+          <button
+            class="page-link"
+            @click="table.previousPage()"
+          >
+            Prev
+          </button>
         </li>
         <li
-          class="page-item"
           v-for="page in table.getPageCount()"
           :key="page"
+          class="page-item"
           :class="{
             active: pagination.pageIndex === page - 1,
           }"
         >
-          <button class="page-link" @click="table.setPageIndex(page - 1)">
+          <button
+            class="page-link"
+            @click="table.setPageIndex(page - 1)"
+          >
             {{ page }}
           </button>
         </li>
-        <li class="page-item" :class="{ disabled: !table.getCanNextPage() }">
-          <button class="page-link" @click="table.nextPage()">Next</button>
+        <li
+          class="page-item"
+          :class="{ disabled: !table.getCanNextPage() }"
+        >
+          <button
+            class="page-link"
+            @click="table.nextPage()"
+          >
+            Next
+          </button>
         </li>
       </ul>
     </nav>

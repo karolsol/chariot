@@ -27,12 +27,24 @@ const handleClose = () => {
 
 <template>
   <div class="modal-header">
-    <Icon icon="bi:check-circle" class="fs-4 me-3 text-primary" />
-    <h5 class="modal-title mb-0">Add new vehicle</h5>
-    <button type="button" class="btn-close" @click="handleClose" />
+    <Icon
+      icon="bi:check-circle"
+      class="fs-4 me-3 text-primary"
+    />
+    <h5 class="modal-title mb-0">
+      Add new vehicle
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      @click="handleClose"
+    />
   </div>
   <div class="modal-body">
-    <VehicleForm ref="formRef" v-model="form" />
+    <VehicleForm
+      ref="formRef"
+      v-model="form"
+    />
   </div>
   <div class="modal-footer">
     <button
@@ -42,8 +54,15 @@ const handleClose = () => {
     >
       Cancel
     </button>
-    <button type="submit" class="btn btn-success btn-sm" @click="handleSubmit">
-      <Icon icon="bi:check-circle" class="me-1" />
+    <button
+      type="submit"
+      class="btn btn-success btn-sm"
+      @click="handleSubmit"
+    >
+      <Icon
+        icon="bi:check-circle"
+        class="me-1"
+      />
       Add Entry
     </button>
   </div>

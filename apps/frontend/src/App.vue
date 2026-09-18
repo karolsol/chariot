@@ -18,7 +18,7 @@ const route = useRoute();
       class="spinner-border text-primary"
       role="status"
       style="width: 3rem; height: 3rem"
-    ></div>
+    />
   </div>
   <navbar v-if="!route.meta.hideNavbar" />
   <router-view />

@@ -23,7 +23,7 @@ import FetchingErrorCard from "../components/FetchingErrorCard.vue";
 
 const modalStore = useModalStore();
 
-let selectedVehicle = ref<IVehicle>({} as IVehicle);
+const selectedVehicle = ref<IVehicle>({} as IVehicle);
 
 const vehicleTypeFilter = ref<VehicleType | undefined>();
 
@@ -108,14 +108,27 @@ const onStats = (id: string) => {
               type="button"
               @click="onCreate"
             >
-              <Icon icon="mdi:plus" width="18" height="18" />
+              <Icon
+                icon="mdi:plus"
+                width="18"
+                height="18"
+              />
               Add new entry
             </button>
           </div>
         </div>
-        <div class="row g-4 mt-4" id="vehiclesCards">
-          <div v-if="isLoading" class="col-12 text-center py-5">
-            <div class="spinner-border text-primary" role="status">
+        <div
+          id="vehiclesCards"
+          class="row g-4 mt-4"
+        >
+          <div
+            v-if="isLoading"
+            class="col-12 text-center py-5"
+          >
+            <div
+              class="spinner-border text-primary"
+              role="status"
+            >
               <span class="visually-hidden">Loading...</span>
             </div>
           </div>
@@ -124,9 +137,9 @@ const onStats = (id: string) => {
           <template v-else>
             <template v-if="vehicles && vehicles.length > 0">
               <div
-                class="col-md-4"
                 v-for="vehicle in vehicles"
                 :key="vehicle.id"
+                class="col-md-4"
               >
                 <VehicleCard
                   :vehicle="vehicle"
@@ -137,9 +150,9 @@ const onStats = (id: string) => {
               </div>
             </template>
             <NoEntitiesCard
+              v-else
               main-text="No vehicles found"
               secondary-text="You haven't added any vehicles to your garage yet."
-              v-else
             />
           </template>
         </div>

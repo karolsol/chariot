@@ -171,15 +171,21 @@ const columns = [
         <h2>Your refuels:</h2>
         <div class="row mb-4 align-items-end">
           <div class="col-6 col-md-3">
-            <label for="vehicleFilter" class="form-label small text-muted"
-              >Vehicle</label
-            >
+            <label
+              for="vehicleFilter"
+              class="form-label small text-muted"
+            >Vehicle</label>
             <select
-              class="form-select form-select-sm"
               id="vehicleFilter"
               v-model="vehicleFilter"
+              class="form-select form-select-sm"
             >
-              <option :value="undefined" selected>All</option>
+              <option
+                :value="undefined"
+                selected
+              >
+                All
+              </option>
               <option
                 v-for="vehicle in vehicles"
                 :key="vehicle.id"
@@ -190,18 +196,30 @@ const columns = [
             </select>
           </div>
           <div class="col-6 col-md-3">
-            <label for="dateRange" class="form-label small text-muted"
-              >Date Range</label
-            >
+            <label
+              for="dateRange"
+              class="form-label small text-muted"
+            >Date Range</label>
             <select
-              class="form-select form-select-sm"
               id="dateRange"
               v-model="dateRangeFilter"
+              class="form-select form-select-sm"
             >
-              <option :value="undefined" selected>All</option>
-              <option value="7">Last 7 days</option>
-              <option value="30">Last 30 days</option>
-              <option value="365">Last Year</option>
+              <option
+                :value="undefined"
+                selected
+              >
+                All
+              </option>
+              <option value="7">
+                Last 7 days
+              </option>
+              <option value="30">
+                Last 30 days
+              </option>
+              <option value="365">
+                Last Year
+              </option>
             </select>
           </div>
           <div class="col-12 col-md-6 d-grid d-md-flex justify-content-md-end">
@@ -209,7 +227,11 @@ const columns = [
               class="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2"
               @click="onCreate"
             >
-              <Icon icon="mdi:plus" width="18" height="18" />
+              <Icon
+                icon="mdi:plus"
+                width="18"
+                height="18"
+              />
               Add new entry
             </button>
           </div>
@@ -218,13 +240,13 @@ const columns = [
         <h4>Refueling Overview</h4>
 
         <DataTable
+          v-model:pagination="pagination"
+          v-model:sorting="sorting"
           :data="refuels ?? []"
           :columns="columns"
           :is-loading="isLoading"
           :is-error="isError"
-          v-model:pagination="pagination"
           :page-count="pageCount"
-          v-model:sorting="sorting"
         >
           <template #error>
             <FetchingErrorCard />
