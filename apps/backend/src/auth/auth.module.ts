@@ -14,7 +14,7 @@ import { RefreshToken } from "./refresh-token.entity";
 @Module({
   imports: [
     UserModule,
-    PassportModule,
+    PassportModule.register({}),
     CommonModule,
     TypeOrmModule.forFeature([RefreshToken]),
     JwtModule.register({
