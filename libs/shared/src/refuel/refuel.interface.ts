@@ -8,7 +8,7 @@ export interface IRefuel {
   fuelAmount: number;
   fuelPrice: number;
   fuelType: FuelType;
-  gasStation: string;
+  gasStation?: string | null;
   mileageAtRefuel: number;
   invoiceLink?: string | null;
   vehicle: IVehicle;

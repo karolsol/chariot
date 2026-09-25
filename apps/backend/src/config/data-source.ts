@@ -7,6 +7,7 @@ import { Vehicle } from "../vehicle/vehicle.entity";
 import { RefreshToken } from "../auth/refresh-token.entity";
 import { InnitialMigration1777895412351 } from "../migrations/1777895412351-innitialMigration";
 import { AddRefreshTokenEntity1777977704186 } from "../migrations/1777977704186-addRefreshTokenEntity";
+import { AllowNotSettingGasStationInRefuel1790345480451 } from "../migrations/1790345480451-allowNotSettingGasStationInRefuel";
 
 export const createDataSourceOptions = (): DataSourceOptions => ({
   type: "postgres",
@@ -20,6 +21,7 @@ export const createDataSourceOptions = (): DataSourceOptions => ({
   migrations: [
     InnitialMigration1777895412351,
     AddRefreshTokenEntity1777977704186,
+    AllowNotSettingGasStationInRefuel1790345480451,
   ],
 });
 

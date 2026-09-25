@@ -28,8 +28,9 @@ export class CreateRefuelDto {
   @IsEnum(FuelType)
   fuelType!: FuelType;
 
+  @IsOptional()
   @IsString()
-  gasStation!: string;
+  gasStation?: string;
 
   @IsInt()
   @Min(0)

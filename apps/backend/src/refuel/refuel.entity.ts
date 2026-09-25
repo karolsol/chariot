@@ -27,12 +27,12 @@ export class Refuel implements IRefuel {
   fuelPrice!: number;
   @Column({ nullable: false, type: "int" })
   fuelType!: FuelType;
-  @Column({ nullable: false })
-  gasStation!: string;
+  @Column({ nullable: true })
+  gasStation?: string;
   @Column({ nullable: false })
   mileageAtRefuel!: number;
   @Column({ nullable: true })
-  invoiceLink!: string;
+  invoiceLink?: string;
   @ManyToOne(() => Vehicle, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",

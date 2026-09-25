@@ -23,8 +23,8 @@ export class UpdateRefuelDto {
   @IsNotEmpty()
   fuelType!: FuelType;
 
-  @IsNotEmpty()
-  gasStation!: string;
+  @IsOptional()
+  gasStation?: string;
 
   @Min(0)
   mileageAtRefuel!: number;
