@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { type Component, createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
