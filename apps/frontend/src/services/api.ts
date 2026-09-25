@@ -25,9 +25,10 @@ api.interceptors.response.use(
 
       try {
         await axios.post("/api/auth/refresh", {}, { withCredentials: true });
+        console.info("Access token expired or invalid, refreshing...");
         return api(originalRequest);
       } catch (refreshError) {
-        console.error("Refresh token expired or invalid");
+        console.error("Refresh token expired or invalid, logging out...");
         await userStore.logout();
         return Promise.reject(
           new Error("Refresh token expired or invalid", {
