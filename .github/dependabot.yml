@@ -8,7 +8,7 @@ updates:
     labels:
       - "dependencies"
     commit-message:
-      prefix: "deps:"
+      prefix: "deps(pnpm):"
     assignees:
       - "karolsol"
     groups:
@@ -54,3 +54,22 @@ updates:
           - "@vue/test-utils"
           - "supertest"
           - "@types/supertest"
+  - package-ecosystem: "github-actions"
+    directory: "/.github/workflows"
+    target-branch: "develop"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "deps(github-actions):"
+
+  - package-ecosystem: "docker"
+    directory: "/docker"
+    target-branch: "develop"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "deps(docker):"
