@@ -60,6 +60,9 @@ const table = useTable({
   get columns() {
     return props.columns;
   },
+  get pageCount() {
+    return props.pageCount;
+  },
   state: {
     get sorting() {
       return sorting.value;
@@ -78,7 +81,6 @@ const table = useTable({
   },
   manualPagination: true,
   manualSorting: true,
-  pageCount: props.pageCount,
 });
 </script>
 
