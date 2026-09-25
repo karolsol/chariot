@@ -3,6 +3,7 @@ services:
     image: ghcr.io/karolsol/chariot-backend:latest
     container_name: chariot-backend
     restart: unless-stopped
+    init: true
     env_file:
       - .env
     depends_on:

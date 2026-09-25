@@ -5,6 +5,7 @@ services:
       dockerfile: docker/Dockerfile.backend
     container_name: chariot-backend
     restart: unless-stopped
+    init: true
     env_file:
       - .env
     depends_on:
