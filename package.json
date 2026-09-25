@@ -12,9 +12,11 @@
   },
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint \"src/**/*.ts\" --fix",
+    "lint": "pnpm -r lint",
     "dev": "pnpm --parallel dev",
-    "clean": "pnpm -r exec rm -rf node_modules && rm -rf node_modules"
+    "clean": "pnpm -r exec rm -rf node_modules && rm -rf node_modules",
+    "type-check": "pnpm -r type-check",
+    "test": "pnpm -r test"
   },
   "dependencies": {
     "class-transformer": "0.5.1",
