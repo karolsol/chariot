@@ -27,9 +27,6 @@ jobs:
 
       - name: Run Linter
         run: pnpm lint
-        env:
-          TSESTREE_ALLOW_BEFORE_TS5: true
-          TYPESCRIPT_ESLINT_RECORD_TS_VERSIONS: "1"
 
       - name: Typecheck
         run: pnpm type-check
