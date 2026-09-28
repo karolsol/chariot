@@ -11,6 +11,11 @@ updates:
       prefix: "deps(pnpm):"
     assignees:
       - "karolsol"
+    ignore:
+      # TypeScript 7 is not supported by eslint and is probably not going to be
+      # https://github.com/typescript-eslint/typescript-eslint/issues/12518
+      - dependency-name: "typescript"
+        versions: [ ">= 7.0.0, < 8.0.0" ]
     groups:
       vue:
         patterns:
