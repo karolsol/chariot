@@ -8,12 +8,14 @@
   },
   "scripts": {
     "build": "tsc",
+    "dev": "tsc --watch",
     "type-check": "tsc --noEmit",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix"
   },
   "exports": {
     ".": {
+      "development": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"

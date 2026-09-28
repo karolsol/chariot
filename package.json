@@ -14,7 +14,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "pnpm -r lint",
     "dev": "pnpm --parallel dev",
-    "clean": "pnpm -r exec rm -rf node_modules && rm -rf node_modules",
+    "clean": "pnpm -r exec rm -rf node_modules && pnpm -r exec rm -rf dist && rm -rf node_modules && rm -rf dist",
     "type-check": "pnpm -r type-check",
     "test": "pnpm -r test"
   },
