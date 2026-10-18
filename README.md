@@ -36,6 +36,15 @@ It is entirely possible to run it without Docker, but it is not supported nor re
 - PostgreSQL database(or docker to run it)
 - A modern web browser
 
+### Installing dependencies
+You can do it with your package manager of choice, but I recommend asdf:
+```bash
+asdf add plugin nodejs
+asdf add plugin pnpm
+asdf install
+asdf reshim
+```
+
 ### Running the app
 1. First of all install dependencies:
 ```bash
