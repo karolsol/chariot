@@ -17,6 +17,14 @@ export default defineConfigWithVueTs(
 
     rules: {
       "vuejs-accessibility/alt-text": "error",
+      "vuejs-accessibility/label-has-for": [
+        "error",
+        {
+          required: {
+            some: ["nesting", "id"],
+          },
+        },
+      ],
     },
   },
 );
